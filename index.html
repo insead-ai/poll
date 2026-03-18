@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>INSEAD AI Club 26D - Member Poll</title>
+    <meta name="description" content="60 seconds. 4 questions. Help us build the AI Club you actually want.">
+    <meta property="og:title" content="INSEAD AI Club 26D - Member Poll">
+    <meta property="og:description" content="60 seconds. 4 questions. Help us build the AI Club you actually want.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --black: #09090b;
+            --white: #fafafa;
+            --gray: #71717a;
+            --gray-light: #a1a1aa;
+            --gray-dark: #27272a;
+            --gray-darker: #18181b;
+            --red: #ef4444;
+            --red-dim: rgba(239, 68, 68, 0.15);
+            --green: #22c55e;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', -apple-system, system-ui, sans-serif;
+            background: var(--black);
+            color: var(--white);
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            min-height: 100dvh;
+            padding-bottom: env(safe-area-inset-bottom, 0);
+        }
+
+        .container {
+            max-width: 640px;
+            margin: 0 auto;
+            padding: 0 clamp(1.25rem, 5vw, 2rem);
+        }
+
+        /* ---- HEADER ---- */
+        .header {
+            padding: 2rem 0 1.25rem;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: clamp(1.5rem, 5vw, 2rem);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+        }
+
+        .header h1 span { color: var(--red); }
+
+        .header p {
+            color: var(--gray-light);
+            font-size: 0.95rem;
+            line-height: 1.5;
+            max-width: 480px;
+            margin: 0 auto;
+        }
+
+        /* ---- PROGRESS ---- */
+        .progress-bar {
+            width: 100%;
+            height: 3px;
+            background: var(--gray-dark);
+            border-radius: 2px;
+            margin: 1.25rem 0 1.75rem;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--red);
+            border-radius: 2px;
+            transition: width 0.4s ease;
+            width: 0%;
+        }
+
+        /* ---- FORM SECTIONS ---- */
+        .form-section {
+            margin-bottom: 2.25rem;
+        }
+
+        .form-section h2 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+            letter-spacing: -0.02em;
+        }
+
+        .form-section .hint {
+            color: var(--gray);
+            font-size: 0.8rem;
+            margin-bottom: 0.85rem;
+        }
+
+        /* ---- TEXT INPUTS ---- */
+        .input-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .input-full {
+            margin-bottom: 0.5rem;
+        }
+
+        input[type="text"], input[type="email"], textarea {
+            width: 100%;
+            padding: 0.85rem 1rem;
+            background: var(--gray-darker);
+            border: 1px solid var(--gray-dark);
+            border-radius: 10px;
+            color: var(--white);
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.2s;
+            -webkit-appearance: none;
+        }
+
+        input[type="text"]:focus, input[type="email"]:focus, textarea:focus {
+            border-color: var(--red);
+        }
+
+        input[type="text"]::placeholder, input[type="email"]::placeholder, textarea::placeholder {
+            color: var(--gray);
+        }
+
+        textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        /* ---- OPTION CARDS ---- */
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .option-card {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.9rem 1rem;
+            min-height: 52px;
+            background: var(--gray-darker);
+            border: 1px solid var(--gray-dark);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+            touch-action: manipulation;
+        }
+
+        .option-card:active {
+            transform: scale(0.98);
+        }
+
+        .option-card.selected {
+            border-color: var(--red);
+            background: var(--red-dim);
+        }
+
+        .option-card.maxed {
+            opacity: 0.35;
+            cursor: not-allowed;
+        }
+
+        /* ---- RANK BADGE (Q1) ---- */
+        .rank-badge {
+            width: 28px;
+            height: 28px;
+            min-width: 28px;
+            border-radius: 50%;
+            border: 2px solid var(--gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--gray);
+            transition: all 0.15s ease;
+        }
+
+        .option-card.selected .rank-badge {
+            border-color: var(--red);
+            background: var(--red);
+            color: var(--white);
+        }
+
+        /* ---- RADIO INDICATOR ---- */
+        .option-indicator {
+            width: 22px;
+            height: 22px;
+            min-width: 22px;
+            border-radius: 50%;
+            border: 2px solid var(--gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.15s ease;
+        }
+
+        .option-card.selected .option-indicator {
+            border-color: var(--red);
+            background: var(--red);
+        }
+
+        .option-indicator::after {
+            content: '';
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--white);
+            opacity: 0;
+            transition: opacity 0.15s ease;
+        }
+
+        .option-card.selected .option-indicator::after {
+            opacity: 1;
+        }
+
+        .option-label {
+            font-size: 0.9rem;
+            line-height: 1.35;
+            color: var(--white);
+        }
+
+        /* ---- Q1 RANK HINT ---- */
+        .rank-hint {
+            text-align: center;
+            color: var(--gray);
+            font-size: 0.75rem;
+            margin-top: 0.5rem;
+            transition: opacity 0.2s;
+        }
+
+        /* ---- DIVIDER ---- */
+        .section-divider {
+            height: 1px;
+            background: var(--gray-dark);
+            margin: 1rem 0 2rem;
+        }
+
+        /* ---- MAILING LIST SECTION ---- */
+        .mailing-section h2 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+            letter-spacing: -0.02em;
+        }
+
+        .mailing-section .hint {
+            color: var(--gray);
+            font-size: 0.8rem;
+            margin-bottom: 0.85rem;
+            line-height: 1.4;
+        }
+
+        /* ---- SUBMIT ---- */
+        .submit-btn {
+            display: block;
+            width: 100%;
+            padding: 1.1rem;
+            background: var(--red);
+            color: var(--white);
+            border: none;
+            border-radius: 12px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-bottom: 3rem;
+            letter-spacing: -0.01em;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+        }
+
+        .submit-btn:hover { opacity: 0.9; }
+        .submit-btn:active { transform: scale(0.98); }
+        .submit-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* ---- THANK YOU ---- */
+        .thank-you {
+            display: none;
+            text-align: center;
+            padding: 4rem 0;
+        }
+
+        .thank-you h2 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 0.75rem;
+            letter-spacing: -0.03em;
+        }
+
+        .thank-you p {
+            color: var(--gray-light);
+            font-size: 1rem;
+            line-height: 1.6;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .checkmark {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: var(--green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            animation: pop 0.3s ease;
+        }
+
+        .checkmark svg { width: 32px; height: 32px; }
+
+        @keyframes pop {
+            0% { transform: scale(0); }
+            70% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        /* ---- FOOTER ---- */
+        .footer {
+            text-align: center;
+            padding: 2rem 0 3rem;
+            color: var(--gray);
+            font-size: 0.75rem;
+        }
+
+        /* ---- ERROR ---- */
+        .field-error {
+            color: var(--red);
+            font-size: 0.8rem;
+            margin-top: 0.35rem;
+            display: none;
+        }
+
+        .field-error.visible { display: block; }
+
+        .shake {
+            animation: shake 0.4s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-6px); }
+            75% { transform: translateX(6px); }
+        }
+
+        /* ---- MOBILE ---- */
+        @media (max-width: 480px) {
+            .option-card {
+                padding: 1rem;
+                min-height: 56px;
+            }
+            .option-label {
+                font-size: 0.88rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- HEADER -->
+    <div class="header">
+        <h1>INSEAD <span>AI Club</span> 26D</h1>
+        <p>We're the new junior leadership. Before we plan anything, we want to hear from you. 4 questions, 60 seconds.</p>
+    </div>
+
+    <!-- PROGRESS -->
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+
+    <!-- FORM -->
+    <form id="pollForm" novalidate>
+
+        <!-- Q1: WHAT DO YOU WANT - TAP TO RANK -->
+        <div class="form-section" data-step="0">
+            <h2>1. What do you most want from the AI Club?</h2>
+            <p class="hint">Tap to rank your top 3 in order</p>
+            <div class="options" id="q1Options">
+                <div class="option-card rank" data-value="build-sessions">
+                    <div class="rank-badge"></div>
+                    <span class="option-label">Hands-on build sessions (bring your laptop, leave with something working)</span>
+                </div>
+                <div class="option-card rank" data-value="speakers">
+                    <div class="rank-badge"></div>
+                    <span class="option-label">Expert speakers / fireside chats</span>
+                </div>
+                <div class="option-card rank" data-value="treks">
+                    <div class="rank-badge"></div>
+                    <span class="option-label">Company treks (AI labs, startups, corporates using AI)</span>
+                </div>
+                <div class="option-card rank" data-value="hackathon">
+                    <div class="rank-badge"></div>
+                    <span class="option-label">Hackathon / competitive team builds</span>
+                </div>
+                <div class="option-card rank" data-value="demos">
+                    <div class="rank-badge"></div>
+                    <span class="option-label">Casual demos + networking (show what you've built)</span>
+                </div>
+                <div class="option-card rank" data-value="deep-dives">
+                    <div class="rank-badge"></div>
+                    <span class="option-label">Technical deep dives (complex AI workflows, multi-agent systems, production tooling)</span>
+                </div>
+                <div class="option-card rank" data-value="staying-current">
+                    <div class="rank-badge"></div>
+                    <span class="option-label">Staying current on AI products, releases and industry developments</span>
+                </div>
+            </div>
+            <div class="rank-hint" id="rankHint">Tap your #1 choice first, then #2, then #3</div>
+            <div class="field-error" id="q1Error">Pick at least 1</div>
+        </div>
+
+        <!-- Q2: PROFICIENCY -->
+        <div class="form-section" data-step="1">
+            <h2>2. Where are you right now with AI?</h2>
+            <p class="hint">No wrong answer - this helps us pitch content right</p>
+            <div class="options" id="q2Options">
+                <div class="option-card radio" data-value="curious">
+                    <div class="option-indicator"></div>
+                    <span class="option-label">I'm curious but haven't really started</span>
+                </div>
+                <div class="option-card radio" data-value="prompting">
+                    <div class="option-indicator"></div>
+                    <span class="option-label">I prompt ChatGPT / Claude / Perplexity etc regularly</span>
+                </div>
+                <div class="option-card radio" data-value="upskilling">
+                    <div class="option-indicator"></div>
+                    <span class="option-label">Practical upskilling - using AI tools to level up in my own role or domain</span>
+                </div>
+                <div class="option-card radio" data-value="ai-first">
+                    <div class="option-indicator"></div>
+                    <span class="option-label">I go to AI first for most tasks - it does the first pass, I review and refine</span>
+                </div>
+                <div class="option-card radio" data-value="customised">
+                    <div class="option-indicator"></div>
+                    <span class="option-label">I've customised my setup - different tools for different jobs, custom instructions, specific workflows</span>
+                </div>
+                <div class="option-card radio" data-value="builder">
+                    <div class="option-indicator"></div>
+                    <span class="option-label">I build with AI - automations, agents, or code</span>
+                </div>
+            </div>
+            <div class="field-error" id="q2Error">Pick one</div>
+        </div>
+
+        <!-- Q3: WHAT WOULD YOU BUILD -->
+        <div class="form-section" data-step="2">
+            <h2>3. What would you build or learn to do with AI if you had help?</h2>
+            <p class="hint">Optional - but the answers here are gold for us</p>
+            <textarea id="q3Text" placeholder="e.g. automate my family business invoicing, build a deal-sourcing tool, get better at prompt engineering..."></textarea>
+        </div>
+
+        <!-- Q4: WOULD YOU LEAD -->
+        <div class="form-section" data-step="3">
+            <h2>4. Would you lead or co-lead a session on something you know?</h2>
+            <p class="hint">We're building a team, not a one-person show</p>
+            <div class="options" id="q4Options">
+                <div class="option-card radio" data-value="yes-specific">
+                    <div class="option-indicator"></div>
+                    <span class="option-label">Yes - I have something specific in mind</span>
+                </div>
+                <div class="option-card radio" data-value="maybe">
+                    <div class="option-indicator"></div>
+                    <span class="option-label">Maybe - depends on the topic and format</span>
+                </div>
+                <div class="option-card radio" data-value="no-learn">
+                    <div class="option-indicator"></div>
+                    <span class="option-label">No - I'm here to learn</span>
+                </div>
+            </div>
+            <div class="field-error" id="q4Error">Pick one</div>
+        </div>
+
+        <!-- MAILING LIST + SECTION (bottom) -->
+        <div class="section-divider"></div>
+        <div class="form-section mailing-section" data-step="4">
+            <h2>Join our mailing list</h2>
+            <p class="hint">Drop your INSEAD email and we'll keep you posted on events, recaps, and anything worth knowing. We'll know who you are from your email - no need to type your name.</p>
+            <div class="input-full">
+                <input type="email" id="email" placeholder="firstname.lastname@insead.edu">
+            </div>
+            <div class="input-full">
+                <input type="text" id="section" placeholder="Section (e.g. E6) - optional">
+            </div>
+        </div>
+
+        <button type="submit" class="submit-btn" id="submitBtn">Submit</button>
+    </form>
+
+    <!-- THANK YOU -->
+    <div class="thank-you" id="thankYou">
+        <div class="checkmark">
+            <svg fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+        </div>
+        <h2>You're in.</h2>
+        <p>Thanks for taking the time. We'll share what we learn and use it to build the club you actually want.</p>
+    </div>
+
+    <div class="footer">INSEAD AI Club 26D</div>
+</div>
+
+<script>
+    // ---- CONFIG ----
+    const SCRIPT_URL = 'APPS_SCRIPT_URL_HERE';
+
+    // ---- STATE ----
+    const state = {
+        q1: [],
+        q2: null,
+        q4: null
+    };
+
+    const totalSteps = 4; // Q1, Q2, Q3 (optional but counts), Q4
+
+    // ---- TAP-TO-RANK LOGIC (Q1) ----
+    document.querySelectorAll('#q1Options .option-card').forEach(card => {
+        card.addEventListener('click', () => {
+            const val = card.dataset.value;
+            const idx = state.q1.indexOf(val);
+
+            if (idx !== -1) {
+                state.q1.splice(idx, 1);
+            } else {
+                if (state.q1.length >= 3) return;
+                state.q1.push(val);
+            }
+
+            document.querySelectorAll('#q1Options .option-card').forEach(c => {
+                const v = c.dataset.value;
+                const rank = state.q1.indexOf(v);
+                const badge = c.querySelector('.rank-badge');
+
+                if (rank !== -1) {
+                    c.classList.add('selected');
+                    c.classList.remove('maxed');
+                    badge.textContent = rank + 1;
+                } else {
+                    c.classList.remove('selected');
+                    badge.textContent = '';
+                    if (state.q1.length >= 3) {
+                        c.classList.add('maxed');
+                    } else {
+                        c.classList.remove('maxed');
+                    }
+                }
+            });
+
+            const hint = document.getElementById('rankHint');
+            if (state.q1.length === 0) hint.textContent = 'Tap your #1 choice first, then #2, then #3';
+            else if (state.q1.length === 1) hint.textContent = 'Now tap your #2';
+            else if (state.q1.length === 2) hint.textContent = 'Now tap your #3';
+            else hint.textContent = 'Tap a choice again to change your ranking';
+
+            hideError('q1Error');
+            updateProgress();
+        });
+    });
+
+    // ---- RADIO LOGIC (Q2, Q4) ----
+    function setupRadio(containerId, stateKey, errorId) {
+        document.querySelectorAll(`#${containerId} .option-card`).forEach(card => {
+            card.addEventListener('click', () => {
+                document.querySelectorAll(`#${containerId} .option-card`).forEach(c => c.classList.remove('selected'));
+                card.classList.add('selected');
+                state[stateKey] = card.dataset.value;
+                hideError(errorId);
+                updateProgress();
+            });
+        });
+    }
+
+    setupRadio('q2Options', 'q2', 'q2Error');
+    setupRadio('q4Options', 'q4', 'q4Error');
+
+    // ---- PROGRESS ----
+    function updateProgress() {
+        let filled = 0;
+        if (state.q1.length > 0) filled++;
+        if (state.q2) filled++;
+        if (document.getElementById('q3Text').value.trim()) filled++;
+        if (state.q4) filled++;
+        const pct = Math.round((filled / totalSteps) * 100);
+        document.getElementById('progressFill').style.width = pct + '%';
+    }
+
+    document.getElementById('q3Text').addEventListener('input', updateProgress);
+
+    // ---- VALIDATION ----
+    function showError(id) {
+        const el = document.getElementById(id);
+        el.classList.add('visible');
+        el.parentElement.classList.add('shake');
+        setTimeout(() => el.parentElement.classList.remove('shake'), 400);
+    }
+
+    function hideError(id) {
+        document.getElementById(id).classList.remove('visible');
+    }
+
+    // ---- NAME FROM EMAIL ----
+    function parseNameFromEmail(email) {
+        if (!email) return '';
+        const local = email.split('@')[0];
+        if (!local) return '';
+        // Handle firstname.lastname, firstname-lastname, firstname_lastname
+        return local
+            .split(/[.\-_]/)
+            .map(part => part.charAt(0).toUpperCase() + part.slice(1).toLowerCase())
+            .join(' ');
+    }
+
+    // ---- SUBMIT ----
+    document.getElementById('pollForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        let valid = true;
+        if (state.q1.length === 0) { showError('q1Error'); valid = false; }
+        if (!state.q2) { showError('q2Error'); valid = false; }
+        if (!state.q4) { showError('q4Error'); valid = false; }
+
+        if (!valid) {
+            const firstError = document.querySelector('.field-error.visible');
+            if (firstError) firstError.parentElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            return;
+        }
+
+        const btn = document.getElementById('submitBtn');
+        btn.disabled = true;
+        btn.textContent = 'Submitting...';
+
+        const email = document.getElementById('email').value.trim();
+        const q1Ranked = state.q1.map((v, i) => `${i + 1}: ${v}`).join(', ');
+
+        const data = {
+            timestamp: new Date().toISOString(),
+            name: parseNameFromEmail(email),
+            section: document.getElementById('section').value.trim(),
+            email: email,
+            q1_want: q1Ranked,
+            q2_proficiency: state.q2,
+            q3_build: document.getElementById('q3Text').value.trim(),
+            q4_lead: state.q4
+        };
+
+        try {
+            await fetch(SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+
+            document.getElementById('pollForm').style.display = 'none';
+            document.querySelector('.progress-bar').style.display = 'none';
+            document.getElementById('thankYou').style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        } catch (err) {
+            btn.disabled = false;
+            btn.textContent = 'Submit';
+            alert('Something went wrong. Try again?');
+        }
+    });
+</script>
+
+</body>
+</html>
