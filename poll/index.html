@@ -494,16 +494,13 @@
             <div class="field-error" id="q4Error">Pick one</div>
         </div>
 
-        <!-- MAILING LIST + SECTION (bottom) -->
+        <!-- MAILING LIST (bottom, optional) -->
         <div class="section-divider"></div>
         <div class="form-section mailing-section" data-step="4">
-            <h2>Join our mailing list</h2>
-            <p class="hint">Drop your INSEAD email and we'll keep you posted on events, recaps, and anything worth knowing. We'll know who you are from your email - no need to type your name.</p>
+            <h2>Join our mailing list (optional)</h2>
+            <p class="hint">Drop your INSEAD email and we'll keep you posted on events, recaps, and anything worth knowing.</p>
             <div class="input-full">
                 <input type="email" id="email" placeholder="firstname.lastname@insead.edu">
-            </div>
-            <div class="input-full">
-                <input type="text" id="section" placeholder="Section (e.g. E6) - optional">
             </div>
         </div>
 
@@ -657,7 +654,7 @@
         const data = {
             timestamp: new Date().toISOString(),
             name: parseNameFromEmail(email),
-            section: document.getElementById('section').value.trim(),
+            section: '',
             email: email,
             q1_want: q1Ranked,
             q2_proficiency: state.q2,
