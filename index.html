@@ -1,685 +1,603 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>INSEAD AI Club 26D - Member Poll</title>
-    <meta name="description" content="60 seconds. 4 questions. Help us build the AI Club you actually want.">
-    <meta property="og:title" content="INSEAD AI Club 26D - Member Poll">
-    <meta property="og:description" content="60 seconds. 4 questions. Help us build the AI Club you actually want.">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Club 26D - Poll Results</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        :root {
-            --black: #09090b;
-            --white: #fafafa;
-            --gray: #71717a;
-            --gray-light: #a1a1aa;
-            --gray-dark: #27272a;
-            --gray-darker: #18181b;
-            --red: #ef4444;
-            --red-dim: rgba(239, 68, 68, 0.15);
-            --green: #22c55e;
-        }
+  :root {
+    --black: #09090b;
+    --white: #fafafa;
+    --gray: #71717a;
+    --gray-light: #a1a1aa;
+    --gray-dark: #27272a;
+    --red: #ef4444;
+  }
 
-        html { scroll-behavior: smooth; }
+  html { scroll-behavior: smooth; }
 
-        body {
-            font-family: 'Inter', -apple-system, system-ui, sans-serif;
-            background: var(--black);
-            color: var(--white);
-            -webkit-font-smoothing: antialiased;
-            overflow-x: hidden;
-            min-height: 100dvh;
-            padding-bottom: env(safe-area-inset-bottom, 0);
-        }
+  body {
+    font-family: 'Inter', -apple-system, system-ui, sans-serif;
+    background: var(--black);
+    color: var(--white);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
 
-        .container {
-            max-width: 640px;
-            margin: 0 auto;
-            padding: 0 clamp(1.25rem, 5vw, 2rem);
-        }
+  ::selection { background: var(--red); color: var(--white); }
 
-        /* ---- HEADER ---- */
-        .header {
-            padding: 2rem 0 1.25rem;
-            text-align: center;
-        }
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 clamp(1.5rem, 5vw, 3rem);
+  }
 
-        .header h1 {
-            font-size: clamp(1.5rem, 5vw, 2rem);
-            font-weight: 800;
-            letter-spacing: -0.03em;
-            line-height: 1.2;
-            margin-bottom: 0.5rem;
-        }
+  /* ---- HEADER ---- */
+  .hero {
+    padding: clamp(4rem, 10vw, 5rem) 0 clamp(1.5rem, 4vw, 2rem);
+  }
 
-        .header h1 span { color: var(--red); }
+  .hero .label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin-bottom: 1rem;
+  }
 
-        .header p {
-            color: var(--gray-light);
-            font-size: 0.95rem;
-            line-height: 1.5;
-            max-width: 480px;
-            margin: 0 auto;
-        }
+  .hero h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -0.04em;
+    margin-bottom: 1rem;
+  }
 
-        /* ---- PROGRESS ---- */
-        .progress-bar {
-            width: 100%;
-            height: 3px;
-            background: var(--gray-dark);
-            border-radius: 2px;
-            margin: 1.25rem 0 1.75rem;
-            overflow: hidden;
-        }
+  .hero .subtitle {
+    font-size: clamp(0.9rem, 1.8vw, 1rem);
+    color: var(--gray-light);
+    line-height: 1.6;
+    max-width: 550px;
+  }
 
-        .progress-fill {
-            height: 100%;
-            background: var(--red);
-            border-radius: 2px;
-            transition: width 0.4s ease;
-            width: 0%;
-        }
+  /* ---- SECTIONS ---- */
+  section {
+    padding: clamp(2.5rem, 6vw, 3.5rem) 0;
+    border-top: 1px solid var(--gray-dark);
+  }
 
-        /* ---- FORM SECTIONS ---- */
-        .form-section {
-            margin-bottom: 2.25rem;
-        }
+  .section-title {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin-bottom: 1.5rem;
+  }
 
-        .form-section h2 {
-            font-size: 1.05rem;
-            font-weight: 700;
-            margin-bottom: 0.25rem;
-            letter-spacing: -0.02em;
-        }
+  /* ---- BAR ROWS (reusable) ---- */
+  .bar-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    background: var(--gray-dark);
+    border-radius: 2px;
+    overflow: hidden;
+  }
 
-        .form-section .hint {
-            color: var(--gray);
-            font-size: 0.8rem;
-            margin-bottom: 0.85rem;
-        }
+  .bar-row {
+    background: var(--black);
+    display: grid;
+    grid-template-columns: 140px 1fr 55px;
+    align-items: center;
+    padding: 0.75rem 1.25rem;
+    gap: 1rem;
+  }
 
-        /* ---- TEXT INPUTS ---- */
-        .input-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0.75rem;
-            margin-bottom: 0.5rem;
-        }
+  .bar-label {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--gray-light);
+  }
 
-        .input-full {
-            margin-bottom: 0.5rem;
-        }
+  .bar-track {
+    height: 22px;
+    background: var(--gray-dark);
+    border-radius: 3px;
+    overflow: hidden;
+  }
 
-        input[type="text"], input[type="email"], textarea {
-            width: 100%;
-            padding: 0.85rem 1rem;
-            background: var(--gray-darker);
-            border: 1px solid var(--gray-dark);
-            border-radius: 10px;
-            color: var(--white);
-            font-family: 'Inter', sans-serif;
-            font-size: 16px;
-            outline: none;
-            transition: border-color 0.2s;
-            -webkit-appearance: none;
-        }
+  .bar-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.6s ease;
+  }
 
-        input[type="text"]:focus, input[type="email"]:focus, textarea:focus {
-            border-color: var(--red);
-        }
+  .bar-pct {
+    text-align: right;
+    font-size: 0.9rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
 
-        input[type="text"]::placeholder, input[type="email"]::placeholder, textarea::placeholder {
-            color: var(--gray);
-        }
+  /* First row highlight */
+  .bar-row.top .bar-label { color: var(--red); font-weight: 700; }
+  .bar-row.top .bar-pct { color: var(--red); }
+  .bar-row.top .bar-fill { background: var(--red); }
 
-        textarea {
-            min-height: 80px;
-            resize: vertical;
-        }
+  .bar-row:not(.top) .bar-fill { background: var(--red); opacity: 0.35; }
+  .bar-row:not(.top) .bar-pct { color: var(--gray-light); }
 
-        /* ---- OPTION CARDS ---- */
-        .options {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
+  /* ---- PROFICIENCY LEVELS ---- */
+  .level-row {
+    background: var(--black);
+    display: grid;
+    grid-template-columns: 130px 1fr 55px;
+    align-items: center;
+    padding: 0.75rem 1.25rem;
+    gap: 1rem;
+  }
 
-        .option-card {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 0.9rem 1rem;
-            min-height: 52px;
-            background: var(--gray-darker);
-            border: 1px solid var(--gray-dark);
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.15s ease;
-            -webkit-tap-highlight-color: transparent;
-            user-select: none;
-            touch-action: manipulation;
-        }
+  .level-name {
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
 
-        .option-card:active {
-            transform: scale(0.98);
-        }
+  .level-desc {
+    font-size: 0.82rem;
+    color: var(--gray);
+    line-height: 1.4;
+  }
 
-        .option-card.selected {
-            border-color: var(--red);
-            background: var(--red-dim);
-        }
+  .level-pct {
+    text-align: right;
+    font-size: 1.1rem;
+    font-weight: 900;
+    letter-spacing: -0.03em;
+  }
 
-        .option-card.maxed {
-            opacity: 0.35;
-            cursor: not-allowed;
-        }
+  .level-row.peak { border-left: 3px solid var(--red); }
+  .level-row.peak .level-name { color: var(--red); }
+  .level-row.peak .level-pct { color: var(--red); }
 
-        /* ---- RANK BADGE (Q1) ---- */
-        .rank-badge {
-            width: 28px;
-            height: 28px;
-            min-width: 28px;
-            border-radius: 50%;
-            border: 2px solid var(--gray);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.8rem;
-            font-weight: 700;
-            color: var(--gray);
-            transition: all 0.15s ease;
-        }
+  .level-row.dim .level-name { color: var(--gray); }
+  .level-row.dim .level-pct { color: var(--gray); }
 
-        .option-card.selected .rank-badge {
-            border-color: var(--red);
-            background: var(--red);
-            color: var(--white);
-        }
+  .level-row.active .level-name { color: var(--gray-light); }
+  .level-row.active .level-pct { color: var(--gray-light); }
 
-        /* ---- RADIO INDICATOR ---- */
-        .option-indicator {
-            width: 22px;
-            height: 22px;
-            min-width: 22px;
-            border-radius: 50%;
-            border: 2px solid var(--gray);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.15s ease;
-        }
+  .level-row.beyond .level-name { color: var(--white); }
+  .level-row.beyond .level-pct { color: var(--white); }
 
-        .option-card.selected .option-indicator {
-            border-color: var(--red);
-            background: var(--red);
-        }
+  /* ---- SPLIT STATS ---- */
+  .split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--gray-dark);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-top: 1.5rem;
+  }
 
-        .option-indicator::after {
-            content: '';
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: var(--white);
-            opacity: 0;
-            transition: opacity 0.15s ease;
-        }
+  .split-cell {
+    background: var(--black);
+    padding: 1.25rem;
+  }
 
-        .option-card.selected .option-indicator::after {
-            opacity: 1;
-        }
+  .split-num {
+    font-size: 2rem;
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
 
-        .option-label {
-            font-size: 0.9rem;
-            line-height: 1.35;
-            color: var(--white);
-        }
+  .split-label {
+    font-size: 0.78rem;
+    color: var(--gray);
+    line-height: 1.4;
+  }
 
-        /* ---- Q1 RANK HINT ---- */
-        .rank-hint {
-            text-align: center;
-            color: var(--gray);
-            font-size: 0.75rem;
-            margin-top: 0.5rem;
-            transition: opacity 0.2s;
-        }
+  /* ---- CROSS-ANALYSIS ---- */
+  .cross-row {
+    background: var(--black);
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    align-items: center;
+    padding: 0.7rem 1.25rem;
+    gap: 1rem;
+  }
 
-        /* ---- DIVIDER ---- */
-        .section-divider {
-            height: 1px;
-            background: var(--gray-dark);
-            margin: 1rem 0 2rem;
-        }
+  .cross-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
 
-        /* ---- MAILING LIST SECTION ---- */
-        .mailing-section h2 {
-            font-size: 1.05rem;
-            font-weight: 700;
-            margin-bottom: 0.25rem;
-            letter-spacing: -0.02em;
-        }
+  .cross-tags { display: flex; gap: 0.3rem; flex-wrap: wrap; }
 
-        .mailing-section .hint {
-            color: var(--gray);
-            font-size: 0.8rem;
-            margin-bottom: 0.85rem;
-            line-height: 1.4;
-        }
+  .cross-tag {
+    font-size: 0.7rem;
+    font-weight: 500;
+    padding: 0.2rem 0.5rem;
+    border-radius: 999px;
+    background: var(--gray-dark);
+    color: var(--gray-light);
+  }
 
-        /* ---- SUBMIT ---- */
-        .submit-btn {
-            display: block;
-            width: 100%;
-            padding: 1.1rem;
-            background: var(--red);
-            color: var(--white);
-            border: none;
-            border-radius: 12px;
-            font-family: 'Inter', sans-serif;
-            font-size: 1rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.2s;
-            margin-bottom: 3rem;
-            letter-spacing: -0.01em;
-            -webkit-tap-highlight-color: transparent;
-            touch-action: manipulation;
-        }
+  .cross-tag.top { background: rgba(239, 68, 68, 0.15); color: var(--red); font-weight: 600; }
 
-        .submit-btn:hover { opacity: 0.9; }
-        .submit-btn:active { transform: scale(0.98); }
-        .submit-btn:disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
-            transform: none;
-        }
+  /* ---- LEADERSHIP BARS ---- */
+  .lead-item { margin-bottom: 0.75rem; }
 
-        /* ---- THANK YOU ---- */
-        .thank-you {
-            display: none;
-            text-align: center;
-            padding: 4rem 0;
-        }
+  .lead-header {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.3rem;
+  }
 
-        .thank-you h2 {
-            font-size: 1.8rem;
-            font-weight: 800;
-            margin-bottom: 0.75rem;
-            letter-spacing: -0.03em;
-        }
+  .lead-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
 
-        .thank-you p {
-            color: var(--gray-light);
-            font-size: 1rem;
-            line-height: 1.6;
-            max-width: 400px;
-            margin: 0 auto;
-        }
+  .lead-label {
+    flex: 1;
+    font-size: 0.85rem;
+    color: var(--gray-light);
+  }
 
-        .checkmark {
-            width: 64px;
-            height: 64px;
-            border-radius: 50%;
-            background: var(--green);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1.5rem;
-            animation: pop 0.3s ease;
-        }
+  .lead-pct {
+    font-size: 1.2rem;
+    font-weight: 900;
+    letter-spacing: -0.03em;
+  }
 
-        .checkmark svg { width: 32px; height: 32px; }
+  .lead-bar {
+    height: 5px;
+    background: var(--gray-dark);
+    border-radius: 999px;
+    overflow: hidden;
+  }
 
-        @keyframes pop {
-            0% { transform: scale(0); }
-            70% { transform: scale(1.1); }
-            100% { transform: scale(1); }
-        }
+  .lead-bar-fill {
+    height: 100%;
+    border-radius: 999px;
+  }
 
-        /* ---- FOOTER ---- */
-        .footer {
-            text-align: center;
-            padding: 2rem 0 3rem;
-            color: var(--gray);
-            font-size: 0.75rem;
-        }
+  /* ---- VOICES ---- */
+  .voice-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    background: var(--gray-dark);
+    border-radius: 2px;
+    overflow: hidden;
+  }
 
-        /* ---- ERROR ---- */
-        .field-error {
-            color: var(--red);
-            font-size: 0.8rem;
-            margin-top: 0.35rem;
-            display: none;
-        }
+  .voice-item {
+    background: var(--black);
+    padding: 0.85rem 1.25rem;
+  }
 
-        .field-error.visible { display: block; }
+  .voice-text {
+    font-size: 0.88rem;
+    color: var(--gray-light);
+    line-height: 1.6;
+    font-style: italic;
+  }
 
-        .shake {
-            animation: shake 0.4s ease;
-        }
+  .voice-tag {
+    display: inline-block;
+    margin-top: 0.35rem;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.15rem 0.45rem;
+    border-radius: 999px;
+    background: var(--gray-dark);
+    color: var(--gray);
+  }
 
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-6px); }
-            75% { transform: translateX(6px); }
-        }
+  /* ---- FOOTER ---- */
+  footer {
+    padding: 2rem 0;
+    border-top: 1px solid var(--gray-dark);
+    font-size: 0.7rem;
+    color: var(--gray);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
 
-        /* ---- MOBILE ---- */
-        @media (max-width: 480px) {
-            .option-card {
-                padding: 1rem;
-                min-height: 56px;
-            }
-            .option-label {
-                font-size: 0.88rem;
-            }
-        }
-    </style>
+  /* ---- FADE ---- */
+  .fade {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+  .fade.in { opacity: 1; transform: none; }
+
+  /* ---- RESPONSIVE ---- */
+  @media (max-width: 600px) {
+    .bar-row { grid-template-columns: 110px 1fr 45px; gap: 0.6rem; padding: 0.6rem 1rem; }
+    .level-row { grid-template-columns: 100px 1fr 45px; gap: 0.6rem; padding: 0.6rem 1rem; }
+    .level-desc { display: none; }
+    .split { grid-template-columns: 1fr; }
+    .cross-row { grid-template-columns: 100px 1fr; }
+  }
+</style>
 </head>
 <body>
 
 <div class="container">
-    <!-- HEADER -->
-    <div class="header">
-        <h1>INSEAD <span>AI Club</span> 26D</h1>
-        <p>We're the new junior leadership. Before we plan anything, we want to hear from you. 4 questions, 60 seconds.</p>
+
+  <!-- HERO -->
+  <div class="hero fade">
+    <div class="label">INSEAD AI Club 26D / Member Poll</div>
+    <h1>Poll Results</h1>
+    <p class="subtitle">AI proficiency, preferred activities, and leadership interest. Collected 18-19 March 2026.</p>
+  </div>
+
+  <!-- 01 PROFICIENCY -->
+  <section class="fade">
+    <div class="section-title">Proficiency</div>
+    <div class="bar-list" id="levels"></div>
+
+    <div class="split">
+      <div class="split-cell">
+        <div class="split-num" style="color:var(--red)" id="s-below"></div>
+        <div class="split-label">At or below Productive</div>
+      </div>
+      <div class="split-cell">
+        <div class="split-num" id="s-above"></div>
+        <div class="split-label">Customised or Builder</div>
+      </div>
     </div>
+  </section>
 
-    <!-- PROGRESS -->
-    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <!-- 02 ACTIVITIES -->
+  <section class="fade">
+    <div class="section-title">Preferred Activities</div>
+    <div class="bar-list" id="activities"></div>
+  </section>
 
-    <!-- FORM -->
-    <form id="pollForm" novalidate>
+  <!-- 03 CROSS-ANALYSIS -->
+  <section class="fade">
+    <div class="section-title">Top Activities by Proficiency</div>
+    <div class="bar-list" id="cross-levels"></div>
+  </section>
 
-        <!-- Q1: WHAT DO YOU WANT - TAP TO RANK -->
-        <div class="form-section" data-step="0">
-            <h2>1. What do you most want from the AI Club?</h2>
-            <p class="hint">Tap to rank your top 3 in order</p>
-            <div class="options" id="q1Options">
-                <div class="option-card rank" data-value="build-sessions">
-                    <div class="rank-badge"></div>
-                    <span class="option-label">Hands-on build sessions (bring your laptop, leave with something working)</span>
-                </div>
-                <div class="option-card rank" data-value="speakers">
-                    <div class="rank-badge"></div>
-                    <span class="option-label">Expert speakers / fireside chats</span>
-                </div>
-                <div class="option-card rank" data-value="treks">
-                    <div class="rank-badge"></div>
-                    <span class="option-label">Company treks (AI labs, startups, corporates using AI)</span>
-                </div>
-                <div class="option-card rank" data-value="hackathon">
-                    <div class="rank-badge"></div>
-                    <span class="option-label">Hackathon / competitive team builds</span>
-                </div>
-                <div class="option-card rank" data-value="demos">
-                    <div class="rank-badge"></div>
-                    <span class="option-label">Casual demos + networking (show what you've built)</span>
-                </div>
-                <div class="option-card rank" data-value="deep-dives">
-                    <div class="rank-badge"></div>
-                    <span class="option-label">Technical deep dives (complex AI workflows, multi-agent systems, production tooling)</span>
-                </div>
-                <div class="option-card rank" data-value="staying-current">
-                    <div class="rank-badge"></div>
-                    <span class="option-label">Staying current on AI products, releases and industry developments</span>
-                </div>
-                <div class="option-card rank" data-value="upskilling">
-                    <div class="rank-badge"></div>
-                    <span class="option-label">Practical upskilling - using AI tools to level up in your own role or domain</span>
-                </div>
-            </div>
-            <div class="rank-hint" id="rankHint">Tap your #1 choice first, then #2, then #3</div>
-            <div class="field-error" id="q1Error">Pick at least 1</div>
-        </div>
+  <!-- 04 LEADERSHIP -->
+  <section class="fade">
+    <div class="section-title">Leadership Interest</div>
+    <div id="lead-rows"></div>
+  </section>
 
-        <!-- Q2: PROFICIENCY -->
-        <div class="form-section" data-step="1">
-            <h2>2. Where are you right now with AI?</h2>
-            <p class="hint">No wrong answer - this helps us pitch content right</p>
-            <div class="options" id="q2Options">
-                <div class="option-card radio" data-value="curious">
-                    <div class="option-indicator"></div>
-                    <span class="option-label">I'm curious but haven't really started</span>
-                </div>
-                <div class="option-card radio" data-value="prompting">
-                    <div class="option-indicator"></div>
-                    <span class="option-label">I prompt ChatGPT / Claude / Perplexity etc regularly</span>
-                </div>
-                <div class="option-card radio" data-value="ai-first">
-                    <div class="option-indicator"></div>
-                    <span class="option-label">I go to AI first for most tasks - it does the first pass, I review and refine</span>
-                </div>
-                <div class="option-card radio" data-value="customised">
-                    <div class="option-indicator"></div>
-                    <span class="option-label">I've customised my setup - different tools for different jobs, custom instructions, specific workflows</span>
-                </div>
-                <div class="option-card radio" data-value="builder">
-                    <div class="option-indicator"></div>
-                    <span class="option-label">I build with AI - automations, agents, or code</span>
-                </div>
-            </div>
-            <div class="field-error" id="q2Error">Pick one</div>
-        </div>
+  <!-- 05 VOICES -->
+  <section class="fade">
+    <div class="section-title">What Would You Build or Learn?</div>
+    <div class="voice-list" id="voices"></div>
+  </section>
 
-        <!-- Q3: WHAT WOULD YOU BUILD -->
-        <div class="form-section" data-step="2">
-            <h2>3. What would you build or learn to do with AI if you had help?</h2>
-            <p class="hint">Optional - but the answers here are gold for us</p>
-            <textarea id="q3Text" placeholder="e.g. automate my family business invoicing, build a deal-sourcing tool, get better at prompt engineering..."></textarea>
-        </div>
+  <footer>
+    INSEAD AI Club 26D &middot; Fontainebleau &amp; Singapore &middot; March 2026
+  </footer>
 
-        <!-- Q4: WOULD YOU LEAD -->
-        <div class="form-section" data-step="3">
-            <h2>4. Would you lead or co-lead a session on something you know?</h2>
-            <p class="hint">We're building a team, not a one-person show</p>
-            <div class="options" id="q4Options">
-                <div class="option-card radio" data-value="yes-specific">
-                    <div class="option-indicator"></div>
-                    <span class="option-label">Yes - I have something specific in mind</span>
-                </div>
-                <div class="option-card radio" data-value="maybe">
-                    <div class="option-indicator"></div>
-                    <span class="option-label">Maybe - depends on the topic and format</span>
-                </div>
-                <div class="option-card radio" data-value="no-learn">
-                    <div class="option-indicator"></div>
-                    <span class="option-label">No - I'm here to learn</span>
-                </div>
-            </div>
-            <div class="field-error" id="q4Error">Pick one</div>
-        </div>
-
-        <!-- MAILING LIST (bottom, optional) -->
-        <div class="section-divider"></div>
-        <div class="form-section mailing-section" data-step="4">
-            <h2>Join our mailing list (optional)</h2>
-            <p class="hint">Drop your INSEAD email and we'll keep you posted on events, recaps, and anything worth knowing.</p>
-            <div class="input-full">
-                <input type="email" id="email" placeholder="firstname.lastname@insead.edu">
-            </div>
-        </div>
-
-        <button type="submit" class="submit-btn" id="submitBtn">Submit</button>
-    </form>
-
-    <!-- THANK YOU -->
-    <div class="thank-you" id="thankYou">
-        <div class="checkmark">
-            <svg fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
-        </div>
-        <h2>You're in.</h2>
-        <p>Thanks for taking the time. We'll share what we learn and use it to build the club you actually want.</p>
-    </div>
-
-    <div class="footer">INSEAD AI Club 26D</div>
 </div>
 
 <script>
-    // ---- CONFIG ----
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw3AOAtHGIpwBnxcflwLjptWguJRWRB4a_8uehumA4f84kPN1PFV1I5vHKh4kQFXuib/exec';
+// ================================================================
+// DATA
+// ================================================================
+const raw = [
+  {ts:"2026-03-18T16:00:23.148Z",name:"Freddie Chambers",email:"freddie.chambers@insead.edu",q1:"1: build-sessions, 2: speakers, 3: treks",q2:"curious",q3:"hello",q4:"yes-specific"},
+  {ts:"2026-03-18T16:08:12.699Z",name:"Felix Schinkovits",email:"felix.schinkovits@insead.edu",q1:"1: build-sessions, 2: speakers, 3: deep-dives",q2:"ai-first",q3:"Get better at prompting; Talk with people about their different setups (how they set up Claude, clawdbot, etc.)",q4:"maybe"},
+  {ts:"2026-03-18T16:27:23.499Z",name:"",email:"",q1:"1: build-sessions, 2: demos, 3: upskilling",q2:"builder",q3:"would love to take better notes!",q4:"maybe"},
+  {ts:"2026-03-18T16:29:33.713Z",name:"",email:"",q1:"1: build-sessions, 2: hackathon, 3: demos",q2:"customised",q3:"Setting up agents, fine tuning models or working with models directly. Containers / coding. Also security!",q4:"no-learn"},
+  {ts:"2026-03-18T16:35:05.022Z",name:"",email:"",q1:"1: treks, 2: deep-dives, 3: staying-current",q2:"prompting",q3:"Build agents, be up to date",q4:"maybe"},
+  {ts:"2026-03-18T16:38:46.142Z",name:"Isabella Isotta",email:"isabella.isotta@insead.edu",q1:"1: build-sessions, 2: treks, 3: deep-dives",q2:"builder",q3:"",q4:"maybe"},
+  {ts:"2026-03-18T16:49:06.410Z",name:"",email:"",q1:"1: speakers, 2: treks, 3: deep-dives",q2:"ai-first",q3:"",q4:"maybe"},
+  {ts:"2026-03-18T16:57:18.715Z",name:"Vivek Jain",email:"vivek.jain@insead.edu",q1:"1: build-sessions, 2: demos, 3: staying-current",q2:"prompting",q3:"Create a framework and system to automate everything mundane using ai",q4:"no-learn"},
+  {ts:"2026-03-18T17:44:57.668Z",name:"",email:"",q1:"1: build-sessions, 2: upskilling, 3: treks",q2:"ai-first",q3:"",q4:"no-learn"},
+  {ts:"2026-03-18T18:35:14.127Z",name:"",email:"",q1:"1: speakers, 2: demos, 3: upskilling",q2:"prompting",q3:"",q4:"maybe"},
+  {ts:"2026-03-19T01:58:54.209Z",name:"Sashin Pillay",email:"sashin.pillay@insead.edu",q1:"1: speakers, 2: demos, 3: upskilling",q2:"ai-first",q3:"",q4:"maybe"},
+  {ts:"2026-03-19T06:00:39.314Z",name:"",email:"",q1:"1: build-sessions",q2:"curious",q3:"Testing one two",q4:"maybe"},
+  {ts:"2026-03-19T06:25:22.757Z",name:"",email:"",q1:"1: build-sessions",q2:"prompting",q3:"",q4:"maybe"},
+  {ts:"2026-03-19T06:45:17.300Z",name:"",email:"",q1:"1: build-sessions, 2: treks, 3: upskilling",q2:"prompting",q3:"",q4:"no-learn"},
+  {ts:"2026-03-19T07:19:50.518Z",name:"",email:"",q1:"1: hackathon, 2: build-sessions, 3: speakers",q2:"ai-first",q3:"Look after my children.",q4:"no-learn"},
+  {ts:"2026-03-19T07:24:55.250Z",name:"",email:"",q1:"1: upskilling, 2: speakers, 3: staying-current",q2:"prompting",q3:"A personalised app tracking health metrics (eating habits, exercise distances, weight etc), and offering French lessons, daily newsletters etc... the 'everything' app",q4:"no-learn"},
+  {ts:"2026-03-19T07:45:15.973Z",name:"",email:"",q1:"1: treks, 2: build-sessions, 3: deep-dives",q2:"ai-first",q3:"",q4:"maybe"},
+  {ts:"2026-03-19T07:46:24.328Z",name:"Felix Grignon",email:"felix.grignon@insead.edu",q1:"1: upskilling, 2: build-sessions, 3: speakers",q2:"customised",q3:"",q4:"no-learn"},
+  {ts:"2026-03-19T09:04:32.380Z",name:"Alec Cutler",email:"alec.cutler@insead.edu",q1:"1: build-sessions, 2: upskilling, 3: treks",q2:"ai-first",q3:"",q4:"no-learn"},
+  {ts:"2026-03-19T09:18:28.093Z",name:"Jay Chopra",email:"jay.chopra@insead.edu",q1:"1: build-sessions, 2: treks, 3: hackathon",q2:"ai-first",q3:"I would like to learn more about others set ups and help setting up my own. I'd like opportunities to find ISPs or projects with companies",q4:"maybe"},
+  {ts:"2026-03-19T09:22:08.231Z",name:"Ariel Abraham",email:"ariel.abraham@insead.edu",q1:"1: build-sessions, 2: staying-current, 3: upskilling",q2:"prompting",q3:"help with networking, looking for internships, and long term roles",q4:"yes-specific"},
+  {ts:"2026-03-19T09:22:42.579Z",name:"",email:"",q1:"1: speakers, 2: staying-current, 3: upskilling",q2:"prompting",q3:"Automate a task",q4:"no-learn"},
+  {ts:"2026-03-19T09:37:10.487Z",name:"Everett Cedarholm",email:"everett.cedarholm@gmail.com",q1:"1: build-sessions, 2: treks",q2:"builder",q3:"",q4:"maybe"},
+  {ts:"2026-03-19T09:43:09.772Z",name:"Carlo Babini",email:"carlo.babini@insead.edu",q1:"1: speakers, 2: staying-current, 3: upskilling",q2:"ai-first",q3:"Automate an air traffic control company with AI.",q4:"maybe"},
+  {ts:"2026-03-19T09:43:46.327Z",name:"Vinayak Kalra",email:"vinayak.kalra@insead.edu",q1:"1: build-sessions, 2: upskilling, 3: staying-current",q2:"curious",q3:"",q4:"no-learn"},
+  {ts:"2026-03-19T09:56:13.194Z",name:"Miguel Santoselizalde",email:"miguel.santoselizalde@insead.edu",q1:"1: build-sessions, 2: treks, 3: deep-dives",q2:"customised",q3:"",q4:"maybe"},
+  {ts:"2026-03-19T10:25:56.655Z",name:"Tom Rees",email:"tom.rees@insead.edu",q1:"1: build-sessions, 2: deep-dives, 3: upskilling",q2:"builder",q3:"",q4:"maybe"},
+  {ts:"2026-03-19T12:26:50.576Z",name:"Junki Shin",email:"junki.shin@insead.edu",q1:"1: build-sessions, 2: treks, 3: staying-current",q2:"ai-first",q3:"",q4:"no-learn"},
+  {ts:"2026-03-19T13:35:26.594Z",name:"Gonzalo Salazar",email:"gonzalo.salazar@insead.edu",q1:"1: build-sessions, 2: upskilling, 3: staying-current",q2:"ai-first",q3:"",q4:"no-learn"},
+  {ts:"2026-03-19T09:08:24.465Z",name:"Rami Baassiri",email:"rami.baassiri@insead.edu",q1:"1: demos, 2: build-sessions, 3: hackathon",q2:"customised",q3:"",q4:"no-learn"},
+];
 
-    // ---- STATE ----
-    const state = {
-        q1: [],
-        q2: null,
-        q4: null
-    };
+const TOTAL = raw.length;
+const pct = n => Math.round((n / TOTAL) * 100) + '%';
 
-    const totalSteps = 4; // Q1, Q2, Q3 (optional but counts), Q4
+// ================================================================
+// STAGES
+// ================================================================
+const STAGES = [
+  { key:'curious', name:'Curious', desc:'Haven\'t really started yet', state:'dim' },
+  { key:'prompting', name:'Prompting', desc:'Use ChatGPT / Claude regularly', state:'active' },
+  { key:'ai-first', name:'AI-First', desc:'AI does the first pass, I review', state:'peak' },
+  { key:'customised', name:'Customised', desc:'Different tools for different jobs', state:'beyond' },
+  { key:'builder', name:'Builder', desc:'Build automations, agents, or code', state:'beyond' },
+];
 
-    // ---- TAP-TO-RANK LOGIC (Q1) ----
-    document.querySelectorAll('#q1Options .option-card').forEach(card => {
-        card.addEventListener('click', () => {
-            const val = card.dataset.value;
-            const idx = state.q1.indexOf(val);
+const STAGE_MAP = {};
+STAGES.forEach(s => { s.count = 0; STAGE_MAP[s.key] = s; });
+raw.forEach(r => { if (STAGE_MAP[r.q2]) STAGE_MAP[r.q2].count++; });
 
-            if (idx !== -1) {
-                state.q1.splice(idx, 1);
-            } else {
-                if (state.q1.length >= 3) return;
-                state.q1.push(val);
-            }
+// Render levels
+const levelsEl = document.getElementById('levels');
+STAGES.forEach(s => {
+  const p = Math.round((s.count / TOTAL) * 100);
+  levelsEl.innerHTML += `
+    <div class="level-row ${s.state}">
+      <div class="level-name">${s.name}</div>
+      <div class="level-desc">${s.desc}</div>
+      <div class="level-pct">${p}%</div>
+    </div>`;
+});
 
-            document.querySelectorAll('#q1Options .option-card').forEach(c => {
-                const v = c.dataset.value;
-                const rank = state.q1.indexOf(v);
-                const badge = c.querySelector('.rank-badge');
+// Split stats
+const below = STAGES.filter(s => ['curious','prompting','ai-first'].includes(s.key)).reduce((a,s) => a + s.count, 0);
+const above = STAGES.filter(s => ['customised','builder'].includes(s.key)).reduce((a,s) => a + s.count, 0);
+document.getElementById('s-below').textContent = pct(below);
+document.getElementById('s-above').textContent = pct(above);
 
-                if (rank !== -1) {
-                    c.classList.add('selected');
-                    c.classList.remove('maxed');
-                    badge.textContent = rank + 1;
-                } else {
-                    c.classList.remove('selected');
-                    badge.textContent = '';
-                    if (state.q1.length >= 3) {
-                        c.classList.add('maxed');
-                    } else {
-                        c.classList.remove('maxed');
-                    }
-                }
-            });
+// ================================================================
+// ACTIVITIES
+// ================================================================
+const ACTIVITIES = ['build-sessions','speakers','treks','upskilling','demos','deep-dives','staying-current','hackathon'];
+const ACT_LABELS = {
+  'build-sessions':'Build Sessions','speakers':'Speakers','treks':'Company Treks',
+  'upskilling':'Upskilling','demos':'Tool Demos','deep-dives':'Deep Dives',
+  'staying-current':'Staying Current','hackathon':'Hackathon'
+};
 
-            const hint = document.getElementById('rankHint');
-            if (state.q1.length === 0) hint.textContent = 'Tap your #1 choice first, then #2, then #3';
-            else if (state.q1.length === 1) hint.textContent = 'Now tap your #2';
-            else if (state.q1.length === 2) hint.textContent = 'Now tap your #3';
-            else hint.textContent = 'Tap a choice again to change your ranking';
+function parseQ1(q) {
+  const r = {};
+  q.split(',').map(s=>s.trim()).forEach(p => { const m = p.match(/(\d):\s*(.+)/); if(m) r[parseInt(m[1])]=m[2].trim(); });
+  return r;
+}
 
-            hideError('q1Error');
-            updateProgress();
-        });
+// Weighted score: 1st=3pts, 2nd=2pts, 3rd=1pt
+const actScores = {};
+ACTIVITIES.forEach(a => actScores[a] = 0);
+raw.forEach(r => {
+  const ranks = parseQ1(r.q1);
+  Object.entries(ranks).forEach(([rank, act]) => {
+    const pts = rank == 1 ? 3 : rank == 2 ? 2 : 1;
+    if (actScores[act] !== undefined) actScores[act] += pts;
+  });
+});
+
+const sortedActs = ACTIVITIES.slice().sort((a,b) => actScores[b] - actScores[a]);
+const maxScore = actScores[sortedActs[0]];
+
+const actEl = document.getElementById('activities');
+sortedActs.forEach((act, i) => {
+  const w = (actScores[act] / maxScore) * 100;
+  actEl.innerHTML += `
+    <div class="bar-row ${i === 0 ? 'top' : ''}">
+      <div class="bar-label">${ACT_LABELS[act]}</div>
+      <div class="bar-track"><div class="bar-fill" style="width:${w}%"></div></div>
+      <div class="bar-pct">${Math.round(w)}%</div>
+    </div>`;
+});
+
+// ================================================================
+// CROSS-ANALYSIS
+// ================================================================
+const crossEl = document.getElementById('cross-levels');
+STAGES.forEach(stage => {
+  if (!stage.count) return;
+  const people = raw.filter(r => r.q2 === stage.key);
+  const scores = {};
+  ACTIVITIES.forEach(a => scores[a] = 0);
+  people.forEach(p => {
+    const ranks = parseQ1(p.q1);
+    Object.entries(ranks).forEach(([rank, act]) => {
+      const pts = rank == 1 ? 3 : rank == 2 ? 2 : 1;
+      if (scores[act] !== undefined) scores[act] += pts;
     });
+  });
+  const sorted = ACTIVITIES.slice().sort((a,b) => scores[b] - scores[a]).filter(a => scores[a] > 0);
+  const top3 = sorted.slice(0, 3);
+  const tagsHTML = top3.map((a, i) =>
+    `<span class="cross-tag ${i === 0 ? 'top' : ''}">${ACT_LABELS[a]}</span>`
+  ).join('');
 
-    // ---- RADIO LOGIC (Q2, Q4) ----
-    function setupRadio(containerId, stateKey, errorId) {
-        document.querySelectorAll(`#${containerId} .option-card`).forEach(card => {
-            card.addEventListener('click', () => {
-                document.querySelectorAll(`#${containerId} .option-card`).forEach(c => c.classList.remove('selected'));
-                card.classList.add('selected');
-                state[stateKey] = card.dataset.value;
-                hideError(errorId);
-                updateProgress();
-            });
-        });
-    }
+  const nameColor = stage.state === 'peak' ? 'color:var(--red)' :
+                     stage.state === 'beyond' ? 'color:var(--white)' :
+                     stage.state === 'active' ? 'color:var(--gray-light)' : 'color:var(--gray)';
 
-    setupRadio('q2Options', 'q2', 'q2Error');
-    setupRadio('q4Options', 'q4', 'q4Error');
+  crossEl.innerHTML += `
+    <div class="cross-row">
+      <div class="cross-label" style="${nameColor}">${stage.name}</div>
+      <div class="cross-tags">${tagsHTML}</div>
+    </div>`;
+});
 
-    // ---- PROGRESS ----
-    function updateProgress() {
-        let filled = 0;
-        if (state.q1.length > 0) filled++;
-        if (state.q2) filled++;
-        if (document.getElementById('q3Text').value.trim()) filled++;
-        if (state.q4) filled++;
-        const pct = Math.round((filled / totalSteps) * 100);
-        document.getElementById('progressFill').style.width = pct + '%';
-    }
+// ================================================================
+// LEADERSHIP
+// ================================================================
+const leadCounts = {'yes-specific':0,'maybe':0,'no-learn':0};
+raw.forEach(r => { if (leadCounts[r.q4] !== undefined) leadCounts[r.q4]++; });
 
-    document.getElementById('q3Text').addEventListener('input', updateProgress);
+const LEAD_META = {
+  'yes-specific': { label:'Yes - have a specific idea', color:'#22c55e' },
+  'maybe': { label:'Open to it', color:'#f59e0b' },
+  'no-learn': { label:'Here to learn', color:'var(--gray)' },
+};
 
-    // ---- VALIDATION ----
-    function showError(id) {
-        const el = document.getElementById(id);
-        el.classList.add('visible');
-        el.parentElement.classList.add('shake');
-        setTimeout(() => el.parentElement.classList.remove('shake'), 400);
-    }
+const leadRowsEl = document.getElementById('lead-rows');
+Object.entries(leadCounts).forEach(([k,v]) => {
+  const p = Math.round((v / TOTAL) * 100);
+  leadRowsEl.innerHTML += `
+    <div class="lead-item">
+      <div class="lead-header">
+        <div class="lead-dot" style="background:${LEAD_META[k].color}"></div>
+        <div class="lead-label">${LEAD_META[k].label}</div>
+        <div class="lead-pct" style="color:${LEAD_META[k].color}">${p}%</div>
+      </div>
+      <div class="lead-bar"><div class="lead-bar-fill" style="width:${p}%;background:${LEAD_META[k].color}"></div></div>
+    </div>`;
+});
 
-    function hideError(id) {
-        document.getElementById(id).classList.remove('visible');
-    }
+// ================================================================
+// VOICES (anonymised - no names)
+// ================================================================
+const voicesEl = document.getElementById('voices');
+raw.filter(r => r.q3 && r.q3.length > 15 && !['hello','Testing one two'].includes(r.q3))
+  .sort((a,b) => b.q3.length - a.q3.length)
+  .forEach(r => {
+    const s = STAGE_MAP[r.q2];
+    const tagColor = s.state === 'peak' ? 'background:rgba(239,68,68,0.15);color:var(--red)' :
+                     s.state === 'beyond' ? 'background:var(--gray-dark);color:var(--white)' :
+                     'background:var(--gray-dark);color:var(--gray-light)';
+    voicesEl.innerHTML += `
+      <div class="voice-item">
+        <div class="voice-text">"${r.q3}"</div>
+        <span class="voice-tag" style="${tagColor}">${s.name}</span>
+      </div>`;
+  });
 
-    // ---- NAME FROM EMAIL ----
-    function parseNameFromEmail(email) {
-        if (!email) return '';
-        const local = email.split('@')[0];
-        if (!local) return '';
-        // Handle firstname.lastname, firstname-lastname, firstname_lastname
-        return local
-            .split(/[.\-_]/)
-            .map(part => part.charAt(0).toUpperCase() + part.slice(1).toLowerCase())
-            .join(' ');
-    }
-
-    // ---- SUBMIT ----
-    document.getElementById('pollForm').addEventListener('submit', async (e) => {
-        e.preventDefault();
-
-        let valid = true;
-        if (state.q1.length === 0) { showError('q1Error'); valid = false; }
-        if (!state.q2) { showError('q2Error'); valid = false; }
-        if (!state.q4) { showError('q4Error'); valid = false; }
-
-        if (!valid) {
-            const firstError = document.querySelector('.field-error.visible');
-            if (firstError) firstError.parentElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            return;
-        }
-
-        const btn = document.getElementById('submitBtn');
-        btn.disabled = true;
-        btn.textContent = 'Submitting...';
-
-        const email = document.getElementById('email').value.trim();
-        const q1Ranked = state.q1.map((v, i) => `${i + 1}: ${v}`).join(', ');
-
-        const data = {
-            timestamp: new Date().toISOString(),
-            name: parseNameFromEmail(email),
-            section: '',
-            email: email,
-            q1_want: q1Ranked,
-            q2_proficiency: state.q2,
-            q3_build: document.getElementById('q3Text').value.trim(),
-            q4_lead: state.q4
-        };
-
-        try {
-            await fetch(SCRIPT_URL, {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data)
-            });
-
-            document.getElementById('pollForm').style.display = 'none';
-            document.querySelector('.progress-bar').style.display = 'none';
-            document.getElementById('thankYou').style.display = 'block';
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        } catch (err) {
-            btn.disabled = false;
-            btn.textContent = 'Submit';
-            alert('Something went wrong. Try again?');
-        }
-    });
+// ================================================================
+// FADE IN
+// ================================================================
+const obs = new IntersectionObserver(es => {
+  es.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade').forEach(el => obs.observe(el));
+document.querySelector('.hero').classList.add('in');
 </script>
 
 </body>
