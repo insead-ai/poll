@@ -1,565 +1,622 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>INSEAD AI Club 26D - Poll Results v2</title>
-    <meta name="description" content="48 responses. Here's what you told us.">
-    <meta property="og:title" content="INSEAD AI Club 26D - Poll Results v2">
-    <meta property="og:description" content="48 responses. Here's what you told us.">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Club 26D - Poll Results (v5)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        :root {
-            --black: #09090b;
-            --white: #fafafa;
-            --gray: #71717a;
-            --gray-light: #a1a1aa;
-            --gray-dark: #27272a;
-            --gray-darker: #18181b;
-            --red: #ef4444;
-            --red-dim: rgba(239, 68, 68, 0.15);
-            --green: #22c55e;
-        }
+  :root {
+    --black: #09090b;
+    --white: #fafafa;
+    --gray: #71717a;
+    --gray-light: #a1a1aa;
+    --gray-dark: #27272a;
+    --red: #ef4444;
+  }
 
-        html { scroll-behavior: smooth; }
+  html { scroll-behavior: smooth; }
 
-        body {
-            font-family: 'Inter', -apple-system, system-ui, sans-serif;
-            background: var(--black);
-            color: var(--white);
-            -webkit-font-smoothing: antialiased;
-            overflow-x: hidden;
-            min-height: 100dvh;
-            padding-bottom: env(safe-area-inset-bottom, 0);
-        }
+  body {
+    font-family: 'Inter', -apple-system, system-ui, sans-serif;
+    background: var(--black);
+    color: var(--white);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
 
-        .container {
-            max-width: 640px;
-            margin: 0 auto;
-            padding: 0 clamp(1.25rem, 5vw, 2rem);
-        }
+  ::selection { background: var(--red); color: var(--white); }
 
-        /* ---- HEADER ---- */
-        .header {
-            padding: 2rem 0 1.25rem;
-            text-align: center;
-        }
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 clamp(1.5rem, 5vw, 3rem);
+  }
 
-        .header h1 {
-            font-size: clamp(1.5rem, 5vw, 2rem);
-            font-weight: 800;
-            letter-spacing: -0.03em;
-            line-height: 1.2;
-            margin-bottom: 0.5rem;
-        }
+  /* ---- HEADER ---- */
+  .hero {
+    padding: clamp(4rem, 10vw, 5rem) 0 clamp(1.5rem, 4vw, 2rem);
+  }
 
-        .header h1 span { color: var(--red); }
+  .hero .label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin-bottom: 1rem;
+  }
 
-        .header p {
-            color: var(--gray-light);
-            font-size: 0.95rem;
-            line-height: 1.5;
-            max-width: 480px;
-            margin: 0 auto;
-        }
+  .hero h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -0.04em;
+    margin-bottom: 1rem;
+  }
 
-        /* ---- PROGRESS ---- */
-        .progress-bar {
-            width: 100%;
-            height: 3px;
-            background: var(--gray-dark);
-            border-radius: 2px;
-            margin: 1.25rem 0 1.75rem;
-            overflow: hidden;
-        }
+  .hero .subtitle {
+    font-size: clamp(0.9rem, 1.8vw, 1rem);
+    color: var(--gray-light);
+    line-height: 1.6;
+    max-width: 550px;
+  }
 
-        .progress-fill {
-            height: 100%;
-            background: var(--red);
-            border-radius: 2px;
-            transition: width 0.4s ease;
-            width: 100%;
-        }
+  /* ---- SECTIONS ---- */
+  section {
+    padding: clamp(2.5rem, 6vw, 3.5rem) 0;
+    border-top: 1px solid var(--gray-dark);
+  }
 
-        /* ---- FORM SECTIONS ---- */
-        .form-section {
-            margin-bottom: 2.25rem;
-        }
+  .section-title {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin-bottom: 1.5rem;
+  }
 
-        .form-section h2 {
-            font-size: 1.05rem;
-            font-weight: 700;
-            margin-bottom: 0.25rem;
-            letter-spacing: -0.02em;
-        }
+  /* ---- BAR ROWS (reusable) ---- */
+  .bar-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    background: var(--gray-dark);
+    border-radius: 2px;
+    overflow: hidden;
+  }
 
-        .form-section .hint {
-            color: var(--gray);
-            font-size: 0.8rem;
-            margin-bottom: 0.85rem;
-        }
+  .bar-row {
+    background: var(--black);
+    display: grid;
+    grid-template-columns: 140px 1fr 55px;
+    align-items: center;
+    padding: 0.75rem 1.25rem;
+    gap: 1rem;
+  }
 
-        /* ---- TEXT INPUTS ---- */
-        .input-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0.75rem;
-            margin-bottom: 0.5rem;
-        }
+  .bar-label {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--gray-light);
+  }
 
-        .input-full {
-            margin-bottom: 0.5rem;
-        }
+  .bar-track {
+    height: 22px;
+    background: var(--gray-dark);
+    border-radius: 3px;
+    overflow: hidden;
+  }
 
-        input[type="text"], input[type="email"], textarea {
-            width: 100%;
-            padding: 0.85rem 1rem;
-            background: var(--gray-darker);
-            border: 1px solid var(--gray-dark);
-            border-radius: 10px;
-            color: var(--white);
-            font-family: 'Inter', sans-serif;
-            font-size: 16px;
-            outline: none;
-            transition: border-color 0.2s;
-            -webkit-appearance: none;
-        }
+  .bar-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.6s ease;
+  }
 
-        input[type="text"]:focus, input[type="email"]:focus, textarea:focus {
-            border-color: var(--red);
-        }
+  .bar-pct {
+    text-align: right;
+    font-size: 0.9rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
 
-        input[type="text"]::placeholder, input[type="email"]::placeholder, textarea::placeholder {
-            color: var(--gray);
-        }
+  /* First row highlight */
+  .bar-row.top .bar-label { color: var(--red); font-weight: 700; }
+  .bar-row.top .bar-pct { color: var(--red); }
+  .bar-row.top .bar-fill { background: var(--red); }
 
-        textarea {
-            min-height: 80px;
-            resize: vertical;
-        }
+  .bar-row:not(.top) .bar-fill { background: var(--red); opacity: 0.35; }
+  .bar-row:not(.top) .bar-pct { color: var(--gray-light); }
 
-        /* ---- OPTION CARDS ---- */
-        .options {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
+  /* ---- PROFICIENCY LEVELS ---- */
+  .level-row {
+    background: var(--black);
+    display: grid;
+    grid-template-columns: 130px 1fr 55px;
+    align-items: center;
+    padding: 0.75rem 1.25rem;
+    gap: 1rem;
+  }
 
-        .option-card {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 0.9rem 1rem;
-            min-height: 52px;
-            background: var(--gray-darker);
-            border: 1px solid var(--gray-dark);
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.15s ease;
-            -webkit-tap-highlight-color: transparent;
-            user-select: none;
-            touch-action: manipulation;
-        }
+  .level-name {
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
 
-        .option-card:active {
-            transform: scale(0.98);
-        }
+  .level-desc {
+    font-size: 0.82rem;
+    color: var(--gray);
+    line-height: 1.4;
+  }
 
-        .option-card.selected {
-            border-color: var(--red);
-            background: var(--red-dim);
-        }
+  .level-pct {
+    text-align: right;
+    font-size: 1.1rem;
+    font-weight: 900;
+    letter-spacing: -0.03em;
+  }
 
-        .option-card.maxed {
-            opacity: 0.35;
-            cursor: not-allowed;
-        }
+  .level-row.peak { border-left: 3px solid var(--red); }
+  .level-row.peak .level-name { color: var(--red); }
+  .level-row.peak .level-pct { color: var(--red); }
 
-        /* ---- RANK BADGE (Q1) ---- */
-        .rank-badge {
-            width: 28px;
-            height: 28px;
-            min-width: 28px;
-            border-radius: 50%;
-            border: 2px solid var(--gray);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.8rem;
-            font-weight: 700;
-            color: var(--gray);
-            transition: all 0.15s ease;
-        }
+  .level-row.dim .level-name { color: var(--gray); }
+  .level-row.dim .level-pct { color: var(--gray); }
 
-        .option-card.selected .rank-badge {
-            border-color: var(--red);
-            background: var(--red);
-            color: var(--white);
-        }
+  .level-row.active .level-name { color: var(--gray-light); }
+  .level-row.active .level-pct { color: var(--gray-light); }
 
-        /* ---- RADIO INDICATOR ---- */
-        .option-indicator {
-            width: 22px;
-            height: 22px;
-            min-width: 22px;
-            border-radius: 50%;
-            border: 2px solid var(--gray);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.15s ease;
-        }
+  .level-row.beyond .level-name { color: var(--white); }
+  .level-row.beyond .level-pct { color: var(--white); }
 
-        .option-card.selected .option-indicator {
-            border-color: var(--red);
-            background: var(--red);
-        }
+  /* ---- SPLIT STATS ---- */
+  .split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--gray-dark);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-top: 1.5rem;
+  }
 
-        .option-indicator::after {
-            content: '';
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: var(--white);
-            opacity: 0;
-            transition: opacity 0.15s ease;
-        }
+  .split-cell {
+    background: var(--black);
+    padding: 1.25rem;
+  }
 
-        .option-card.selected .option-indicator::after {
-            opacity: 1;
-        }
+  .split-num {
+    font-size: 2rem;
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
 
-        .option-label {
-            font-size: 0.9rem;
-            line-height: 1.35;
-            color: var(--white);
-        }
+  .split-label {
+    font-size: 0.78rem;
+    color: var(--gray);
+    line-height: 1.4;
+  }
 
-        /* ---- Q1 RANK HINT ---- */
-        .rank-hint {
-            text-align: center;
-            color: var(--gray);
-            font-size: 0.75rem;
-            margin-top: 0.5rem;
-            transition: opacity 0.2s;
-        }
+  /* ---- CROSS-ANALYSIS ---- */
+  .cross-row {
+    background: var(--black);
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    align-items: center;
+    padding: 0.7rem 1.25rem;
+    gap: 1rem;
+  }
 
-        /* ---- DIVIDER ---- */
-        .section-divider {
-            height: 1px;
-            background: var(--gray-dark);
-            margin: 1rem 0 2rem;
-        }
+  .cross-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
 
-        /* ---- MAILING LIST SECTION ---- */
-        .mailing-section h2 {
-            font-size: 1.05rem;
-            font-weight: 700;
-            margin-bottom: 0.25rem;
-            letter-spacing: -0.02em;
-        }
+  .cross-tags { display: flex; gap: 0.3rem; flex-wrap: wrap; }
 
-        .mailing-section .hint {
-            color: var(--gray);
-            font-size: 0.8rem;
-            margin-bottom: 0.85rem;
-            line-height: 1.4;
-        }
+  .cross-tag {
+    font-size: 0.7rem;
+    font-weight: 500;
+    padding: 0.2rem 0.5rem;
+    border-radius: 999px;
+    background: var(--gray-dark);
+    color: var(--gray-light);
+  }
 
-        /* ---- SUBMIT ---- */
-        .submit-btn {
-            display: block;
-            width: 100%;
-            padding: 1.1rem;
-            background: var(--red);
-            color: var(--white);
-            border: none;
-            border-radius: 12px;
-            font-family: 'Inter', sans-serif;
-            font-size: 1rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.2s;
-            margin-bottom: 3rem;
-            letter-spacing: -0.01em;
-            -webkit-tap-highlight-color: transparent;
-            touch-action: manipulation;
-        }
+  .cross-tag.top { background: rgba(239, 68, 68, 0.15); color: var(--red); font-weight: 600; }
 
-        .submit-btn:hover { opacity: 0.9; }
-        .submit-btn:active { transform: scale(0.98); }
-        .submit-btn:disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
-            transform: none;
-        }
+  /* ---- LEADERSHIP BARS ---- */
+  .lead-item { margin-bottom: 0.75rem; }
 
-        /* ---- THANK YOU ---- */
-        .thank-you {
-            display: none;
-            text-align: center;
-            padding: 4rem 0;
-        }
+  .lead-header {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.3rem;
+  }
 
-        .thank-you h2 {
-            font-size: 1.8rem;
-            font-weight: 800;
-            margin-bottom: 0.75rem;
-            letter-spacing: -0.03em;
-        }
+  .lead-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
 
-        .thank-you p {
-            color: var(--gray-light);
-            font-size: 1rem;
-            line-height: 1.6;
-            max-width: 400px;
-            margin: 0 auto;
-        }
+  .lead-label {
+    flex: 1;
+    font-size: 0.85rem;
+    color: var(--gray-light);
+  }
 
-        .checkmark {
-            width: 64px;
-            height: 64px;
-            border-radius: 50%;
-            background: var(--green);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1.5rem;
-            animation: pop 0.3s ease;
-        }
+  .lead-pct {
+    font-size: 1.2rem;
+    font-weight: 900;
+    letter-spacing: -0.03em;
+  }
 
-        .checkmark svg { width: 32px; height: 32px; }
+  .lead-bar {
+    height: 5px;
+    background: var(--gray-dark);
+    border-radius: 999px;
+    overflow: hidden;
+  }
 
-        @keyframes pop {
-            0% { transform: scale(0); }
-            70% { transform: scale(1.1); }
-            100% { transform: scale(1); }
-        }
+  .lead-bar-fill {
+    height: 100%;
+    border-radius: 999px;
+  }
 
-        /* ---- FOOTER ---- */
-        .footer {
-            text-align: center;
-            padding: 2rem 0 3rem;
-            color: var(--gray);
-            font-size: 0.75rem;
-        }
+  /* ---- VOICES ---- */
+  .voice-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    background: var(--gray-dark);
+    border-radius: 2px;
+    overflow: hidden;
+  }
 
-        .footer a {
-            color: var(--red);
-            text-decoration: none;
-        }
+  .voice-item {
+    background: var(--black);
+    padding: 0.85rem 1.25rem;
+  }
 
-        /* ---- ERROR ---- */
-        .field-error {
-            color: var(--red);
-            font-size: 0.8rem;
-            margin-top: 0.35rem;
-            display: none;
-        }
+  .voice-text {
+    font-size: 0.88rem;
+    color: var(--gray-light);
+    line-height: 1.6;
+    font-style: italic;
+  }
 
-        .field-error.visible { display: block; }
+  .voice-tag {
+    display: inline-block;
+    margin-top: 0.35rem;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.15rem 0.45rem;
+    border-radius: 999px;
+    background: var(--gray-dark);
+    color: var(--gray);
+  }
 
-        .shake {
-            animation: shake 0.4s ease;
-        }
+  /* ---- FOOTER ---- */
+  footer {
+    padding: 2rem 0;
+    border-top: 1px solid var(--gray-dark);
+    font-size: 0.7rem;
+    color: var(--gray);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
 
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-6px); }
-            75% { transform: translateX(6px); }
-        }
+  /* ---- FADE ---- */
+  .fade {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+  .fade.in { opacity: 1; transform: none; }
 
-        /* ---- RESULTS ONLY ---- */
-        .option-pct {
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: var(--gray-light);
-            margin-left: auto;
-        }
-
-        .option-card.selected .option-pct {
-            color: var(--white);
-        }
-
-        /* ---- MOBILE ---- */
-        @media (max-width: 480px) {
-            .option-card {
-                padding: 1rem;
-                min-height: 56px;
-            }
-            .option-label {
-                font-size: 0.88rem;
-            }
-        }
-    </style>
+  /* ---- RESPONSIVE ---- */
+  @media (max-width: 600px) {
+    .bar-row { grid-template-columns: 110px 1fr 45px; gap: 0.6rem; padding: 0.6rem 1rem; }
+    .level-row { grid-template-columns: 100px 1fr 45px; gap: 0.6rem; padding: 0.6rem 1rem; }
+    .level-desc { display: none; }
+    .split { grid-template-columns: 1fr; }
+    .cross-row { grid-template-columns: 100px 1fr; }
+  }
+</style>
 </head>
 <body>
 
 <div class="container">
-    <!-- HEADER -->
-    <div class="header">
-        <h1>INSEAD <span>AI Club</span> 26D</h1>
-        <p>48 of you responded in 48 hours. Here's what you told us.</p>
+
+  <!-- HERO -->
+  <div class="hero fade">
+    <div class="label">INSEAD AI Club 26D / Member Poll</div>
+    <h1>Poll Results</h1>
+    <p class="subtitle">AI proficiency, preferred activities, and leadership interest. 48 responses, 18-20 March 2026.</p>
+  </div>
+
+  <!-- 01 PROFICIENCY -->
+  <section class="fade">
+    <div class="section-title">Proficiency</div>
+    <div class="bar-list" id="levels"></div>
+
+    <div class="split">
+      <div class="split-cell">
+        <div class="split-num" style="color:var(--red)" id="s-below"></div>
+        <div class="split-label">At or below Productive</div>
+      </div>
+      <div class="split-cell">
+        <div class="split-num" id="s-above"></div>
+        <div class="split-label">Customised or Builder</div>
+      </div>
     </div>
+  </section>
 
-    <!-- PROGRESS -->
-    <div class="progress-bar"><div class="progress-fill"></div></div>
+  <!-- 02 ACTIVITIES -->
+  <section class="fade">
+    <div class="section-title">Preferred Activities</div>
+    <div class="bar-list" id="activities"></div>
+  </section>
 
-    <!-- Q1: WHAT DO YOU WANT - RANKED RESULTS -->
-    <div class="form-section">
-        <h2>1. What do you most want from the AI Club?</h2>
-        <p class="hint">Weighted score: 1st pick = 3 pts, 2nd = 2 pts, 3rd = 1 pt</p>
-        <div class="options">
-            <div class="option-card selected">
-                <div class="rank-badge">1</div>
-                <span class="option-label">Hands-on build sessions (bring your laptop, leave with something working)</span>
-                <span class="option-pct">95 pts</span>
-            </div>
-            <div class="option-card selected">
-                <div class="rank-badge">2</div>
-                <span class="option-label">Company treks (AI labs, startups, corporates using AI)</span>
-                <span class="option-pct">43 pts</span>
-            </div>
-            <div class="option-card selected">
-                <div class="rank-badge">3</div>
-                <span class="option-label">Practical upskilling - using AI tools to level up in your own role or domain</span>
-                <span class="option-pct">38 pts</span>
-            </div>
-            <div class="option-card">
-                <div class="rank-badge">4</div>
-                <span class="option-label">Expert speakers / fireside chats</span>
-                <span class="option-pct">34 pts</span>
-            </div>
-            <div class="option-card">
-                <div class="rank-badge">5</div>
-                <span class="option-label">Staying current on AI products, releases and industry developments</span>
-                <span class="option-pct">24 pts</span>
-            </div>
-            <div class="option-card">
-                <div class="rank-badge">6</div>
-                <span class="option-label">Technical deep dives (complex AI workflows, multi-agent systems, production tooling)</span>
-                <span class="option-pct">17 pts</span>
-            </div>
-            <div class="option-card">
-                <div class="rank-badge">7</div>
-                <span class="option-label">Hackathon / competitive team builds</span>
-                <span class="option-pct">15 pts</span>
-            </div>
-            <div class="option-card">
-                <div class="rank-badge">8</div>
-                <span class="option-label">Casual demos + networking (show what you've built)</span>
-                <span class="option-pct">13 pts</span>
-            </div>
-        </div>
-        <div class="rank-hint">Build sessions ran away with it - more than double second place</div>
-    </div>
+  <!-- 03 CROSS-ANALYSIS -->
+  <section class="fade">
+    <div class="section-title">Top Activities by Proficiency</div>
+    <div class="bar-list" id="cross-levels"></div>
+  </section>
 
-    <div class="section-divider"></div>
+  <!-- 04 LEADERSHIP -->
+  <section class="fade">
+    <div class="section-title">Leadership Interest</div>
+    <div id="lead-rows"></div>
+  </section>
 
-    <!-- Q2: PROFICIENCY -->
-    <div class="form-section">
-        <h2>2. Where are you right now with AI?</h2>
-        <p class="hint">Self-assessed across the club</p>
-        <div class="options">
-            <div class="option-card selected">
-                <div class="option-indicator"></div>
-                <span class="option-label">I go to AI first for most tasks - it does the first pass, I review and refine</span>
-                <span class="option-pct">35%</span>
-            </div>
-            <div class="option-card selected">
-                <div class="option-indicator"></div>
-                <span class="option-label">I prompt ChatGPT / Claude / Perplexity etc regularly</span>
-                <span class="option-pct">33%</span>
-            </div>
-            <div class="option-card">
-                <div class="option-indicator"></div>
-                <span class="option-label">I've customised my setup - different tools for different jobs, custom instructions, specific workflows</span>
-                <span class="option-pct">13%</span>
-            </div>
-            <div class="option-card">
-                <div class="option-indicator"></div>
-                <span class="option-label">I build with AI - automations, agents, or code</span>
-                <span class="option-pct">13%</span>
-            </div>
-            <div class="option-card">
-                <div class="option-indicator"></div>
-                <span class="option-label">I'm curious but haven't really started</span>
-                <span class="option-pct">6%</span>
-            </div>
-        </div>
-    </div>
+  <!-- 05 VOICES -->
+  <section class="fade">
+    <div class="section-title">What Would You Build or Learn?</div>
+    <div class="voice-list" id="voices"></div>
+  </section>
 
-    <div class="section-divider"></div>
+  <footer>
+    INSEAD AI Club 26D &middot; Fontainebleau &amp; Singapore &middot; March 2026
+  </footer>
 
-    <!-- Q3: WHAT WOULD YOU BUILD -->
-    <div class="form-section">
-        <h2>3. What would you build or learn to do with AI if you had help?</h2>
-        <p class="hint">Selected responses - 20 of you wrote something</p>
-        <div class="options">
-            <div class="option-card">
-                <span class="option-label" style="font-style: italic; color: var(--gray-light);">"Create a framework and system to automate everything mundane using AI"</span>
-            </div>
-            <div class="option-card">
-                <span class="option-label" style="font-style: italic; color: var(--gray-light);">"Setting up agents, fine tuning models or working with models directly. Containers / coding. Also security!"</span>
-            </div>
-            <div class="option-card">
-                <span class="option-label" style="font-style: italic; color: var(--gray-light);">"A personalised app tracking health metrics (eating habits, exercise, weight), and offering French lessons, daily newsletters... the 'everything' app"</span>
-            </div>
-            <div class="option-card">
-                <span class="option-label" style="font-style: italic; color: var(--gray-light);">"I would love a workshop to build my first agent"</span>
-            </div>
-            <div class="option-card">
-                <span class="option-label" style="font-style: italic; color: var(--gray-light);">"Automate an air traffic control company with AI"</span>
-            </div>
-            <div class="option-card">
-                <span class="option-label" style="font-style: italic; color: var(--gray-light);">"Skillset to build for PM roles in the new era"</span>
-            </div>
-            <div class="option-card">
-                <span class="option-label" style="font-style: italic; color: var(--gray-light);">"Efficiently streamline my workflow. Experiment with vibe coding projects."</span>
-            </div>
-            <div class="option-card">
-                <span class="option-label" style="font-style: italic; color: var(--gray-light);">"Casing prep tool"</span>
-            </div>
-            <div class="option-card">
-                <span class="option-label" style="font-style: italic; color: var(--gray-light);">"Get better at prompting; talk with people about their different setups (how they set up Claude, etc.)"</span>
-            </div>
-            <div class="option-card">
-                <span class="option-label" style="font-style: italic; color: var(--gray-light);">"Help with networking, looking for internships, and long term roles"</span>
-            </div>
-        </div>
-    </div>
-
-    <div class="section-divider"></div>
-
-    <!-- Q4: WOULD YOU LEAD -->
-    <div class="form-section">
-        <h2>4. Would you lead or co-lead a session on something you know?</h2>
-        <p class="hint">Building a team, not a one-person show</p>
-        <div class="options">
-            <div class="option-card">
-                <div class="option-indicator"></div>
-                <span class="option-label">Yes - I have something specific in mind</span>
-                <span class="option-pct">8%</span>
-            </div>
-            <div class="option-card selected">
-                <div class="option-indicator"></div>
-                <span class="option-label">Maybe - depends on the topic and format</span>
-                <span class="option-pct">46%</span>
-            </div>
-            <div class="option-card selected">
-                <div class="option-indicator"></div>
-                <span class="option-label">No - I'm here to learn</span>
-                <span class="option-pct">46%</span>
-            </div>
-        </div>
-    </div>
-
-    <div class="footer">INSEAD AI Club 26D &middot; <a href="index.html">Take the poll</a></div>
 </div>
+
+<script>
+// ================================================================
+// DATA
+// ================================================================
+const raw = [
+  {ts:"2026-03-18T16:00:23.148Z",name:"Freddie Chambers",email:"freddie.chambers@insead.edu",q1:"1: build-sessions, 2: speakers, 3: treks",q2:"curious",q3:"hello",q4:"yes-specific"},
+  {ts:"2026-03-18T16:08:12.699Z",name:"Felix Schinkovits",email:"felix.schinkovits@insead.edu",q1:"1: build-sessions, 2: speakers, 3: deep-dives",q2:"ai-first",q3:"Get better at prompting; Talk with people about their different setups (how they set up Claude, clawdbot, etc.)",q4:"maybe"},
+  {ts:"2026-03-18T16:27:23.499Z",name:"",email:"",q1:"1: build-sessions, 2: demos, 3: upskilling",q2:"builder",q3:"would love to take better notes!",q4:"maybe"},
+  {ts:"2026-03-18T16:29:33.713Z",name:"",email:"",q1:"1: build-sessions, 2: hackathon, 3: demos",q2:"customised",q3:"Setting up agents, fine tuning models or working with models directly. Containers / coding. Also security!",q4:"no-learn"},
+  {ts:"2026-03-18T16:35:05.022Z",name:"",email:"",q1:"1: treks, 2: deep-dives, 3: staying-current",q2:"prompting",q3:"Build agents, be up to date",q4:"maybe"},
+  {ts:"2026-03-18T16:38:46.142Z",name:"Isabella Isotta",email:"isabella.isotta@insead.edu",q1:"1: build-sessions, 2: treks, 3: deep-dives",q2:"builder",q3:"",q4:"maybe"},
+  {ts:"2026-03-18T16:49:06.410Z",name:"",email:"",q1:"1: speakers, 2: treks, 3: deep-dives",q2:"ai-first",q3:"",q4:"maybe"},
+  {ts:"2026-03-18T16:57:18.715Z",name:"Vivek Jain",email:"vivek.jain@insead.edu",q1:"1: build-sessions, 2: demos, 3: staying-current",q2:"prompting",q3:"Create a framework and system to automate everything mundane using ai",q4:"no-learn"},
+  {ts:"2026-03-18T17:44:57.668Z",name:"",email:"",q1:"1: build-sessions, 2: upskilling, 3: treks",q2:"ai-first",q3:"",q4:"no-learn"},
+  {ts:"2026-03-18T18:35:14.127Z",name:"",email:"",q1:"1: speakers, 2: demos, 3: upskilling",q2:"prompting",q3:"",q4:"maybe"},
+  {ts:"2026-03-19T01:58:54.209Z",name:"Sashin Pillay",email:"sashin.pillay@insead.edu",q1:"1: speakers, 2: demos, 3: upskilling",q2:"ai-first",q3:"",q4:"maybe"},
+  {ts:"2026-03-19T06:00:39.314Z",name:"",email:"",q1:"1: build-sessions",q2:"curious",q3:"Testing one two",q4:"maybe"},
+  {ts:"2026-03-19T06:25:22.757Z",name:"",email:"",q1:"1: build-sessions",q2:"prompting",q3:"",q4:"maybe"},
+  {ts:"2026-03-19T06:45:17.300Z",name:"",email:"",q1:"1: build-sessions, 2: treks, 3: upskilling",q2:"prompting",q3:"",q4:"no-learn"},
+  {ts:"2026-03-19T07:19:50.518Z",name:"",email:"",q1:"1: hackathon, 2: build-sessions, 3: speakers",q2:"ai-first",q3:"Look after my children.",q4:"no-learn"},
+  {ts:"2026-03-19T07:24:55.250Z",name:"",email:"",q1:"1: upskilling, 2: speakers, 3: staying-current",q2:"prompting",q3:"A personalised app tracking health metrics (eating habits, exercise distances, weight etc), and offering French lessons, daily newsletters etc... the 'everything' app",q4:"no-learn"},
+  {ts:"2026-03-19T07:45:15.973Z",name:"",email:"",q1:"1: treks, 2: build-sessions, 3: deep-dives",q2:"ai-first",q3:"",q4:"maybe"},
+  {ts:"2026-03-19T07:46:24.328Z",name:"Felix Grignon",email:"felix.grignon@insead.edu",q1:"1: upskilling, 2: build-sessions, 3: speakers",q2:"customised",q3:"",q4:"no-learn"},
+  {ts:"2026-03-19T08:08:24.465Z",name:"Rami Baassiri",email:"rami.baassiri@insead.edu",q1:"1: demos, 2: build-sessions, 3: hackathon",q2:"customised",q3:"",q4:"no-learn"},
+  {ts:"2026-03-19T09:04:32.380Z",name:"Alec Cutler",email:"alec.cutler@insead.edu",q1:"1: build-sessions, 2: upskilling, 3: treks",q2:"ai-first",q3:"",q4:"no-learn"},
+  {ts:"2026-03-19T09:18:28.093Z",name:"Jay Chopra",email:"jay.chopra@insead.edu",q1:"1: build-sessions, 2: treks, 3: hackathon",q2:"ai-first",q3:"I would like to learn more about others set ups and help setting up my own. I'd like opportunities to find ISPs or projects with companies",q4:"maybe"},
+  {ts:"2026-03-19T09:22:08.231Z",name:"Ariel Abraham",email:"ariel.abraham@insead.edu",q1:"1: build-sessions, 2: staying-current, 3: upskilling",q2:"prompting",q3:"help with networking, looking for internships, and long term roles",q4:"yes-specific"},
+  {ts:"2026-03-19T09:22:42.579Z",name:"",email:"",q1:"1: speakers, 2: staying-current, 3: upskilling",q2:"prompting",q3:"Automate a task",q4:"no-learn"},
+  {ts:"2026-03-19T09:37:10.487Z",name:"Everett Cedarholm",email:"everett.cedarholm@gmail.com",q1:"1: build-sessions, 2: treks",q2:"builder",q3:"",q4:"maybe"},
+  {ts:"2026-03-19T09:43:09.772Z",name:"Carlo Babini",email:"carlo.babini@insead.edu",q1:"1: speakers, 2: staying-current, 3: upskilling",q2:"ai-first",q3:"Automate an air traffic control company with AI.",q4:"maybe"},
+  {ts:"2026-03-19T09:43:46.327Z",name:"Vinayak Kalra",email:"vinayak.kalra@insead.edu",q1:"1: build-sessions, 2: upskilling, 3: staying-current",q2:"curious",q3:"",q4:"no-learn"},
+  {ts:"2026-03-19T09:56:13.194Z",name:"Miguel Santoselizalde",email:"miguel.santoselizalde@insead.edu",q1:"1: build-sessions, 2: treks, 3: deep-dives",q2:"customised",q3:"",q4:"maybe"},
+  {ts:"2026-03-19T10:25:56.655Z",name:"Tom Rees",email:"tom.rees@insead.edu",q1:"1: build-sessions, 2: deep-dives, 3: upskilling",q2:"builder",q3:"",q4:"maybe"},
+  {ts:"2026-03-19T12:26:50.576Z",name:"Junki Shin",email:"junki.shin@insead.edu",q1:"1: build-sessions, 2: treks, 3: staying-current",q2:"ai-first",q3:"",q4:"no-learn"},
+  {ts:"2026-03-19T13:35:26.594Z",name:"Gonzalo Salazar",email:"gonzalo.salazar@insead.edu",q1:"1: build-sessions, 2: upskilling, 3: staying-current",q2:"ai-first",q3:"",q4:"no-learn"},
+  {ts:"2026-03-19T16:38:35.470Z",name:"",email:"",q1:"1: treks, 2: speakers, 3: demos",q2:"prompting",q3:"",q4:"no-learn"},
+  {ts:"2026-03-19T21:15:47.822Z",name:"Nadir Omar",email:"nadir.omar@insead.edu",q1:"1: build-sessions, 2: staying-current, 3: upskilling",q2:"ai-first",q3:"",q4:"no-learn"},
+  {ts:"2026-03-20T01:43:35.892Z",name:"",email:"",q1:"1: speakers, 2: build-sessions, 3: deep-dives",q2:"customised",q3:"",q4:"maybe"},
+  {ts:"2026-03-20T06:55:24.648Z",name:"",email:"",q1:"1: build-sessions, 2: deep-dives",q2:"prompting",q3:"",q4:"no-learn"},
+  {ts:"2026-03-20T06:56:42.811Z",name:"",email:"",q1:"1: staying-current, 2: upskilling",q2:"prompting",q3:"",q4:"no-learn"},
+  {ts:"2026-03-20T06:57:11.488Z",name:"",email:"",q1:"1: build-sessions, 2: treks, 3: hackathon",q2:"builder",q3:"Casing prep tool",q4:"yes-specific"},
+  {ts:"2026-03-20T06:57:43.018Z",name:"Nicholas Ratinaud",email:"nicholas.ratinaud@insead.edu",q1:"1: upskilling, 2: build-sessions, 3: treks",q2:"prompting",q3:"Efficiently streamline my workflow. Experiment with vibe coding projects.",q4:"maybe"},
+  {ts:"2026-03-20T07:13:12.919Z",name:"",email:"",q1:"1: build-sessions, 2: treks, 3: hackathon",q2:"builder",q3:"Skillset to build for PM roles in the new era",q4:"maybe"},
+  {ts:"2026-03-20T07:14:54.852Z",name:"Madeleine",email:"madeleine",q1:"1: upskilling, 2: build-sessions, 3: treks",q2:"ai-first",q3:"",q4:"no-learn"},
+  {ts:"2026-03-20T07:16:27.167Z",name:"",email:"",q1:"1: build-sessions, 2: hackathon, 3: treks",q2:"customised",q3:"",q4:"yes-specific"},
+  {ts:"2026-03-20T07:29:47.341Z",name:"",email:"",q1:"1: staying-current, 2: upskilling, 3: deep-dives",q2:"prompting",q3:"Learn how to automate work-related activities. Also, on a personal level, on how to operate in the stock market and make more money!",q4:"no-learn"},
+  {ts:"2026-03-20T07:34:53.142Z",name:"L",email:"l",q1:"1: speakers, 2: treks, 3: upskilling",q2:"ai-first",q3:"Try to automate my daily tasks as much as possible",q4:"maybe"},
+  {ts:"2026-03-20T08:03:11.977Z",name:"Lillian Guan",email:"lillian.guan@insead.edu",q1:"1: speakers, 2: treks, 3: staying-current",q2:"ai-first",q3:"Prepare for the interview",q4:"maybe"},
+  {ts:"2026-03-20T08:13:12.702Z",name:"Mikel Uribe",email:"mikel.uribe@insead.edu",q1:"1: build-sessions, 2: deep-dives, 3: upskilling",q2:"prompting",q3:"I would love a workshop to build my first agent",q4:"maybe"},
+  {ts:"2026-03-20T09:11:59.128Z",name:"",email:"",q1:"1: treks, 2: hackathon, 3: upskilling",q2:"prompting",q3:"",q4:"maybe"},
+  {ts:"2026-03-20T10:52:42.103Z",name:"",email:"",q1:"1: treks, 2: hackathon, 3: staying-current",q2:"ai-first",q3:"",q4:"no-learn"},
+  {ts:"2026-03-20T11:02:53.152Z",name:"Chetanand Ramakrishnan",email:"chetanand.ramakrishnan@insead.edu",q1:"1: build-sessions, 2: deep-dives, 3: upskilling",q2:"prompting",q3:"",q4:"no-learn"},
+  {ts:"2026-03-20T13:24:59.710Z",name:"Arnav Walecha",email:"arnav.walecha@insead.edu",q1:"1: build-sessions, 2: staying-current, 3: upskilling",q2:"ai-first",q3:"",q4:"no-learn"},
+];
+
+const TOTAL = raw.length;
+const pct = n => Math.round((n / TOTAL) * 100) + '%';
+
+// ================================================================
+// STAGES
+// ================================================================
+const STAGES = [
+  { key:'curious', name:'Curious', desc:'Haven\'t really started yet', state:'dim' },
+  { key:'prompting', name:'Prompting', desc:'Use ChatGPT / Claude regularly', state:'active' },
+  { key:'ai-first', name:'AI-First', desc:'AI does the first pass, I review', state:'peak' },
+  { key:'customised', name:'Customised', desc:'Different tools for different jobs', state:'beyond' },
+  { key:'builder', name:'Builder', desc:'Build automations, agents, or code', state:'beyond' },
+];
+
+const STAGE_MAP = {};
+STAGES.forEach(s => { s.count = 0; STAGE_MAP[s.key] = s; });
+raw.forEach(r => { if (STAGE_MAP[r.q2]) STAGE_MAP[r.q2].count++; });
+
+// Render levels
+const levelsEl = document.getElementById('levels');
+STAGES.forEach(s => {
+  const p = Math.round((s.count / TOTAL) * 100);
+  levelsEl.innerHTML += `
+    <div class="level-row ${s.state}">
+      <div class="level-name">${s.name}</div>
+      <div class="level-desc">${s.desc}</div>
+      <div class="level-pct">${p}%</div>
+    </div>`;
+});
+
+// Split stats
+const below = STAGES.filter(s => ['curious','prompting','ai-first'].includes(s.key)).reduce((a,s) => a + s.count, 0);
+const above = STAGES.filter(s => ['customised','builder'].includes(s.key)).reduce((a,s) => a + s.count, 0);
+document.getElementById('s-below').textContent = pct(below);
+document.getElementById('s-above').textContent = pct(above);
+
+// ================================================================
+// ACTIVITIES
+// ================================================================
+const ACTIVITIES = ['build-sessions','speakers','treks','upskilling','demos','deep-dives','staying-current','hackathon'];
+const ACT_LABELS = {
+  'build-sessions':'Build Sessions','speakers':'Speakers','treks':'Company Treks',
+  'upskilling':'Upskilling','demos':'Tool Demos','deep-dives':'Deep Dives',
+  'staying-current':'Staying Current','hackathon':'Hackathon'
+};
+
+function parseQ1(q) {
+  const r = {};
+  q.split(',').map(s=>s.trim()).forEach(p => { const m = p.match(/(\d):\s*(.+)/); if(m) r[parseInt(m[1])]=m[2].trim(); });
+  return r;
+}
+
+// Weighted score: 1st=3pts, 2nd=2pts, 3rd=1pt
+const actScores = {};
+ACTIVITIES.forEach(a => actScores[a] = 0);
+raw.forEach(r => {
+  const ranks = parseQ1(r.q1);
+  Object.entries(ranks).forEach(([rank, act]) => {
+    const pts = rank == 1 ? 3 : rank == 2 ? 2 : 1;
+    if (actScores[act] !== undefined) actScores[act] += pts;
+  });
+});
+
+const sortedActs = ACTIVITIES.slice().sort((a,b) => actScores[b] - actScores[a]);
+const maxScore = actScores[sortedActs[0]];
+
+const actEl = document.getElementById('activities');
+sortedActs.forEach((act, i) => {
+  const w = (actScores[act] / maxScore) * 100;
+  actEl.innerHTML += `
+    <div class="bar-row ${i === 0 ? 'top' : ''}">
+      <div class="bar-label">${ACT_LABELS[act]}</div>
+      <div class="bar-track"><div class="bar-fill" style="width:${w}%"></div></div>
+      <div class="bar-pct">${Math.round(w)}%</div>
+    </div>`;
+});
+
+// ================================================================
+// CROSS-ANALYSIS
+// ================================================================
+const crossEl = document.getElementById('cross-levels');
+STAGES.forEach(stage => {
+  if (!stage.count) return;
+  const people = raw.filter(r => r.q2 === stage.key);
+  const scores = {};
+  ACTIVITIES.forEach(a => scores[a] = 0);
+  people.forEach(p => {
+    const ranks = parseQ1(p.q1);
+    Object.entries(ranks).forEach(([rank, act]) => {
+      const pts = rank == 1 ? 3 : rank == 2 ? 2 : 1;
+      if (scores[act] !== undefined) scores[act] += pts;
+    });
+  });
+  const sorted = ACTIVITIES.slice().sort((a,b) => scores[b] - scores[a]).filter(a => scores[a] > 0);
+  const top3 = sorted.slice(0, 3);
+  const tagsHTML = top3.map((a, i) =>
+    `<span class="cross-tag ${i === 0 ? 'top' : ''}">${ACT_LABELS[a]}</span>`
+  ).join('');
+
+  const nameColor = stage.state === 'peak' ? 'color:var(--red)' :
+                     stage.state === 'beyond' ? 'color:var(--white)' :
+                     stage.state === 'active' ? 'color:var(--gray-light)' : 'color:var(--gray)';
+
+  crossEl.innerHTML += `
+    <div class="cross-row">
+      <div class="cross-label" style="${nameColor}">${stage.name}</div>
+      <div class="cross-tags">${tagsHTML}</div>
+    </div>`;
+});
+
+// ================================================================
+// LEADERSHIP
+// ================================================================
+const leadCounts = {'yes-specific':0,'maybe':0,'no-learn':0};
+raw.forEach(r => { if (leadCounts[r.q4] !== undefined) leadCounts[r.q4]++; });
+
+const LEAD_META = {
+  'yes-specific': { label:'Yes - have a specific idea', color:'#22c55e' },
+  'maybe': { label:'Open to it', color:'#f59e0b' },
+  'no-learn': { label:'Here to learn', color:'var(--gray)' },
+};
+
+const leadRowsEl = document.getElementById('lead-rows');
+Object.entries(leadCounts).forEach(([k,v]) => {
+  const p = Math.round((v / TOTAL) * 100);
+  leadRowsEl.innerHTML += `
+    <div class="lead-item">
+      <div class="lead-header">
+        <div class="lead-dot" style="background:${LEAD_META[k].color}"></div>
+        <div class="lead-label">${LEAD_META[k].label}</div>
+        <div class="lead-pct" style="color:${LEAD_META[k].color}">${p}%</div>
+      </div>
+      <div class="lead-bar"><div class="lead-bar-fill" style="width:${p}%;background:${LEAD_META[k].color}"></div></div>
+    </div>`;
+});
+
+// ================================================================
+// VOICES (anonymised - no names)
+// ================================================================
+const voicesEl = document.getElementById('voices');
+raw.filter(r => r.q3 && r.q3.length > 15 && !['hello','Testing one two'].includes(r.q3))
+  .sort((a,b) => b.q3.length - a.q3.length)
+  .forEach(r => {
+    const s = STAGE_MAP[r.q2];
+    const tagColor = s.state === 'peak' ? 'background:rgba(239,68,68,0.15);color:var(--red)' :
+                     s.state === 'beyond' ? 'background:var(--gray-dark);color:var(--white)' :
+                     'background:var(--gray-dark);color:var(--gray-light)';
+    voicesEl.innerHTML += `
+      <div class="voice-item">
+        <div class="voice-text">"${r.q3}"</div>
+        <span class="voice-tag" style="${tagColor}">${s.name}</span>
+      </div>`;
+  });
+
+// ================================================================
+// FADE IN
+// ================================================================
+const obs = new IntersectionObserver(es => {
+  es.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade').forEach(el => obs.observe(el));
+document.querySelector('.hero').classList.add('in');
+</script>
 
 </body>
 </html>
