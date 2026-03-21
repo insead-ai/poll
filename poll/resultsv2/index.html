@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>INSEAD AI Club 26D - Poll Results v2</title>
+    <meta name="description" content="48 responses. Here's what you told us.">
+    <meta property="og:title" content="INSEAD AI Club 26D - Poll Results v2">
+    <meta property="og:description" content="48 responses. Here's what you told us.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --black: #09090b;
+            --white: #fafafa;
+            --gray: #71717a;
+            --gray-light: #a1a1aa;
+            --gray-dark: #27272a;
+            --gray-darker: #18181b;
+            --red: #ef4444;
+            --red-dim: rgba(239, 68, 68, 0.15);
+            --green: #22c55e;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', -apple-system, system-ui, sans-serif;
+            background: var(--black);
+            color: var(--white);
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            min-height: 100dvh;
+            padding-bottom: env(safe-area-inset-bottom, 0);
+        }
+
+        .container {
+            max-width: 640px;
+            margin: 0 auto;
+            padding: 0 clamp(1.25rem, 5vw, 2rem);
+        }
+
+        /* ---- HEADER ---- */
+        .header {
+            padding: 2rem 0 1.25rem;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: clamp(1.5rem, 5vw, 2rem);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+        }
+
+        .header h1 span { color: var(--red); }
+
+        .header p {
+            color: var(--gray-light);
+            font-size: 0.95rem;
+            line-height: 1.5;
+            max-width: 480px;
+            margin: 0 auto;
+        }
+
+        /* ---- PROGRESS ---- */
+        .progress-bar {
+            width: 100%;
+            height: 3px;
+            background: var(--gray-dark);
+            border-radius: 2px;
+            margin: 1.25rem 0 1.75rem;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--red);
+            border-radius: 2px;
+            transition: width 0.4s ease;
+            width: 100%;
+        }
+
+        /* ---- FORM SECTIONS ---- */
+        .form-section {
+            margin-bottom: 2.25rem;
+        }
+
+        .form-section h2 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+            letter-spacing: -0.02em;
+        }
+
+        .form-section .hint {
+            color: var(--gray);
+            font-size: 0.8rem;
+            margin-bottom: 0.85rem;
+        }
+
+        /* ---- TEXT INPUTS ---- */
+        .input-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .input-full {
+            margin-bottom: 0.5rem;
+        }
+
+        input[type="text"], input[type="email"], textarea {
+            width: 100%;
+            padding: 0.85rem 1rem;
+            background: var(--gray-darker);
+            border: 1px solid var(--gray-dark);
+            border-radius: 10px;
+            color: var(--white);
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.2s;
+            -webkit-appearance: none;
+        }
+
+        input[type="text"]:focus, input[type="email"]:focus, textarea:focus {
+            border-color: var(--red);
+        }
+
+        input[type="text"]::placeholder, input[type="email"]::placeholder, textarea::placeholder {
+            color: var(--gray);
+        }
+
+        textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        /* ---- OPTION CARDS ---- */
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .option-card {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.9rem 1rem;
+            min-height: 52px;
+            background: var(--gray-darker);
+            border: 1px solid var(--gray-dark);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+            touch-action: manipulation;
+        }
+
+        .option-card:active {
+            transform: scale(0.98);
+        }
+
+        .option-card.selected {
+            border-color: var(--red);
+            background: var(--red-dim);
+        }
+
+        .option-card.maxed {
+            opacity: 0.35;
+            cursor: not-allowed;
+        }
+
+        /* ---- RANK BADGE (Q1) ---- */
+        .rank-badge {
+            width: 28px;
+            height: 28px;
+            min-width: 28px;
+            border-radius: 50%;
+            border: 2px solid var(--gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--gray);
+            transition: all 0.15s ease;
+        }
+
+        .option-card.selected .rank-badge {
+            border-color: var(--red);
+            background: var(--red);
+            color: var(--white);
+        }
+
+        /* ---- RADIO INDICATOR ---- */
+        .option-indicator {
+            width: 22px;
+            height: 22px;
+            min-width: 22px;
+            border-radius: 50%;
+            border: 2px solid var(--gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.15s ease;
+        }
+
+        .option-card.selected .option-indicator {
+            border-color: var(--red);
+            background: var(--red);
+        }
+
+        .option-indicator::after {
+            content: '';
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--white);
+            opacity: 0;
+            transition: opacity 0.15s ease;
+        }
+
+        .option-card.selected .option-indicator::after {
+            opacity: 1;
+        }
+
+        .option-label {
+            font-size: 0.9rem;
+            line-height: 1.35;
+            color: var(--white);
+        }
+
+        /* ---- Q1 RANK HINT ---- */
+        .rank-hint {
+            text-align: center;
+            color: var(--gray);
+            font-size: 0.75rem;
+            margin-top: 0.5rem;
+            transition: opacity 0.2s;
+        }
+
+        /* ---- DIVIDER ---- */
+        .section-divider {
+            height: 1px;
+            background: var(--gray-dark);
+            margin: 1rem 0 2rem;
+        }
+
+        /* ---- MAILING LIST SECTION ---- */
+        .mailing-section h2 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+            letter-spacing: -0.02em;
+        }
+
+        .mailing-section .hint {
+            color: var(--gray);
+            font-size: 0.8rem;
+            margin-bottom: 0.85rem;
+            line-height: 1.4;
+        }
+
+        /* ---- SUBMIT ---- */
+        .submit-btn {
+            display: block;
+            width: 100%;
+            padding: 1.1rem;
+            background: var(--red);
+            color: var(--white);
+            border: none;
+            border-radius: 12px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-bottom: 3rem;
+            letter-spacing: -0.01em;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+        }
+
+        .submit-btn:hover { opacity: 0.9; }
+        .submit-btn:active { transform: scale(0.98); }
+        .submit-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* ---- THANK YOU ---- */
+        .thank-you {
+            display: none;
+            text-align: center;
+            padding: 4rem 0;
+        }
+
+        .thank-you h2 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 0.75rem;
+            letter-spacing: -0.03em;
+        }
+
+        .thank-you p {
+            color: var(--gray-light);
+            font-size: 1rem;
+            line-height: 1.6;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .checkmark {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: var(--green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            animation: pop 0.3s ease;
+        }
+
+        .checkmark svg { width: 32px; height: 32px; }
+
+        @keyframes pop {
+            0% { transform: scale(0); }
+            70% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        /* ---- FOOTER ---- */
+        .footer {
+            text-align: center;
+            padding: 2rem 0 3rem;
+            color: var(--gray);
+            font-size: 0.75rem;
+        }
+
+        .footer a {
+            color: var(--red);
+            text-decoration: none;
+        }
+
+        /* ---- ERROR ---- */
+        .field-error {
+            color: var(--red);
+            font-size: 0.8rem;
+            margin-top: 0.35rem;
+            display: none;
+        }
+
+        .field-error.visible { display: block; }
+
+        .shake {
+            animation: shake 0.4s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-6px); }
+            75% { transform: translateX(6px); }
+        }
+
+        /* ---- RESULTS ONLY ---- */
+        .option-pct {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--gray-light);
+            margin-left: auto;
+        }
+
+        .option-card.selected .option-pct {
+            color: var(--white);
+        }
+
+        /* ---- MOBILE ---- */
+        @media (max-width: 480px) {
+            .option-card {
+                padding: 1rem;
+                min-height: 56px;
+            }
+            .option-label {
+                font-size: 0.88rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- HEADER -->
+    <div class="header">
+        <h1>INSEAD <span>AI Club</span> 26D</h1>
+        <p>48 of you responded in 48 hours. Here's what you told us.</p>
+    </div>
+
+    <!-- PROGRESS -->
+    <div class="progress-bar"><div class="progress-fill"></div></div>
+
+    <!-- Q1: WHAT DO YOU WANT - RANKED RESULTS -->
+    <div class="form-section">
+        <h2>1. What do you most want from the AI Club?</h2>
+        <p class="hint">Weighted score: 1st pick = 3 pts, 2nd = 2 pts, 3rd = 1 pt</p>
+        <div class="options">
+            <div class="option-card selected">
+                <div class="rank-badge">1</div>
+                <span class="option-label">Hands-on build sessions (bring your laptop, leave with something working)</span>
+                <span class="option-pct">95 pts</span>
+            </div>
+            <div class="option-card selected">
+                <div class="rank-badge">2</div>
+                <span class="option-label">Company treks (AI labs, startups, corporates using AI)</span>
+                <span class="option-pct">43 pts</span>
+            </div>
+            <div class="option-card selected">
+                <div class="rank-badge">3</div>
+                <span class="option-label">Practical upskilling - using AI tools to level up in your own role or domain</span>
+                <span class="option-pct">38 pts</span>
+            </div>
+            <div class="option-card">
+                <div class="rank-badge">4</div>
+                <span class="option-label">Expert speakers / fireside chats</span>
+                <span class="option-pct">34 pts</span>
+            </div>
+            <div class="option-card">
+                <div class="rank-badge">5</div>
+                <span class="option-label">Staying current on AI products, releases and industry developments</span>
+                <span class="option-pct">24 pts</span>
+            </div>
+            <div class="option-card">
+                <div class="rank-badge">6</div>
+                <span class="option-label">Technical deep dives (complex AI workflows, multi-agent systems, production tooling)</span>
+                <span class="option-pct">17 pts</span>
+            </div>
+            <div class="option-card">
+                <div class="rank-badge">7</div>
+                <span class="option-label">Hackathon / competitive team builds</span>
+                <span class="option-pct">15 pts</span>
+            </div>
+            <div class="option-card">
+                <div class="rank-badge">8</div>
+                <span class="option-label">Casual demos + networking (show what you've built)</span>
+                <span class="option-pct">13 pts</span>
+            </div>
+        </div>
+        <div class="rank-hint">Build sessions ran away with it - more than double second place</div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- Q2: PROFICIENCY -->
+    <div class="form-section">
+        <h2>2. Where are you right now with AI?</h2>
+        <p class="hint">Self-assessed across the club</p>
+        <div class="options">
+            <div class="option-card selected">
+                <div class="option-indicator"></div>
+                <span class="option-label">I go to AI first for most tasks - it does the first pass, I review and refine</span>
+                <span class="option-pct">35%</span>
+            </div>
+            <div class="option-card selected">
+                <div class="option-indicator"></div>
+                <span class="option-label">I prompt ChatGPT / Claude / Perplexity etc regularly</span>
+                <span class="option-pct">33%</span>
+            </div>
+            <div class="option-card">
+                <div class="option-indicator"></div>
+                <span class="option-label">I've customised my setup - different tools for different jobs, custom instructions, specific workflows</span>
+                <span class="option-pct">13%</span>
+            </div>
+            <div class="option-card">
+                <div class="option-indicator"></div>
+                <span class="option-label">I build with AI - automations, agents, or code</span>
+                <span class="option-pct">13%</span>
+            </div>
+            <div class="option-card">
+                <div class="option-indicator"></div>
+                <span class="option-label">I'm curious but haven't really started</span>
+                <span class="option-pct">6%</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- Q3: WHAT WOULD YOU BUILD -->
+    <div class="form-section">
+        <h2>3. What would you build or learn to do with AI if you had help?</h2>
+        <p class="hint">Selected responses - 20 of you wrote something</p>
+        <div class="options">
+            <div class="option-card">
+                <span class="option-label" style="font-style: italic; color: var(--gray-light);">"Create a framework and system to automate everything mundane using AI"</span>
+            </div>
+            <div class="option-card">
+                <span class="option-label" style="font-style: italic; color: var(--gray-light);">"Setting up agents, fine tuning models or working with models directly. Containers / coding. Also security!"</span>
+            </div>
+            <div class="option-card">
+                <span class="option-label" style="font-style: italic; color: var(--gray-light);">"A personalised app tracking health metrics (eating habits, exercise, weight), and offering French lessons, daily newsletters... the 'everything' app"</span>
+            </div>
+            <div class="option-card">
+                <span class="option-label" style="font-style: italic; color: var(--gray-light);">"I would love a workshop to build my first agent"</span>
+            </div>
+            <div class="option-card">
+                <span class="option-label" style="font-style: italic; color: var(--gray-light);">"Automate an air traffic control company with AI"</span>
+            </div>
+            <div class="option-card">
+                <span class="option-label" style="font-style: italic; color: var(--gray-light);">"Skillset to build for PM roles in the new era"</span>
+            </div>
+            <div class="option-card">
+                <span class="option-label" style="font-style: italic; color: var(--gray-light);">"Efficiently streamline my workflow. Experiment with vibe coding projects."</span>
+            </div>
+            <div class="option-card">
+                <span class="option-label" style="font-style: italic; color: var(--gray-light);">"Casing prep tool"</span>
+            </div>
+            <div class="option-card">
+                <span class="option-label" style="font-style: italic; color: var(--gray-light);">"Get better at prompting; talk with people about their different setups (how they set up Claude, etc.)"</span>
+            </div>
+            <div class="option-card">
+                <span class="option-label" style="font-style: italic; color: var(--gray-light);">"Help with networking, looking for internships, and long term roles"</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- Q4: WOULD YOU LEAD -->
+    <div class="form-section">
+        <h2>4. Would you lead or co-lead a session on something you know?</h2>
+        <p class="hint">Building a team, not a one-person show</p>
+        <div class="options">
+            <div class="option-card">
+                <div class="option-indicator"></div>
+                <span class="option-label">Yes - I have something specific in mind</span>
+                <span class="option-pct">8%</span>
+            </div>
+            <div class="option-card selected">
+                <div class="option-indicator"></div>
+                <span class="option-label">Maybe - depends on the topic and format</span>
+                <span class="option-pct">46%</span>
+            </div>
+            <div class="option-card selected">
+                <div class="option-indicator"></div>
+                <span class="option-label">No - I'm here to learn</span>
+                <span class="option-pct">46%</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">INSEAD AI Club 26D &middot; <a href="index.html">Take the poll</a></div>
+</div>
+
+</body>
+</html>
