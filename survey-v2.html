@@ -1,0 +1,2057 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>INSEAD AI Survey</title>
+    <meta name="description" content="Help shape how INSEAD supports AI for MBA students. Anonymous, ~8 minutes.">
+    <meta property="og:title" content="INSEAD AI Survey">
+    <meta property="og:description" content="Help shape how INSEAD supports AI for MBA students. Anonymous, ~8 minutes.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --black: #09090b;
+            --white: #fafafa;
+            --gray: #71717a;
+            --gray-light: #a1a1aa;
+            --gray-dark: #27272a;
+            --gray-darker: #18181b;
+            --red: #ef4444;
+            --red-dim: rgba(239, 68, 68, 0.15);
+            --green: #22c55e;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', -apple-system, system-ui, sans-serif;
+            background: var(--black);
+            color: var(--white);
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            min-height: 100dvh;
+            padding-bottom: env(safe-area-inset-bottom, 0);
+        }
+
+        .container {
+            max-width: 640px;
+            margin: 0 auto;
+            padding: 0 clamp(1.25rem, 5vw, 2rem);
+        }
+
+        /* ---- HEADER ---- */
+        .header {
+            padding: 2rem 0 1.25rem;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: clamp(1.5rem, 5vw, 2rem);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+        }
+
+        .header h1 span { color: var(--red); }
+
+        .header p {
+            color: var(--gray-light);
+            font-size: 0.95rem;
+            line-height: 1.5;
+            max-width: 480px;
+            margin: 0 auto;
+        }
+
+        /* ---- PROGRESS ---- */
+        .progress-bar {
+            width: 100%;
+            height: 3px;
+            background: var(--gray-dark);
+            border-radius: 2px;
+            margin: 0.75rem 0 0.5rem;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--red);
+            border-radius: 2px;
+            transition: width 0.4s ease;
+            width: 20%;
+        }
+
+        .page-indicator {
+            text-align: center;
+            color: var(--gray);
+            font-size: 0.75rem;
+            margin-bottom: 1.75rem;
+        }
+
+        /* ---- PAGES ---- */
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        .page-title {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+        }
+
+        /* ---- FORM SECTIONS ---- */
+        .form-section {
+            margin-bottom: 2.25rem;
+        }
+
+        .form-section h2 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+            letter-spacing: -0.02em;
+        }
+
+        .form-section .hint {
+            color: var(--gray);
+            font-size: 0.8rem;
+            margin-bottom: 0.85rem;
+            line-height: 1.4;
+        }
+
+        /* ---- TEXT INPUTS ---- */
+        .input-full {
+            margin-bottom: 0.5rem;
+        }
+
+        input[type="text"], input[type="email"], textarea {
+            width: 100%;
+            padding: 0.85rem 1rem;
+            background: var(--gray-darker);
+            border: 1px solid var(--gray-dark);
+            border-radius: 10px;
+            color: var(--white);
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.2s;
+            -webkit-appearance: none;
+        }
+
+        input[type="text"]:focus, input[type="email"]:focus, textarea:focus {
+            border-color: var(--red);
+        }
+
+        input[type="text"]::placeholder, input[type="email"]::placeholder, textarea::placeholder {
+            color: var(--gray);
+        }
+
+        textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        /* ---- OPTION CARDS ---- */
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .option-card {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.9rem 1rem;
+            min-height: 52px;
+            background: var(--gray-darker);
+            border: 1px solid var(--gray-dark);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+            touch-action: manipulation;
+        }
+
+        .option-card:active {
+            transform: scale(0.98);
+        }
+
+        .option-card.selected {
+            border-color: var(--red);
+            background: var(--red-dim);
+        }
+
+        .option-card.maxed {
+            opacity: 0.35;
+            cursor: not-allowed;
+        }
+
+        /* ---- COMPACT VARIANT ---- */
+        .options.compact {
+            gap: 0.35rem;
+        }
+
+        .options.compact .option-card {
+            padding: 0.65rem 0.85rem;
+            min-height: auto;
+        }
+
+        .options.compact .option-label {
+            font-size: 0.85rem;
+        }
+
+        /* ---- TWO-COLUMN COMPACT ---- */
+        @media (min-width: 500px) {
+            .options.compact-grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 0.35rem;
+            }
+        }
+
+        /* ---- RANK BADGE ---- */
+        .rank-badge {
+            width: 28px;
+            height: 28px;
+            min-width: 28px;
+            border-radius: 50%;
+            border: 2px solid var(--gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--gray);
+            transition: all 0.15s ease;
+        }
+
+        .option-card.selected .rank-badge {
+            border-color: var(--red);
+            background: var(--red);
+            color: var(--white);
+        }
+
+        /* ---- RADIO INDICATOR ---- */
+        .option-indicator {
+            width: 22px;
+            height: 22px;
+            min-width: 22px;
+            border-radius: 50%;
+            border: 2px solid var(--gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.15s ease;
+        }
+
+        .option-card.selected .option-indicator {
+            border-color: var(--red);
+            background: var(--red);
+        }
+
+        .option-indicator::after {
+            content: '';
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--white);
+            opacity: 0;
+            transition: opacity 0.15s ease;
+        }
+
+        .option-card.selected .option-indicator::after {
+            opacity: 1;
+        }
+
+        /* ---- CHECKBOX INDICATOR ---- */
+        .checkbox-indicator {
+            width: 22px;
+            height: 22px;
+            min-width: 22px;
+            border-radius: 3px;
+            border: 2px solid var(--gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.15s ease;
+        }
+
+        .option-card.selected .checkbox-indicator {
+            border-color: var(--red);
+            background: var(--red);
+        }
+
+        .checkbox-indicator::after {
+            content: '';
+            width: 12px;
+            height: 12px;
+            background: url("data:image/svg+xml,%3Csvg viewBox='0 0 12 12' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M2 6L5 9L10 3' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat;
+            opacity: 0;
+            transition: opacity 0.15s ease;
+        }
+
+        .option-card.selected .checkbox-indicator::after {
+            opacity: 1;
+        }
+
+        .option-label {
+            font-size: 0.9rem;
+            line-height: 1.35;
+            color: var(--white);
+        }
+
+        /* ---- RANK HINT ---- */
+        .rank-hint {
+            text-align: center;
+            color: var(--gray);
+            font-size: 0.75rem;
+            margin-top: 0.5rem;
+            transition: opacity 0.2s;
+        }
+
+        /* ---- PILL ROW ---- */
+        .pill-row {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .pill {
+            min-width: 48px;
+            padding: 0.6rem 1.2rem;
+            border-radius: 999px;
+            border: 1px solid var(--gray-dark);
+            background: var(--gray-darker);
+            text-align: center;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--white);
+            transition: all 0.15s ease;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+            touch-action: manipulation;
+        }
+
+        .pill:active {
+            transform: scale(0.96);
+        }
+
+        .pill.selected {
+            border-color: var(--red);
+            background: var(--red-dim);
+            color: var(--white);
+        }
+
+        .pill-section {
+            padding: 0.6rem 0.6rem;
+        }
+
+        /* ---- CATEGORY LABELS ---- */
+        .category-label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--gray);
+            margin-bottom: 0.5rem;
+        }
+
+        .category-label:not(:first-child) {
+            margin-top: 1.25rem;
+        }
+
+        /* ---- SCROLLABLE MATRIX ---- */
+        .matrix-wrapper {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scroll-snap-type: x mandatory;
+            margin: 0 -0.5rem;
+            padding: 0 0.5rem;
+        }
+
+        .matrix {
+            display: grid;
+            grid-template-columns: 130px repeat(5, 1fr);
+            min-width: 520px;
+            gap: 0;
+        }
+
+        .matrix-header {
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--gray);
+            text-align: center;
+            padding: 0.5rem 0.25rem;
+            line-height: 1.3;
+            position: sticky;
+            top: 0;
+            background: var(--black);
+        }
+
+        .matrix-header:first-child {
+            text-align: left;
+        }
+
+        .matrix-row-label {
+            font-size: 0.82rem;
+            color: var(--white);
+            padding: 0.6rem 0.5rem 0.6rem 0;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid var(--gray-dark);
+        }
+
+        .matrix-cell {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid var(--gray-dark);
+            scroll-snap-align: center;
+        }
+
+        .matrix-dot {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 2px solid var(--gray-dark);
+            cursor: pointer;
+            transition: all 0.15s ease;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+        }
+
+        .matrix-dot:active {
+            transform: scale(0.9);
+        }
+
+        .matrix-dot.selected {
+            border-color: var(--red);
+            background: var(--red);
+        }
+
+        .matrix-row-highlight {
+            background: var(--red-dim);
+        }
+
+        @media (min-width: 560px) {
+            .matrix {
+                min-width: unset;
+                grid-template-columns: 160px repeat(5, 1fr);
+            }
+        }
+
+        /* ---- LIKERT SCALE ---- */
+        .likert {
+            display: flex;
+            gap: 2px;
+        }
+
+        .likert-option {
+            flex: 1;
+            padding: 0.85rem 0.25rem;
+            text-align: center;
+            border: 1px solid var(--gray-dark);
+            background: var(--gray-darker);
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75rem;
+            line-height: 1.3;
+            color: var(--white);
+            transition: all 0.15s ease;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+            touch-action: manipulation;
+        }
+
+        .likert-option:first-child {
+            border-radius: 10px 0 0 10px;
+        }
+
+        .likert-option:last-child {
+            border-radius: 0 10px 10px 0;
+        }
+
+        .likert-option:active {
+            transform: scale(0.97);
+        }
+
+        .likert-option.selected {
+            background: var(--red);
+            border-color: var(--red);
+            color: var(--white);
+            font-weight: 600;
+        }
+
+        /* ---- CONDITIONAL REVEAL ---- */
+        .conditional-field {
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: max-height 0.3s ease, opacity 0.3s ease, margin 0.3s ease;
+        }
+
+        .conditional-field.visible {
+            max-height: 80px;
+            opacity: 1;
+            margin-top: 0.5rem;
+        }
+
+        /* ---- NAVIGATION ---- */
+        .nav-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 3rem;
+            gap: 1rem;
+        }
+
+        .back-link {
+            color: var(--gray-light);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 500;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem 0;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+            transition: color 0.15s;
+        }
+
+        .back-link:hover {
+            color: var(--white);
+        }
+
+        .back-link.hidden {
+            visibility: hidden;
+        }
+
+        .next-btn {
+            flex: 1;
+            max-width: 200px;
+            padding: 1.1rem;
+            background: var(--red);
+            color: var(--white);
+            border: none;
+            border-radius: 12px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            letter-spacing: -0.01em;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+        }
+
+        .next-btn:hover { opacity: 0.9; }
+        .next-btn:active { transform: scale(0.98); }
+        .next-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* ---- THANK YOU ---- */
+        .thank-you {
+            display: none;
+            text-align: center;
+            padding: 4rem 0;
+        }
+
+        .thank-you h2 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 0.75rem;
+            letter-spacing: -0.03em;
+        }
+
+        .thank-you p {
+            color: var(--gray-light);
+            font-size: 1rem;
+            line-height: 1.6;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .checkmark {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: var(--green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            animation: pop 0.3s ease;
+        }
+
+        .checkmark svg { width: 32px; height: 32px; }
+
+        @keyframes pop {
+            0% { transform: scale(0); }
+            70% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        /* ---- FOOTER ---- */
+        .footer {
+            text-align: center;
+            padding: 2rem 0 3rem;
+            color: var(--gray);
+            font-size: 0.75rem;
+        }
+
+        /* ---- ERROR ---- */
+        .field-error {
+            color: var(--red);
+            font-size: 0.8rem;
+            margin-top: 0.35rem;
+            display: none;
+        }
+
+        .field-error.visible { display: block; }
+
+        .shake {
+            animation: shake 0.4s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-6px); }
+            75% { transform: translateX(6px); }
+        }
+
+        /* ---- MOBILE ---- */
+        @media (max-width: 480px) {
+            .option-card {
+                padding: 1rem;
+                min-height: 56px;
+            }
+            .option-label {
+                font-size: 0.88rem;
+            }
+            .options.compact .option-card {
+                padding: 0.75rem 0.85rem;
+            }
+        }
+
+        /* ---- RATIONALE BLOCKS ---- */
+        details.rationale {
+            margin-top: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        details.rationale summary {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--gray);
+            cursor: pointer;
+            user-select: none;
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        details.rationale summary::-webkit-details-marker { display: none; }
+
+        details.rationale summary::before {
+            content: '\25B6';
+            font-size: 0.5rem;
+            transition: transform 0.2s ease;
+            display: inline-block;
+        }
+
+        details.rationale[open] summary::before {
+            transform: rotate(90deg);
+        }
+
+        details.rationale .rationale-content {
+            margin-top: 0.5rem;
+            padding: 0.75rem 1rem;
+            background: rgba(239, 68, 68, 0.05);
+            border-left: 2px solid var(--red);
+            border-radius: 0 6px 6px 0;
+            font-size: 0.78rem;
+            line-height: 1.55;
+            color: var(--gray-light);
+        }
+
+        details.rationale .rationale-content strong {
+            color: var(--white);
+            font-weight: 600;
+        }
+
+        details.rationale .rationale-content .cross-tab {
+            display: inline-block;
+            background: var(--gray-darker);
+            border: 1px solid var(--gray-dark);
+            border-radius: 4px;
+            padding: 0.1rem 0.4rem;
+            font-size: 0.7rem;
+            font-family: 'Inter', monospace;
+            color: var(--red);
+            margin: 0 0.1rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- PREVIEW BANNER -->
+    <div id="previewBanner" style="display:none; text-align:center; padding:0.6rem; margin-bottom:0.5rem; background:rgba(239,68,68,0.1); border:1px solid var(--red); border-radius:8px; font-size:0.75rem; color:var(--red); font-weight:600; letter-spacing:0.05em; text-transform:uppercase;">
+        Preview Mode - click through without answering
+    </div>
+
+    <!-- HEADER -->
+    <div class="header">
+        <h1>INSEAD <span>AI Survey</span></h1>
+        <p>Help shape how INSEAD supports AI for MBA students. Anonymous, ~8 minutes.</p>
+    </div>
+
+    <!-- PROGRESS -->
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="page-indicator" id="pageIndicator">1 of 5</div>
+
+    <!-- FORM -->
+    <div id="surveyForm">
+
+        <!-- ==================== PAGE 1: ABOUT YOU ==================== -->
+        <div class="page active" data-page="1">
+            <div class="page-title">About You</div>
+
+            <!-- Q1: Proficiency -->
+            <div class="form-section">
+                <h2>Which statement best describes how you currently use AI tools?</h2>
+                <p class="hint">No wrong answer - this helps us understand the cohort</p>
+                <div class="options" id="q1Options">
+                    <div class="option-card radio" data-value="rarely">
+                        <div class="option-indicator"></div>
+                        <span class="option-label">I rarely or never use AI tools</span>
+                    </div>
+                    <div class="option-card radio" data-value="tried">
+                        <div class="option-indicator"></div>
+                        <span class="option-label">I've tried them but don't use them regularly</span>
+                    </div>
+                    <div class="option-card radio" data-value="regular">
+                        <div class="option-indicator"></div>
+                        <span class="option-label">I use AI regularly for common tasks (drafting, summarising, research)</span>
+                    </div>
+                    <div class="option-card radio" data-value="ai-first">
+                        <div class="option-indicator"></div>
+                        <span class="option-label">I go to AI first for most tasks - it does the first pass, I review and refine</span>
+                    </div>
+                    <div class="option-card radio" data-value="customised">
+                        <div class="option-indicator"></div>
+                        <span class="option-label">I use different tools for different jobs and have my own setup</span>
+                    </div>
+                    <div class="option-card radio" data-value="builder">
+                        <div class="option-indicator"></div>
+                        <span class="option-label">I build things with AI - automations, agents, or code</span>
+                    </div>
+                </div>
+                <details class="rationale" open>
+                    <summary>Why this question</summary>
+                    <div class="rationale-content">
+                        <strong>Primary segmentation variable.</strong> Maps to the Multiverse AI maturity model (Literate &rarr; Productive &rarr; Automation &rarr; AI Native). Every other answer gets cross-tabbed against this. Thibault needs the distribution to pitch curriculum at the right level. Anonymous because named proficiency data invites self-inflation.
+                        <br><br><strong>Key cross-tabs:</strong> <span class="cross-tab">Q1 x Q2</span> self-reported vs actual frequency &middot; <span class="cross-tab">Q1 x Q4</span> background predicts proficiency? &middot; <span class="cross-tab">Q1 x Q9</span> tool preference by maturity
+                    </div>
+                </details>
+                <div class="field-error" id="q1Error">Please select one</div>
+            </div>
+
+            <!-- Q2: Frequency -->
+            <div class="form-section">
+                <h2>How often do you use AI tools for INSEAD-related work?</h2>
+                <div class="options" id="q2Options">
+                    <div class="option-card radio" data-value="never">
+                        <div class="option-indicator"></div>
+                        <span class="option-label">Never</span>
+                    </div>
+                    <div class="option-card radio" data-value="lt-weekly">
+                        <div class="option-indicator"></div>
+                        <span class="option-label">Less than once a week</span>
+                    </div>
+                    <div class="option-card radio" data-value="1-2-week">
+                        <div class="option-indicator"></div>
+                        <span class="option-label">1-2 times a week</span>
+                    </div>
+                    <div class="option-card radio" data-value="3-6-week">
+                        <div class="option-indicator"></div>
+                        <span class="option-label">3-6 times a week</span>
+                    </div>
+                    <div class="option-card radio" data-value="daily">
+                        <div class="option-indicator"></div>
+                        <span class="option-label">Daily</span>
+                    </div>
+                    <div class="option-card radio" data-value="multi-daily">
+                        <div class="option-indicator"></div>
+                        <span class="option-label">Multiple times a day</span>
+                    </div>
+                </div>
+                <details class="rationale" open>
+                    <summary>Why this question</summary>
+                    <div class="rationale-content">
+                        <strong>Frequency is harder to inflate than self-reported proficiency.</strong> Does someone who calls themselves "AI-first" actually use it daily, or weekly? Also directly relevant to tool provisioning - if 60% use AI daily, the ROI on institutional licences is clear.
+                        <br><br><strong>Key cross-tab:</strong> <span class="cross-tab">Q1 x Q2</span> accuracy of self-assessment
+                    </div>
+                </details>
+                <div class="field-error" id="q2Error">Please select one</div>
+            </div>
+
+            <!-- Q3: MBA Student -->
+            <div class="form-section">
+                <h2>Are you a current INSEAD MBA student?</h2>
+                <div class="pill-row" id="q3Options">
+                    <div class="pill" data-value="yes">Yes</div>
+                    <div class="pill" data-value="no">No</div>
+                </div>
+                <details class="rationale" open>
+                    <summary>Why this question</summary>
+                    <div class="rationale-content">
+                        <strong>Survey may reach non-MBA recipients</strong> (exchange students, staff, alumni via the WhatsApp link). No gate - everyone can complete it - but this field lets us filter to MBA-only for institutional decisions while keeping all data for broader analysis.
+                    </div>
+                </details>
+                <div class="field-error" id="q3Error">Please select one</div>
+            </div>
+
+            <!-- Q3b: Intake -->
+            <div class="form-section">
+                <h2>Intake</h2>
+                <div class="pill-row" id="q3bOptions">
+                    <div class="pill" data-value="26D">26D</div>
+                    <div class="pill" data-value="26J">26J</div>
+                </div>
+                <details class="rationale" open>
+                    <summary>Why this question</summary>
+                    <div class="rationale-content">
+                        <strong>26J students have had a full period of INSEAD.</strong> Comparing their AI usage patterns to fresh 26D students reveals whether INSEAD itself shifts AI behaviour - critical for curriculum timing decisions (should upskilling happen in P1 or P2?).
+                        <br><br><strong>Key cross-tab:</strong> <span class="cross-tab">Q3b x Q1</span> does a period at INSEAD move people up the maturity curve?
+                    </div>
+                </details>
+                <div class="field-error" id="q3bError">Please select one</div>
+            </div>
+
+            <!-- Q3c: Section -->
+            <div class="form-section">
+                <h2>Which section are you in?</h2>
+                <div class="pill-row" id="q3cOptions">
+                    <div class="pill pill-section" data-value="1">1</div>
+                    <div class="pill pill-section" data-value="2">2</div>
+                    <div class="pill pill-section" data-value="3">3</div>
+                    <div class="pill pill-section" data-value="4">4</div>
+                    <div class="pill pill-section" data-value="5">5</div>
+                    <div class="pill pill-section" data-value="6">6</div>
+                    <div class="pill pill-section" data-value="7">7</div>
+                    <div class="pill pill-section" data-value="8">8</div>
+                    <div class="pill pill-section" data-value="9">9</div>
+                </div>
+                <div class="field-error" id="q3cError">Please select one</div>
+            </div>
+
+            <!-- Q4: Background -->
+            <div class="form-section">
+                <h2>Background before INSEAD</h2>
+                <div class="options compact compact-grid" id="q4Options">
+                    <div class="option-card radio" data-value="consulting">
+                        <div class="option-indicator"></div>
+                        <span class="option-label">Consulting</span>
+                    </div>
+                    <div class="option-card radio" data-value="finance">
+                        <div class="option-indicator"></div>
+                        <span class="option-label">Finance / banking / investing</span>
+                    </div>
+                    <div class="option-card radio" data-value="tech">
+                        <div class="option-indicator"></div>
+                        <span class="option-label">Technology / product</span>
+                    </div>
+                    <div class="option-card radio" data-value="engineering">
+                        <div class="option-indicator"></div>
+                        <span class="option-label">Engineering / technical</span>
+                    </div>
+                    <div class="option-card radio" data-value="energy">
+                        <div class="option-indicator"></div>
+                        <span class="option-label">Energy / natural resources</span>
+                    </div>
+                    <div class="option-card radio" data-value="fmcg">
+                        <div class="option-indicator"></div>
+                        <span class="option-label">FMCG / consumer / retail</span>
+                    </div>
+                    <div class="option-card radio" data-value="marketing">
+                        <div class="option-indicator"></div>
+                        <span class="option-label">Marketing / sales / media</span>
+                    </div>
+                    <div class="option-card radio" data-value="healthcare">
+                        <div class="option-indicator"></div>
+                        <span class="option-label">Healthcare / pharma</span>
+                    </div>
+                    <div class="option-card radio" data-value="real-estate">
+                        <div class="option-indicator"></div>
+                        <span class="option-label">Real estate / construction</span>
+                    </div>
+                    <div class="option-card radio" data-value="legal">
+                        <div class="option-indicator"></div>
+                        <span class="option-label">Legal</span>
+                    </div>
+                    <div class="option-card radio" data-value="military">
+                        <div class="option-indicator"></div>
+                        <span class="option-label">Military / defence / gov</span>
+                    </div>
+                    <div class="option-card radio" data-value="ngo">
+                        <div class="option-indicator"></div>
+                        <span class="option-label">Non-profit / NGO / dev</span>
+                    </div>
+                    <div class="option-card radio" data-value="entrepreneurship">
+                        <div class="option-indicator"></div>
+                        <span class="option-label">Entrepreneurship / family biz</span>
+                    </div>
+                    <div class="option-card radio" data-value="supply-chain">
+                        <div class="option-indicator"></div>
+                        <span class="option-label">Supply chain / logistics</span>
+                    </div>
+                    <div class="option-card radio" data-value="education">
+                        <div class="option-indicator"></div>
+                        <span class="option-label">Education</span>
+                    </div>
+                    <div class="option-card radio" data-value="other">
+                        <div class="option-indicator"></div>
+                        <span class="option-label">Mixed / other</span>
+                    </div>
+                </div>
+                <details class="rationale" open>
+                    <summary>Why this question</summary>
+                    <div class="rationale-content">
+                        <strong>Professional background is the strongest proxy for baseline digital fluency.</strong> An ex-McKinsey consultant and an ex-engineer have different AI starting points. Industry list validated against the actual 26D CV book (100 students).
+                        <br><br><strong>Key cross-tab:</strong> <span class="cross-tab">Q4 x Q1</span> does background predict proficiency?
+                    </div>
+                </details>
+                <div class="field-error" id="q4Error">Please select one</div>
+            </div>
+
+            <!-- Nav -->
+            <div class="nav-row">
+                <button type="button" class="back-link hidden" id="backBtn" onclick="prevPage()">Back</button>
+                <button type="button" class="next-btn" id="nextBtn" onclick="nextPage()">Next</button>
+            </div>
+        </div>
+
+        <!-- ==================== PAGE 2: TOOLS ==================== -->
+        <div class="page" data-page="2">
+            <div class="page-title">Tools</div>
+
+            <!-- Q5: Tool awareness matrix -->
+            <div class="form-section">
+                <h2>For each tool, which best describes you?</h2>
+                <p class="hint">Scroll right on mobile to see all columns</p>
+                <div class="matrix-wrapper">
+                    <div class="matrix" id="q5Matrix">
+                        <!-- Header row -->
+                        <div class="matrix-header"></div>
+                        <div class="matrix-header">Never heard of it</div>
+                        <div class="matrix-header">Heard of it</div>
+                        <div class="matrix-header">Tried it</div>
+                        <div class="matrix-header">Use occasionally</div>
+                        <div class="matrix-header">Use regularly</div>
+                        <!-- Rows generated by JS -->
+                    </div>
+                </div>
+                <details class="rationale" open>
+                    <summary>Why this question</summary>
+                    <div class="rationale-content">
+                        <strong>The awareness-to-adoption funnel.</strong> "Heard of it" vs "Tried it" vs "Use regularly" tells Thibault where the drop-off is for each tool. If 90% have heard of Claude but only 5% use it regularly, that's an awareness problem, not a quality problem. Buckets (presentation, meeting notes, coding) capture tool categories without forcing brand recognition on niche tools.
+                    </div>
+                </details>
+                <div class="field-error" id="q5Error">Please rate at least one tool</div>
+            </div>
+
+            <!-- Q5a: Primary go-to -->
+            <div class="form-section">
+                <h2>Which AI tool is your primary go-to?</h2>
+                <div class="options" id="q5aOptions">
+                    <div class="option-card radio" data-value="chatgpt">
+                        <div class="option-indicator"></div>
+                        <span class="option-label">ChatGPT</span>
+                    </div>
+                    <div class="option-card radio" data-value="claude">
+                        <div class="option-indicator"></div>
+                        <span class="option-label">Claude</span>
+                    </div>
+                    <div class="option-card radio" data-value="perplexity">
+                        <div class="option-indicator"></div>
+                        <span class="option-label">Perplexity</span>
+                    </div>
+                    <div class="option-card radio" data-value="copilot-ms">
+                        <div class="option-indicator"></div>
+                        <span class="option-label">Microsoft Copilot</span>
+                    </div>
+                    <div class="option-card radio" data-value="copilot-gh">
+                        <div class="option-indicator"></div>
+                        <span class="option-label">GitHub Copilot</span>
+                    </div>
+                    <div class="option-card radio" data-value="gemini">
+                        <div class="option-indicator"></div>
+                        <span class="option-label">Gemini</span>
+                    </div>
+                    <div class="option-card radio" data-value="notebooklm">
+                        <div class="option-indicator"></div>
+                        <span class="option-label">NotebookLM</span>
+                    </div>
+                    <div class="option-card radio" data-value="other">
+                        <div class="option-indicator"></div>
+                        <span class="option-label">Other</span>
+                    </div>
+                    <div class="option-card radio" data-value="none">
+                        <div class="option-indicator"></div>
+                        <span class="option-label">I don't have a go-to</span>
+                    </div>
+                </div>
+                <div class="conditional-field" id="q5aOtherField">
+                    <input type="text" id="q5aOtherInput" placeholder="Which tool?">
+                </div>
+                <details class="rationale" open>
+                    <summary>Why this question</summary>
+                    <div class="rationale-content">
+                        <strong>Revealed preference</strong> - what people actually rely on day-to-day. If advanced users pick Claude but beginners pick ChatGPT, that shapes whether to provision one tool or tier it.
+                        <br><br><strong>Key cross-tab:</strong> <span class="cross-tab">Q5a x Q9</span> gap between what people use (revealed) vs what they'd want funded (aspirational)
+                    </div>
+                </details>
+                <div class="field-error" id="q5aError">Please select one</div>
+            </div>
+
+            <!-- Q5b: Note-taking -->
+            <div class="form-section">
+                <h2>What do you use for note-taking in class?</h2>
+                <p class="hint">Select all that apply</p>
+                <div class="options" id="q5bOptions">
+                    <div class="category-label">Handwriting</div>
+                    <div class="option-card checkbox" data-value="pen-paper">
+                        <div class="checkbox-indicator"></div>
+                        <span class="option-label">Pen and paper</span>
+                    </div>
+                    <div class="option-card checkbox" data-value="ipad">
+                        <div class="checkbox-indicator"></div>
+                        <span class="option-label">iPad + Apple Pencil (Notability, GoodNotes, etc.)</span>
+                    </div>
+                    <div class="option-card checkbox" data-value="eink">
+                        <div class="checkbox-indicator"></div>
+                        <span class="option-label">reMarkable / Supernote / e-ink tablet</span>
+                    </div>
+                    <div class="option-card checkbox" data-value="surface">
+                        <div class="checkbox-indicator"></div>
+                        <span class="option-label">Surface / Android tablet with stylus</span>
+                    </div>
+                    <div class="category-label">Typed notes</div>
+                    <div class="option-card checkbox" data-value="apple-notes">
+                        <div class="checkbox-indicator"></div>
+                        <span class="option-label">Apple Notes</span>
+                    </div>
+                    <div class="option-card checkbox" data-value="onenote">
+                        <div class="checkbox-indicator"></div>
+                        <span class="option-label">Microsoft OneNote</span>
+                    </div>
+                    <div class="option-card checkbox" data-value="gdocs">
+                        <div class="checkbox-indicator"></div>
+                        <span class="option-label">Google Docs</span>
+                    </div>
+                    <div class="option-card checkbox" data-value="notion">
+                        <div class="checkbox-indicator"></div>
+                        <span class="option-label">Notion</span>
+                    </div>
+                    <div class="option-card checkbox" data-value="obsidian">
+                        <div class="checkbox-indicator"></div>
+                        <span class="option-label">Obsidian</span>
+                    </div>
+                    <div class="option-card checkbox" data-value="word">
+                        <div class="checkbox-indicator"></div>
+                        <span class="option-label">Word / Pages</span>
+                    </div>
+                    <div class="category-label">Other</div>
+                    <div class="option-card checkbox" data-value="no-notes">
+                        <div class="checkbox-indicator"></div>
+                        <span class="option-label">I don't take notes in class</span>
+                    </div>
+                    <div class="option-card checkbox" data-value="other-notes">
+                        <div class="checkbox-indicator"></div>
+                        <span class="option-label">Other</span>
+                    </div>
+                </div>
+                <details class="rationale" open>
+                    <summary>Why this question</summary>
+                    <div class="rationale-content">
+                        <strong>Understanding note-taking tools maps to Thibault's learning quality research.</strong> The grouping (handwriting / typed) reveals whether students favour active capture or passive methods. Multi-select because people use multiple tools (e.g. reMarkable in class, Notion after). AI-powered capture tools (Otter, Granola etc.) are covered separately in the tool matrix (Q5).
+                    </div>
+                </details>
+                <div class="field-error" id="q5bError">Please select at least one</div>
+            </div>
+
+            <!-- Q6a: Awareness of free tools -->
+            <div class="form-section">
+                <h2>Which of the following do you know you can access for free as an INSEAD student?</h2>
+                <p class="hint">Select all that apply</p>
+                <div class="options" id="q6aOptions">
+                    <div class="option-card checkbox" data-value="perplexity">
+                        <div class="checkbox-indicator"></div>
+                        <span class="option-label">Perplexity Pro</span>
+                    </div>
+                    <div class="option-card checkbox" data-value="copilot-gh">
+                        <div class="checkbox-indicator"></div>
+                        <span class="option-label">GitHub Copilot</span>
+                    </div>
+                    <div class="option-card checkbox" data-value="copilot-ms">
+                        <div class="checkbox-indicator"></div>
+                        <span class="option-label">Microsoft Copilot</span>
+                    </div>
+                    <div class="option-card checkbox" data-value="figma">
+                        <div class="checkbox-indicator"></div>
+                        <span class="option-label">Figma (student licence)</span>
+                    </div>
+                    <div class="option-card checkbox" data-value="gemini">
+                        <div class="checkbox-indicator"></div>
+                        <span class="option-label">Gemini</span>
+                    </div>
+                    <div class="option-card checkbox" data-value="other-free">
+                        <div class="checkbox-indicator"></div>
+                        <span class="option-label">Other</span>
+                    </div>
+                    <div class="option-card checkbox" data-value="unaware">
+                        <div class="checkbox-indicator"></div>
+                        <span class="option-label">I'm not aware of any AI tools available through INSEAD</span>
+                    </div>
+                </div>
+                <details class="rationale" open>
+                    <summary>Why this question</summary>
+                    <div class="rationale-content">
+                        <strong>Separating awareness from activation is the single most actionable split.</strong> If 70% don't know Perplexity Pro is free, that's a comms fix, not a budget decision. This was identified as a critical gap missing from v1.
+                        <br><br><strong>Key cross-tab:</strong> <span class="cross-tab">Q6a x Q6b</span> the awareness &rarr; activation gap
+                    </div>
+                </details>
+                <div class="field-error" id="q6aError">Please select at least one</div>
+            </div>
+
+            <!-- Q6b: Activated -->
+            <div class="form-section">
+                <h2>Which of these have you actually activated and used?</h2>
+                <p class="hint">Optional</p>
+                <div class="options" id="q6bOptions">
+                    <div class="option-card checkbox" data-value="perplexity">
+                        <div class="checkbox-indicator"></div>
+                        <span class="option-label">Perplexity Pro</span>
+                    </div>
+                    <div class="option-card checkbox" data-value="copilot-gh">
+                        <div class="checkbox-indicator"></div>
+                        <span class="option-label">GitHub Copilot</span>
+                    </div>
+                    <div class="option-card checkbox" data-value="copilot-ms">
+                        <div class="checkbox-indicator"></div>
+                        <span class="option-label">Microsoft Copilot</span>
+                    </div>
+                    <div class="option-card checkbox" data-value="figma">
+                        <div class="checkbox-indicator"></div>
+                        <span class="option-label">Figma (student licence)</span>
+                    </div>
+                    <div class="option-card checkbox" data-value="gemini">
+                        <div class="checkbox-indicator"></div>
+                        <span class="option-label">Gemini</span>
+                    </div>
+                    <div class="option-card checkbox" data-value="other-free">
+                        <div class="checkbox-indicator"></div>
+                        <span class="option-label">Other</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nav -->
+            <div class="nav-row">
+                <button type="button" class="back-link" onclick="prevPage()">Back</button>
+                <button type="button" class="next-btn" onclick="nextPage()">Next</button>
+            </div>
+                <details class="rationale" open>
+                    <summary>Why this question</summary>
+                    <div class="rationale-content">
+                        <strong>The activation gap.</strong> If people know about a free tool but haven't activated it, the barrier is friction (too many steps, unclear how), not ignorance. Directly informs whether Thibault's team needs better onboarding vs better communications.
+                    </div>
+                </details>
+        </div>
+
+        <!-- ==================== PAGE 3: USAGE, BARRIERS, PREFERENCE ==================== -->
+        <div class="page" data-page="3">
+            <div class="page-title">Usage &amp; Barriers</div>
+
+
+
+            <!-- Q7b: In-class usage -->
+            <div class="form-section">
+                <h2>Do you use AI tools during class?</h2>
+                <div class="options" id="q7bOptions">
+                    <div class="option-card radio" data-value="never">
+                        <div class="option-indicator"></div>
+                        <span class="option-label">Never</span>
+                    </div>
+                    <div class="option-card radio" data-value="rarely">
+                        <div class="option-indicator"></div>
+                        <span class="option-label">Rarely - only for specific things (e.g. looking up a term)</span>
+                    </div>
+                    <div class="option-card radio" data-value="sometimes">
+                        <div class="option-indicator"></div>
+                        <span class="option-label">Sometimes - to follow along, summarise, or check understanding</span>
+                    </div>
+                    <div class="option-card radio" data-value="regularly">
+                        <div class="option-indicator"></div>
+                        <span class="option-label">Regularly - AI is open alongside my notes during most classes</span>
+                    </div>
+                    <div class="option-card radio" data-value="always">
+                        <div class="option-indicator"></div>
+                        <span class="option-label">Always - I rely on AI transcription or real-time assistance</span>
+                    </div>
+                </div>
+                <details class="rationale" open>
+                    <summary>Why this question</summary>
+                    <div class="rationale-content">
+                        <strong>Directly addresses Thibault's governance question.</strong> If 40% of the cohort uses AI during class and there's no policy on it, that's a finding for his presentation to senior leadership. Wording is deliberately neutral ("follow along", "check understanding") to avoid triggering academic integrity anxiety that would suppress honest answers.
+                    </div>
+                </details>
+                <div class="field-error" id="q7bError">Please select one</div>
+            </div>
+
+            <!-- Q8: Barriers - ranked top 3 -->
+            <div class="form-section">
+                <h2>What, if anything, most limits your use of AI tools?</h2>
+                <p class="hint">Tap your top 3 in order</p>
+                <div class="options" id="q8Options">
+                    <div class="option-card rank" data-value="tool-choice">
+                        <div class="rank-badge"></div>
+                        <span class="option-label">I'm not sure which tool to use for what</span>
+                    </div>
+                    <div class="option-card rank" data-value="skill">
+                        <div class="rank-badge"></div>
+                        <span class="option-label">I don't know how to get good results from AI</span>
+                    </div>
+                    <div class="option-card rank" data-value="trust">
+                        <div class="rank-badge"></div>
+                        <span class="option-label">I don't trust the outputs enough</span>
+                    </div>
+                    <div class="option-card rank" data-value="integrity">
+                        <div class="rank-badge"></div>
+                        <span class="option-label">I'm concerned about academic integrity</span>
+                    </div>
+                    <div class="option-card rank" data-value="privacy">
+                        <div class="rank-badge"></div>
+                        <span class="option-label">I'm concerned about privacy and confidentiality</span>
+                    </div>
+                    <div class="option-card rank" data-value="cost">
+                        <div class="rank-badge"></div>
+                        <span class="option-label">The tools I want are too expensive</span>
+                    </div>
+                    <div class="option-card rank" data-value="workflow">
+                        <div class="rank-badge"></div>
+                        <span class="option-label">I don't know how to incorporate it into my workflow</span>
+                    </div>
+                    <div class="option-card rank" data-value="not-useful">
+                        <div class="rank-badge"></div>
+                        <span class="option-label">I've tried it but didn't find it useful</span>
+                    </div>
+                    <div class="option-card rank" data-value="prefer-not">
+                        <div class="rank-badge"></div>
+                        <span class="option-label">I prefer not to rely on it</span>
+                    </div>
+                    <div class="option-card rank" data-value="nothing">
+                        <div class="rank-badge"></div>
+                        <span class="option-label">Nothing - I'm already using it as much as I want</span>
+                    </div>
+                </div>
+                <div class="rank-hint" id="q8RankHint">Tap your #1 choice first, then #2, then #3</div>
+                <details class="rationale" open>
+                    <summary>Why this question</summary>
+                    <div class="rationale-content">
+                        <strong>Probably the highest-value question for institutional decisions.</strong> Each barrier maps to a different intervention: "tool choice" &rarr; curriculum on tool selection; "skill" &rarr; prompting workshops; "cost" &rarr; provisioning; "integrity" &rarr; clearer policies; "privacy" &rarr; enterprise-grade tools with data guarantees.
+                        <br><br><strong>Key cross-tab:</strong> <span class="cross-tab">Q8 x Q1</span> do beginners and advanced users face different barriers?
+                    </div>
+                </details>
+                <div class="field-error" id="q8Error">Please select at least one</div>
+            </div>
+
+            <!-- Q9: Fund tool -->
+            <div class="form-section">
+                <h2>If INSEAD were to fund one additional AI tool for the MBA cohort, which would be most valuable to you?</h2>
+                <div class="options" id="q9Options">
+                    <div class="option-card radio" data-value="chatgpt-plus">
+                        <div class="option-indicator"></div>
+                        <span class="option-label">ChatGPT Plus</span>
+                    </div>
+                    <div class="option-card radio" data-value="claude-pro">
+                        <div class="option-indicator"></div>
+                        <span class="option-label">Claude Pro</span>
+                    </div>
+                    <div class="option-card radio" data-value="perplexity-pro">
+                        <div class="option-indicator"></div>
+                        <span class="option-label">Perplexity Pro</span>
+                    </div>
+                    <div class="option-card radio" data-value="copilot-gh">
+                        <div class="option-indicator"></div>
+                        <span class="option-label">GitHub Copilot</span>
+                    </div>
+                    <div class="option-card radio" data-value="copilot-ms">
+                        <div class="option-indicator"></div>
+                        <span class="option-label">Microsoft Copilot</span>
+                    </div>
+                    <div class="option-card radio" data-value="gemini-adv">
+                        <div class="option-indicator"></div>
+                        <span class="option-label">Gemini Advanced</span>
+                    </div>
+                    <div class="option-card radio" data-value="cursor">
+                        <div class="option-indicator"></div>
+                        <span class="option-label">Cursor / AI coding tool</span>
+                    </div>
+                    <div class="option-card radio" data-value="other-tool">
+                        <div class="option-indicator"></div>
+                        <span class="option-label">Other</span>
+                    </div>
+                </div>
+                <div class="conditional-field" id="q9OtherField">
+                    <input type="text" id="q9OtherInput" placeholder="Which tool?">
+                </div>
+                <details class="rationale" open>
+                    <summary>Why this question</summary>
+                    <div class="rationale-content">
+                        <strong>The procurement question.</strong> This is what Thibault takes to the budgeting meeting. Should INSEAD provision one tool for everyone or different tools for different maturity levels?
+                        <br><br><strong>Key cross-tabs:</strong> <span class="cross-tab">Q9 x Q1</span> tool preference by maturity &middot; <span class="cross-tab">Q9 x Q5a</span> what people want funded vs what they actually use
+                    </div>
+                </details>
+                <div class="field-error" id="q9Error">Please select one</div>
+            </div>
+
+            <!-- Q10: Usefulness -->
+            <div class="form-section">
+                <h2>Overall, how useful are AI tools for your INSEAD work today?</h2>
+                <div class="likert" id="q10Options">
+                    <div class="likert-option" data-value="not-useful">Not at all useful</div>
+                    <div class="likert-option" data-value="slightly">Slightly useful</div>
+                    <div class="likert-option" data-value="moderate">Moderately useful</div>
+                    <div class="likert-option" data-value="very">Very useful</div>
+                    <div class="likert-option" data-value="essential">Essential</div>
+                </div>
+                <details class="rationale" open>
+                    <summary>Why this question</summary>
+                    <div class="rationale-content">
+                        <strong>Simple outcome measure.</strong> If the cohort says "moderately useful", the curriculum should focus on making AI more useful (practical skills). If "essential", focus on making them better at what they already do. Also provides a baseline that can be re-measured after any intervention.
+                    </div>
+                </details>
+                <div class="field-error" id="q10Error">Please select one</div>
+            </div>
+
+            <!-- Q11: Disclosure -->
+            <div class="form-section">
+                <h2>When you use AI for academic work, how openly do you usually disclose it?</h2>
+                <div class="options" id="q11Options">
+                    <div class="option-card radio" data-value="openly">
+                        <div class="option-indicator"></div>
+                        <span class="option-label">I usually disclose it openly</span>
+                    </div>
+                    <div class="option-card radio" data-value="sometimes">
+                        <div class="option-indicator"></div>
+                        <span class="option-label">I sometimes disclose it, depending on the context</span>
+                    </div>
+                    <div class="option-card radio" data-value="rarely">
+                        <div class="option-indicator"></div>
+                        <span class="option-label">I rarely disclose it</span>
+                    </div>
+                    <div class="option-card radio" data-value="prefer-not-say">
+                        <div class="option-indicator"></div>
+                        <span class="option-label">I prefer not to say</span>
+                    </div>
+                    <div class="option-card radio" data-value="no-ai">
+                        <div class="option-indicator"></div>
+                        <span class="option-label">I do not use AI for academic work</span>
+                    </div>
+                </div>
+                <details class="rationale" open>
+                    <summary>Why this question</summary>
+                    <div class="rationale-content">
+                        <strong>Hidden-use behaviour is one of Thibault's primary ISP research interests.</strong> Students use AI extensively but dramatically under-report it in formal surveys. The interpersonal wording captures the social norm dimension - the discomfort IS the signal. Anonymous survey + no name field maximises honest responses here.
+                    </div>
+                </details>
+                <div class="field-error" id="q11Error">Please select one</div>
+            </div>
+
+            <!-- Nav -->
+            <div class="nav-row">
+                <button type="button" class="back-link" onclick="prevPage()">Back</button>
+                <button type="button" class="next-btn" onclick="nextPage()">Next</button>
+            </div>
+        </div>
+
+        <!-- ==================== PAGE 4: CURRICULUM & SUPPORT ==================== -->
+        <div class="page" data-page="4">
+            <div class="page-title">Curriculum &amp; Support</div>
+
+            <!-- Q12: Topics - ranked top 3 -->
+            <div class="form-section">
+                <h2>Which topics would be most valuable in a 10-hour AI skills programme?</h2>
+                <p class="hint">Tap your first choice, then second, then third</p>
+                <div class="options" id="q12Options">
+                    <div class="option-card rank" data-value="tool-choice">
+                        <div class="rank-badge"></div>
+                        <span class="option-label">Choosing the right AI tool for different tasks</span>
+                    </div>
+                    <div class="option-card rank" data-value="prompting">
+                        <div class="rank-badge"></div>
+                        <span class="option-label">Writing better prompts and getting better outputs</span>
+                    </div>
+                    <div class="option-card rank" data-value="research">
+                        <div class="rank-badge"></div>
+                        <span class="option-label">Using AI for research, reading, and synthesis</span>
+                    </div>
+                    <div class="option-card rank" data-value="writing">
+                        <div class="rank-badge"></div>
+                        <span class="option-label">Using AI for writing, presentations, and communication</span>
+                    </div>
+                    <div class="option-card rank" data-value="data">
+                        <div class="rank-badge"></div>
+                        <span class="option-label">Using AI for data analysis and modelling</span>
+                    </div>
+                    <div class="option-card rank" data-value="workflows">
+                        <div class="rank-badge"></div>
+                        <span class="option-label">Building personal workflows and automations</span>
+                    </div>
+                    <div class="option-card rank" data-value="coding">
+                        <div class="rank-badge"></div>
+                        <span class="option-label">Coding with AI</span>
+                    </div>
+                    <div class="option-card rank" data-value="ethics">
+                        <div class="rank-badge"></div>
+                        <span class="option-label">AI ethics, academic integrity, and responsible use</span>
+                    </div>
+                    <div class="option-card rank" data-value="understanding">
+                        <div class="rank-badge"></div>
+                        <span class="option-label">Understanding AI strengths, weaknesses, and risks</span>
+                    </div>
+                </div>
+                <div class="rank-hint" id="q12RankHint">Tap your #1 choice first, then #2, then #3</div>
+                <details class="rationale" open>
+                    <summary>Why this question</summary>
+                    <div class="rationale-content">
+                        <strong>Directly answers "what should 10 hours cover?"</strong> Ranking (not just multi-select) gives priority signal - the difference between "I'd like all of these" and "prompting is #1 for me" matters for time allocation.
+                        <br><br><strong>Key cross-tab:</strong> <span class="cross-tab">Q12 x Q1</span> do beginners and advanced users want different curricula? (they almost certainly do)
+                    </div>
+                </details>
+                <div class="field-error" id="q12Error">Pick at least 1</div>
+            </div>
+
+            <!-- Q13: Formats - ranked top 2 -->
+            <div class="form-section">
+                <h2>Which learning formats would work best for you?</h2>
+                <p class="hint">Tap your first choice, then your second</p>
+                <div class="options" id="q13Options">
+                    <div class="option-card rank" data-value="workshops">
+                        <div class="rank-badge"></div>
+                        <span class="option-label">Guided hands-on workshops</span>
+                    </div>
+                    <div class="option-card rank" data-value="self-paced">
+                        <div class="rank-badge"></div>
+                        <span class="option-label">Self-paced online modules</span>
+                    </div>
+                    <div class="option-card rank" data-value="peer-demos">
+                        <div class="rank-badge"></div>
+                        <span class="option-label">Peer demos from students</span>
+                    </div>
+                    <div class="option-card rank" data-value="office-hours">
+                        <div class="rank-badge"></div>
+                        <span class="option-label">Drop-in office hours</span>
+                    </div>
+                    <div class="option-card rank" data-value="starter-pack">
+                        <div class="rank-badge"></div>
+                        <span class="option-label">A pre-built starter pack of recommended tools and workflows</span>
+                    </div>
+                    <div class="option-card rank" data-value="build-workshop">
+                        <div class="rank-badge"></div>
+                        <span class="option-label">A "build your own workflow" workshop</span>
+                    </div>
+                    <div class="option-card rank" data-value="talks">
+                        <div class="rank-badge"></div>
+                        <span class="option-label">Expert talks or panels</span>
+                    </div>
+                </div>
+                <div class="rank-hint" id="q13RankHint">Tap your #1 choice first, then #2</div>
+                <details class="rationale" open>
+                    <summary>Why this question</summary>
+                    <div class="rationale-content">
+                        <strong>Tests the package-vs-build-your-own question Thibault explicitly asked about.</strong> "Starter pack" = pre-built package. "Build your own workflow workshop" = teach them to build. Also validates v1 poll finding that "build sessions" dominated - does that hold at cohort scale?
+                    </div>
+                </details>
+                <div class="field-error" id="q13Error">Pick at least 1</div>
+            </div>
+
+            <!-- Q14: Support model -->
+            <div class="form-section">
+                <h2>If INSEAD supports AI tools for students, which model would you prefer?</h2>
+                <div class="options" id="q14Options">
+                    <div class="option-card radio" data-value="one-tool">
+                        <div class="option-indicator"></div>
+                        <span class="option-label">One standard tool for everyone</span>
+                    </div>
+                    <div class="option-card radio" data-value="small-set">
+                        <div class="option-indicator"></div>
+                        <span class="option-label">A small set of recommended tools</span>
+                    </div>
+                    <div class="option-card radio" data-value="flexible">
+                        <div class="option-indicator"></div>
+                        <span class="option-label">A flexible credit or subsidy I can use on the tool that suits me</span>
+                    </div>
+                    <div class="option-card radio" data-value="none">
+                        <div class="option-indicator"></div>
+                        <span class="option-label">No institutional provisioning needed</span>
+                    </div>
+                </div>
+                <details class="rationale" open>
+                    <summary>Why this question</summary>
+                    <div class="rationale-content">
+                        <strong>Directly budget-relevant.</strong> "One tool" = single enterprise licence negotiation. "Small set" = 2-3 licences. "Flexible credit" = per-student stipend model. This shapes the procurement <em>mechanism</em>, not just the tool choice. Identified as a critical addition during external review.
+                    </div>
+                </details>
+                <div class="field-error" id="q14Error">Please select one</div>
+            </div>
+
+            <!-- Nav -->
+            <div class="nav-row">
+                <button type="button" class="back-link" onclick="prevPage()">Back</button>
+                <button type="button" class="next-btn" onclick="nextPage()">Next</button>
+            </div>
+        </div>
+
+        <!-- ==================== PAGE 5: OPTIONAL ==================== -->
+        <div class="page" data-page="5">
+            <div class="page-title">Almost done - these are optional but incredibly valuable</div>
+
+            <!-- Q15: AI setup -->
+            <div class="form-section">
+                <h2>Describe your AI setup in one sentence.</h2>
+                <textarea id="q15Text" placeholder="e.g. I use ChatGPT for case prep and Perplexity for research..." style="min-height: 60px;"></textarea>
+                <details class="rationale" open>
+                    <summary>Why this question</summary>
+                    <div class="rationale-content">
+                        <strong>Gold for ISP qualitative research.</strong> These descriptions reveal actual workflow sophistication in ways structured questions can't. "I use ChatGPT for everything" vs "I use Claude for writing, Perplexity for research, and Cursor for my side project" tells more about tool maturity than any Likert scale.
+                    </div>
+                </details>
+            </div>
+
+            <!-- Q16: Useful example -->
+            <div class="form-section">
+                <h2>What is one useful way you've used AI at INSEAD?</h2>
+                <textarea id="q16Text" placeholder="e.g. I used Claude to break down a complex OB case into stakeholder perspectives..." style="min-height: 60px;"></textarea>
+                <details class="rationale" open>
+                    <summary>Why this question</summary>
+                    <div class="rationale-content">
+                        <strong>Surfaces specific use cases that become workshop content.</strong> Also provides concrete examples for Thibault's presentation to senior leadership - "students report using AI to [specific thing]" is more persuasive than "70% use AI regularly".
+                    </div>
+                </details>
+            </div>
+
+            <!-- Q17: Follow-up interview -->
+            <div class="form-section">
+                <h2>Would you be willing to participate in a short follow-up interview?</h2>
+                <div class="options" id="q17Options">
+                    <div class="option-card radio" data-value="yes">
+                        <div class="option-indicator"></div>
+                        <span class="option-label">Yes</span>
+                    </div>
+                    <div class="option-card radio" data-value="no">
+                        <div class="option-indicator"></div>
+                        <span class="option-label">No</span>
+                    </div>
+                </div>
+                <div class="conditional-field" id="q17EmailField">
+                    <input type="email" id="q17EmailInput" placeholder="firstname.lastname@insead.edu">
+                </div>
+            </div>
+
+            <!-- Nav -->
+            <div class="nav-row">
+                <button type="button" class="back-link" onclick="prevPage()">Back</button>
+                <button type="button" class="next-btn" id="submitBtn" onclick="nextPage()">Submit</button>
+            </div>
+        </div>
+
+    </div><!-- /surveyForm -->
+
+    <!-- THANK YOU -->
+    <div class="thank-you" id="thankYou">
+        <div class="checkmark">
+            <svg fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+        </div>
+        <h2>Thanks.</h2>
+        <p>Your responses will directly shape INSEAD's AI tool provisioning and upskilling programme.</p>
+    </div>
+
+    <div class="footer">INSEAD AI Club x Learning Experience</div>
+</div>
+
+<script>
+    // ---- CONFIG ----
+    const SCRIPT_URL = 'YOUR_APPS_SCRIPT_URL';
+    const TOTAL_PAGES = 5;
+    let currentPage = 1;
+
+    // ---- STATE ----
+    const state = {
+        q1: null,
+        q2: null,
+        q3: null,
+        q3b: null,
+        q3c: null,
+        q4: null,
+        q5: {},
+        q5a: null,
+        q5a_other: '',
+        q5b: [],
+        q6a: [],
+        q6b: [],
+        q7: [],
+        q7b: null,
+        q8: [],
+        q9: null,
+        q9_other: '',
+        q10: null,
+        q11: null,
+        q12: [],
+        q13: [],
+        q14: null,
+        q15: '',
+        q16: '',
+        q17: null,
+        q17_email: ''
+    };
+
+    // ---- MATRIX TOOLS DATA ----
+    const matrixTools = [
+        { key: 'chatgpt', label: 'ChatGPT' },
+        { key: 'claude', label: 'Claude' },
+        { key: 'claude_excel', label: 'Claude for Excel' },
+        { key: 'claude_ppt', label: 'Claude for PowerPoint' },
+        { key: 'perplexity', label: 'Perplexity' },
+        { key: 'copilot_ms', label: 'Microsoft Copilot' },
+        { key: 'copilot_gh', label: 'GitHub Copilot' },
+        { key: 'gemini', label: 'Gemini' },
+        { key: 'notebooklm', label: 'NotebookLM' },
+        { key: 'presentation', label: 'AI presentation tools' },
+        { key: 'meeting_notes', label: 'AI meeting notes' },
+        { key: 'coding', label: 'AI coding tools' }
+    ];
+
+    const matrixLevels = ['never-heard', 'heard', 'tried', 'occasional', 'regular'];
+
+    // Build matrix rows
+    (function buildMatrix() {
+        const grid = document.getElementById('q5Matrix');
+        matrixTools.forEach(tool => {
+            // Label
+            const label = document.createElement('div');
+            label.className = 'matrix-row-label';
+            label.textContent = tool.label;
+            label.dataset.tool = tool.key;
+            grid.appendChild(label);
+            // Cells
+            matrixLevels.forEach(level => {
+                const cell = document.createElement('div');
+                cell.className = 'matrix-cell';
+                cell.dataset.tool = tool.key;
+                const dot = document.createElement('div');
+                dot.className = 'matrix-dot';
+                dot.dataset.tool = tool.key;
+                dot.dataset.level = level;
+                dot.addEventListener('click', () => selectMatrixCell(tool.key, level));
+                cell.appendChild(dot);
+                grid.appendChild(cell);
+            });
+        });
+    })();
+
+    function selectMatrixCell(toolKey, level) {
+        state.q5[toolKey] = level;
+        // Update UI
+        document.querySelectorAll(`.matrix-dot[data-tool="${toolKey}"]`).forEach(d => {
+            d.classList.toggle('selected', d.dataset.level === level);
+        });
+        // Row highlight
+        document.querySelectorAll(`[data-tool="${toolKey}"]`).forEach(el => {
+            if (el.classList.contains('matrix-row-label') || el.classList.contains('matrix-cell')) {
+                el.classList.add('matrix-row-highlight');
+            }
+        });
+        hideError('q5Error');
+    }
+
+    // ---- GENERIC RADIO SETUP ----
+    function setupRadio(containerId, stateKey, errorId) {
+        document.querySelectorAll(`#${containerId} .option-card.radio`).forEach(card => {
+            card.addEventListener('click', () => {
+                document.querySelectorAll(`#${containerId} .option-card`).forEach(c => c.classList.remove('selected'));
+                card.classList.add('selected');
+                state[stateKey] = card.dataset.value;
+                if (errorId) hideError(errorId);
+            });
+        });
+    }
+
+    // ---- GENERIC PILL SETUP ----
+    function setupPills(containerId, stateKey, errorId) {
+        document.querySelectorAll(`#${containerId} .pill`).forEach(pill => {
+            pill.addEventListener('click', () => {
+                document.querySelectorAll(`#${containerId} .pill`).forEach(p => p.classList.remove('selected'));
+                pill.classList.add('selected');
+                state[stateKey] = pill.dataset.value;
+                if (errorId) hideError(errorId);
+            });
+        });
+    }
+
+    // ---- GENERIC CHECKBOX SETUP ----
+    function setupCheckboxes(containerId, stateKey, errorId) {
+        document.querySelectorAll(`#${containerId} .option-card.checkbox`).forEach(card => {
+            card.addEventListener('click', () => {
+                const val = card.dataset.value;
+                const idx = state[stateKey].indexOf(val);
+                if (idx !== -1) {
+                    state[stateKey].splice(idx, 1);
+                    card.classList.remove('selected');
+                } else {
+                    state[stateKey].push(val);
+                    card.classList.add('selected');
+                }
+                if (errorId) hideError(errorId);
+            });
+        });
+    }
+
+    // ---- TAP-TO-RANK SETUP ----
+    function setupRank(containerId, stateKey, maxRank, hintId, errorId) {
+        document.querySelectorAll(`#${containerId} .option-card.rank`).forEach(card => {
+            card.addEventListener('click', () => {
+                const val = card.dataset.value;
+                const idx = state[stateKey].indexOf(val);
+
+                if (idx !== -1) {
+                    state[stateKey].splice(idx, 1);
+                } else {
+                    if (state[stateKey].length >= maxRank) return;
+                    state[stateKey].push(val);
+                }
+
+                // Update all cards
+                document.querySelectorAll(`#${containerId} .option-card`).forEach(c => {
+                    const v = c.dataset.value;
+                    const rank = state[stateKey].indexOf(v);
+                    const badge = c.querySelector('.rank-badge');
+
+                    if (rank !== -1) {
+                        c.classList.add('selected');
+                        c.classList.remove('maxed');
+                        badge.textContent = rank + 1;
+                    } else {
+                        c.classList.remove('selected');
+                        badge.textContent = '';
+                        if (state[stateKey].length >= maxRank) {
+                            c.classList.add('maxed');
+                        } else {
+                            c.classList.remove('maxed');
+                        }
+                    }
+                });
+
+                // Update hint
+                if (hintId) {
+                    const hint = document.getElementById(hintId);
+                    const len = state[stateKey].length;
+                    if (maxRank === 3) {
+                        if (len === 0) hint.textContent = 'Tap your #1 choice first, then #2, then #3';
+                        else if (len === 1) hint.textContent = 'Now tap your #2';
+                        else if (len === 2) hint.textContent = 'Now tap your #3';
+                        else hint.textContent = 'Tap a choice again to change your ranking';
+                    } else if (maxRank === 2) {
+                        if (len === 0) hint.textContent = 'Tap your #1 choice first, then #2';
+                        else if (len === 1) hint.textContent = 'Now tap your #2';
+                        else hint.textContent = 'Tap a choice again to change your ranking';
+                    }
+                }
+
+                if (errorId) hideError(errorId);
+            });
+        });
+    }
+
+    // ---- LIKERT SETUP ----
+    function setupLikert(containerId, stateKey, errorId) {
+        document.querySelectorAll(`#${containerId} .likert-option`).forEach(opt => {
+            opt.addEventListener('click', () => {
+                document.querySelectorAll(`#${containerId} .likert-option`).forEach(o => o.classList.remove('selected'));
+                opt.classList.add('selected');
+                state[stateKey] = opt.dataset.value;
+                if (errorId) hideError(errorId);
+            });
+        });
+    }
+
+    // ---- CONDITIONAL FIELDS ----
+    function setupConditionalRadio(containerId, stateKey, triggerValue, fieldId) {
+        document.querySelectorAll(`#${containerId} .option-card.radio`).forEach(card => {
+            card.addEventListener('click', () => {
+                const field = document.getElementById(fieldId);
+                if (card.dataset.value === triggerValue) {
+                    field.classList.add('visible');
+                } else {
+                    field.classList.remove('visible');
+                }
+            });
+        });
+    }
+
+    // ---- INIT ALL INTERACTIONS ----
+    // Page 1
+    setupRadio('q1Options', 'q1', 'q1Error');
+    setupRadio('q2Options', 'q2', 'q2Error');
+    setupPills('q3Options', 'q3', 'q3Error');
+    setupPills('q3bOptions', 'q3b', 'q3bError');
+    setupPills('q3cOptions', 'q3c', 'q3cError');
+    setupRadio('q4Options', 'q4', 'q4Error');
+
+    // Page 2
+    setupRadio('q5aOptions', 'q5a', 'q5aError');
+    setupConditionalRadio('q5aOptions', 'q5a', 'other', 'q5aOtherField');
+    setupCheckboxes('q5bOptions', 'q5b', 'q5bError');
+    setupCheckboxes('q6aOptions', 'q6a', 'q6aError');
+    setupCheckboxes('q6bOptions', 'q6b', null);
+
+    // Page 3
+    // Q7 and Q8 now use setupRank (see below)
+    setupRadio('q7bOptions', 'q7b', 'q7bError');
+    setupRadio('q9Options', 'q9', 'q9Error');
+    setupConditionalRadio('q9Options', 'q9', 'other-tool', 'q9OtherField');
+    setupLikert('q10Options', 'q10', 'q10Error');
+    setupRadio('q11Options', 'q11', 'q11Error');
+
+    // Page 4
+    // Q7 removed
+    setupRank('q8Options', 'q8', 3, 'q8RankHint', 'q8Error');
+    setupRank('q12Options', 'q12', 3, 'q12RankHint', 'q12Error');
+    setupRank('q13Options', 'q13', 2, 'q13RankHint', 'q13Error');
+    setupRadio('q14Options', 'q14', 'q14Error');
+
+    // Page 5
+    setupRadio('q17Options', 'q17', null);
+    setupConditionalRadio('q17Options', 'q17', 'yes', 'q17EmailField');
+
+    // ---- PAGINATION ----
+    function showPage(n) {
+        document.querySelectorAll('.page').forEach(p => {
+            p.classList.remove('active');
+        });
+        const target = document.querySelector(`[data-page="${n}"]`);
+        if (target) target.classList.add('active');
+
+        // Update progress bar
+        document.getElementById('progressFill').style.width = ((n / TOTAL_PAGES) * 100) + '%';
+
+        // Update page indicator
+        document.getElementById('pageIndicator').textContent = `${n} of ${TOTAL_PAGES}`;
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function validatePage(n) {
+        let valid = true;
+
+        if (n === 1) {
+            if (!state.q1) { showError('q1Error'); valid = false; }
+            if (!state.q2) { showError('q2Error'); valid = false; }
+            if (!state.q3) { showError('q3Error'); valid = false; }
+            if (!state.q3b) { showError('q3bError'); valid = false; }
+            if (!state.q3c) { showError('q3cError'); valid = false; }
+            if (!state.q4) { showError('q4Error'); valid = false; }
+        }
+
+        if (n === 2) {
+            // At least one matrix row answered
+            if (Object.keys(state.q5).length === 0) { showError('q5Error'); valid = false; }
+            if (!state.q5a) { showError('q5aError'); valid = false; }
+            if (state.q5b.length === 0) { showError('q5bError'); valid = false; }
+            if (state.q6a.length === 0) { showError('q6aError'); valid = false; }
+        }
+
+        if (n === 3) {
+            if (!state.q7b) { showError('q7bError'); valid = false; }
+            if (state.q8.length === 0) { showError('q8Error'); valid = false; }
+            if (!state.q9) { showError('q9Error'); valid = false; }
+            if (!state.q10) { showError('q10Error'); valid = false; }
+            if (!state.q11) { showError('q11Error'); valid = false; }
+        }
+
+        if (n === 4) {
+            if (state.q12.length === 0) { showError('q12Error'); valid = false; }
+            if (state.q13.length === 0) { showError('q13Error'); valid = false; }
+            if (!state.q14) { showError('q14Error'); valid = false; }
+        }
+
+        // Page 5 has no required fields
+
+        if (!valid) {
+            const firstError = document.querySelector('.page.active .field-error.visible');
+            if (firstError) firstError.parentElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        return valid;
+    }
+
+    // Preview mode - skip validation so reviewers can click through
+    let isPreview = new URLSearchParams(window.location.search).has('preview');
+
+    // Also enable preview if any rationale blocks exist (review version)
+    if (document.querySelector('details.rationale')) isPreview = true;
+
+    if (isPreview) document.getElementById('previewBanner').style.display = 'block';
+
+    function nextPage() {
+        if (!isPreview && !validatePage(currentPage)) return;
+
+        if (currentPage === TOTAL_PAGES) {
+            if (isPreview) {
+                // In preview mode, just show thank-you without submitting
+                document.getElementById('surveyForm').style.display = 'none';
+                document.querySelector('.progress-bar').style.display = 'none';
+                document.querySelector('.page-indicator').style.display = 'none';
+                document.getElementById('thankYou').style.display = 'block';
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                return;
+            }
+            submitForm();
+            return;
+        }
+
+        currentPage++;
+        showPage(currentPage);
+    }
+
+    function prevPage() {
+        if (currentPage > 1) {
+            currentPage--;
+            showPage(currentPage);
+        }
+    }
+
+    // ---- VALIDATION HELPERS ----
+    function showError(id) {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.classList.add('visible');
+        el.parentElement.classList.add('shake');
+        setTimeout(() => el.parentElement.classList.remove('shake'), 400);
+    }
+
+    function hideError(id) {
+        const el = document.getElementById(id);
+        if (el) el.classList.remove('visible');
+    }
+
+    // ---- SUBMIT ----
+    async function submitForm() {
+        // Gather text inputs
+        state.q5a_other = document.getElementById('q5aOtherInput').value.trim();
+        state.q9_other = document.getElementById('q9OtherInput').value.trim();
+        state.q15 = document.getElementById('q15Text').value.trim();
+        state.q16 = document.getElementById('q16Text').value.trim();
+        state.q17_email = document.getElementById('q17EmailInput').value.trim();
+
+        const btn = document.getElementById('submitBtn');
+        btn.disabled = true;
+        btn.textContent = 'Submitting...';
+
+        const data = {
+            timestamp: new Date().toISOString(),
+            // Page 1
+            q1_proficiency: state.q1,
+            q2_frequency: state.q2,
+            q3_mba_student: state.q3,
+            q3b_intake: state.q3b,
+            q3c_section: state.q3c,
+            q4_background: state.q4,
+            // Page 2
+            q5_chatgpt: state.q5.chatgpt || '',
+            q5_claude: state.q5.claude || '',
+            q5_claude_excel: state.q5.claude_excel || '',
+            q5_claude_ppt: state.q5.claude_ppt || '',
+            q5_perplexity: state.q5.perplexity || '',
+            q5_copilot_ms: state.q5.copilot_ms || '',
+            q5_copilot_gh: state.q5.copilot_gh || '',
+            q5_gemini: state.q5.gemini || '',
+            q5_notebooklm: state.q5.notebooklm || '',
+            q5_presentation: state.q5.presentation || '',
+            q5_meeting_notes: state.q5.meeting_notes || '',
+            q5_coding: state.q5.coding || '',
+            q5a_goto: state.q5a === 'other' ? 'other: ' + state.q5a_other : state.q5a,
+            q5b_notetaking: state.q5b.join(', '),
+            q6a_awareness: state.q6a.join(', '),
+            q6b_activated: state.q6b.join(', '),
+            // Page 3
+            q7_use_cases: (state.q7 || []).map((v, i) => `${i+1}: ${v}`).join(', '),
+            q7b_in_class: state.q7b,
+            q8_barriers: (state.q8 || []).map((v, i) => `${i+1}: ${v}`).join(', '),
+            q9_fund_tool: state.q9 === 'other-tool' ? 'other: ' + state.q9_other : state.q9,
+            q10_usefulness: state.q10,
+            q11_disclosure: state.q11,
+            // Page 4
+            q12_curriculum: state.q12.map((v, i) => `${i + 1}: ${v}`).join(', '),
+            q13_format: state.q13.map((v, i) => `${i + 1}: ${v}`).join(', '),
+            q14_support_model: state.q14,
+            // Page 5
+            q15_setup: state.q15,
+            q16_useful_example: state.q16,
+            q17_interview: state.q17,
+            q17_email: state.q17_email
+        };
+
+        try {
+            await fetch(SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+
+            document.getElementById('surveyForm').style.display = 'none';
+            document.querySelector('.progress-bar').style.display = 'none';
+            document.getElementById('pageIndicator').style.display = 'none';
+            document.getElementById('thankYou').style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        } catch (err) {
+            btn.disabled = false;
+            btn.textContent = 'Submit';
+            alert('Something went wrong. Try again?');
+        }
+    }
+</script>
+
+</body>
+</html>
+
+                <details class="rationale" open>
+                    <summary>Why this question</summary>
+                    <div class="rationale-content">
+                        <strong>Bridge to named data for ISP qualitative research.</strong> The main survey is anonymous to maximise honest responses on sensitive questions (Q11 disclosure, Q7b in-class use). People who opt in here have consented to being identified - this is the only identity capture point. No name field in the main survey by design.
+                    </div>
+                </details>
