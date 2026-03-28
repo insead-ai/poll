@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>INSEAD AI Survey</title>
+<meta property="og:title" content="INSEAD AI Survey">
+<meta property="og:description" content="Help shape how INSEAD supports AI for MBA students. Anonymous, ~8 minutes.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+    --black: #09090b;
+    --white: #fafafa;
+    --gray: #71717a;
+    --gray-light: #a1a1aa;
+    --gray-dark: #27272a;
+    --gray-darker: #18181b;
+    --red: #ef4444;
+    --red-dim: rgba(239,68,68,0.15);
+    --green: #22c55e;
+}
+
+html { font-size: 16px; }
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--black);
+    color: var(--white);
+    min-height: 100dvh;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.container {
+    max-width: 560px;
+    margin: 0 auto;
+    padding: 1.5rem 1.25rem;
+    padding-bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px));
+}
+
+/* Header */
+.header { text-align: center; margin-bottom: 1.5rem; }
+.header h1 { font-size: 1.5rem; font-weight: 800; letter-spacing: -0.02em; }
+.header h1 span { color: var(--red); }
+.header .subtitle { font-size: 0.85rem; color: var(--gray-light); margin-top: 0.4rem; line-height: 1.5; }
+
+/* Progress */
+.progress-bar { height: 4px; background: var(--gray-dark); border-radius: 999px; margin-bottom: 1.5rem; overflow: hidden; }
+.progress-fill { height: 100%; background: var(--red); border-radius: 999px; transition: width 0.4s ease; width: 20%; }
+.page-indicator { text-align: center; font-size: 0.7rem; color: var(--gray); margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: 0.1em; }
+
+/* Page title */
+.page-title {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--gray);
+    margin-bottom: 1.25rem;
+    font-weight: 600;
+}
+
+/* Questions */
+.question { margin-bottom: 2rem; }
+.question-label { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.75rem; line-height: 1.4; }
+.question-hint { font-size: 0.75rem; color: var(--gray); margin-bottom: 0.75rem; }
+
+/* Error */
+.error-msg { font-size: 0.8rem; color: var(--red); display: none; margin-top: 0.5rem; }
+.error-msg.visible { display: block; }
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-6px); }
+    40% { transform: translateX(6px); }
+    60% { transform: translateX(-6px); }
+    80% { transform: translateX(6px); }
+}
+.shake { animation: shake 0.4s ease; }
+
+/* Radio Cards */
+.card-stack { display: flex; flex-direction: column; gap: 0.5rem; }
+.card {
+    display: flex; align-items: center; gap: 0.75rem;
+    padding: 0.85rem 1rem;
+    border: 1px solid var(--gray-dark);
+    border-radius: 10px;
+    background: var(--gray-darker);
+    cursor: pointer;
+    transition: all 0.15s ease;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+}
+.card:active { transform: scale(0.98); }
+.card.selected { border-color: var(--red); background: var(--red-dim); }
+.card .indicator {
+    width: 22px; height: 22px; min-width: 22px;
+    border-radius: 50%;
+    border: 2px solid var(--gray);
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.15s ease;
+}
+.card.selected .indicator {
+    border-color: var(--red);
+    background: var(--red);
+}
+.card.selected .indicator::after {
+    content: '';
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: white;
+}
+.card .card-text { font-size: 0.9rem; font-weight: 500; }
+
+/* Radio Cards Compact */
+.card-stack.compact .card { padding: 0.65rem 0.85rem; font-size: 0.85rem; gap: 0.35rem; }
+.card-stack.compact .card .card-text { font-size: 0.85rem; }
+@media (min-width: 501px) {
+    .card-stack.compact { display: grid; grid-template-columns: 1fr 1fr; }
+}
+
+/* Checkbox Cards */
+.card.checkbox .indicator { border-radius: 3px; }
+.card.checkbox.selected .indicator::after {
+    content: '';
+    width: 14px; height: 14px;
+    border-radius: 0;
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 12 12' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M2 6L5 9L10 3' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat;
+}
+
+/* Pill Row */
+.pill-row { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+.pill {
+    min-width: 48px; padding: 0.6rem 1.2rem;
+    border-radius: 999px;
+    border: 1px solid var(--gray-dark);
+    background: var(--gray-darker);
+    font-weight: 600; font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    text-align: center;
+}
+.pill:active { transform: scale(0.98); }
+.pill.selected { border-color: var(--red); background: var(--red-dim); color: var(--white); }
+
+/* Scrollable Matrix */
+.matrix-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; scroll-snap-type: x mandatory; margin: 0 -0.25rem; padding: 0 0.25rem; }
+.matrix {
+    display: grid;
+    grid-template-columns: 130px repeat(5, 1fr);
+    min-width: 520px;
+    gap: 0;
+}
+@media (min-width: 561px) {
+    .matrix { grid-template-columns: 160px repeat(5, 1fr); }
+}
+.matrix .col-header {
+    font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.1em;
+    color: var(--gray); text-align: center; padding: 0 0.15rem 0.6rem;
+    font-weight: 600; line-height: 1.3;
+}
+.matrix .col-header:first-child { text-align: left; }
+.matrix .row-label {
+    font-size: 0.8rem; font-weight: 500;
+    display: flex; align-items: center;
+    padding: 0.5rem 0.5rem 0.5rem 0;
+    border-bottom: 1px solid var(--gray-dark);
+    transition: background 0.15s ease;
+}
+.matrix .cell {
+    display: flex; align-items: center; justify-content: center;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--gray-dark);
+    transition: background 0.15s ease;
+}
+.matrix .row-selected { background: var(--red-dim); }
+.matrix .dot {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    border: 2px solid var(--gray-dark);
+    cursor: pointer;
+    transition: all 0.15s ease;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+}
+.matrix .dot:active { transform: scale(0.9); }
+.matrix .dot.selected { background: var(--red); border-color: var(--red); }
+
+/* Tap-to-Rank Cards */
+.rank-card {
+    display: flex; align-items: center; gap: 0.75rem;
+    padding: 0.85rem 1rem;
+    border: 1px solid var(--gray-dark);
+    border-radius: 10px;
+    background: var(--gray-darker);
+    cursor: pointer;
+    transition: all 0.15s ease;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+}
+.rank-card:active { transform: scale(0.98); }
+.rank-card.selected { border-color: var(--red); background: var(--red-dim); }
+.rank-card.dimmed { opacity: 0.35; cursor: not-allowed; }
+.rank-card .badge {
+    width: 28px; height: 28px; min-width: 28px;
+    border-radius: 50%;
+    border: 2px solid var(--gray);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.75rem; font-weight: 700;
+    transition: all 0.15s ease;
+}
+.rank-card.selected .badge {
+    background: var(--red); border-color: var(--red); color: white;
+}
+.rank-card .card-text { font-size: 0.9rem; font-weight: 500; }
+.rank-hint { font-size: 0.75rem; color: var(--gray); margin-top: 0.5rem; }
+
+/* Likert Scale */
+.likert { display: flex; gap: 2px; }
+.likert-option {
+    flex: 1; padding: 0.85rem 0.25rem;
+    text-align: center;
+    border: 1px solid var(--gray-dark);
+    background: var(--gray-darker);
+    font-size: 0.75rem; font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    line-height: 1.3;
+}
+.likert-option:first-child { border-radius: 10px 0 0 10px; }
+.likert-option:last-child { border-radius: 0 10px 10px 0; }
+.likert-option:active { transform: scale(0.98); }
+.likert-option.selected { background: var(--red); border-color: var(--red); color: white; font-weight: 600; }
+
+/* Conditional Reveal */
+.conditional { max-height: 0; overflow: hidden; opacity: 0; transition: max-height 0.3s ease, opacity 0.3s ease; }
+.conditional.visible { max-height: 80px; opacity: 1; margin-top: 0.5rem; }
+
+/* Category Labels */
+.category-label {
+    font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.15em;
+    color: var(--gray); margin-bottom: 0.5rem; font-weight: 600;
+}
+.category-group + .category-group { margin-top: 1.25rem; }
+
+/* Inputs */
+input[type="text"], input[type="email"], textarea {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--gray-dark);
+    border-radius: 10px;
+    background: var(--gray-darker);
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.15s ease;
+}
+input[type="text"]:focus, input[type="email"]:focus, textarea:focus {
+    border-color: var(--gray);
+}
+input::placeholder, textarea::placeholder { color: var(--gray); }
+textarea { resize: vertical; min-height: 60px; }
+
+/* Navigation */
+.nav { display: flex; align-items: center; justify-content: center; gap: 1.5rem; margin-top: 2rem; position: relative; }
+.btn-next {
+    padding: 0.85rem 2.5rem;
+    background: var(--red);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+}
+.btn-next:active { transform: scale(0.98); }
+.btn-next:disabled { opacity: 0.5; cursor: not-allowed; }
+.btn-back {
+    color: var(--gray-light);
+    background: none; border: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem; font-weight: 500;
+    cursor: pointer;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    position: absolute; left: 0;
+}
+
+/* Thank You */
+.thank-you { display: none; text-align: center; padding: 3rem 1rem; }
+.thank-you .checkmark {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    background: var(--green);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 1.5rem;
+    animation: pop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+@keyframes pop {
+    0% { transform: scale(0); }
+    80% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+.thank-you .checkmark svg { width: 32px; height: 32px; }
+.thank-you h2 { font-size: 1.75rem; font-weight: 800; margin-bottom: 0.75rem; }
+.thank-you p { font-size: 0.9rem; color: var(--gray-light); line-height: 1.6; }
+
+/* Footer */
+.footer { text-align: center; font-size: 0.7rem; color: var(--gray); margin-top: 2.5rem; letter-spacing: 0.05em; }
+
+/* Page visibility */
+.page { display: none; }
+.page.active { display: block; }
+</style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>INSEAD <span>AI Survey</span></h1>
+        <p class="subtitle">Help shape how INSEAD supports AI for MBA students. Anonymous, ~8 minutes.</p>
+    </div>
+
+    <div id="progress-section">
+        <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+        <div class="page-indicator" id="pageIndicator">1 of 5</div>
+    </div>
+
+    <form id="surveyForm" autocomplete="off">
+
+    <!-- PAGE 1 -->
+    <div class="page active" id="page1">
+        <div class="page-title">About You</div>
+
+        <div class="question" id="q1-wrap">
+            <div class="question-label">Which statement best describes how you currently use AI tools?</div>
+            <div class="question-hint">No wrong answer - this helps us understand the cohort</div>
+            <div class="card-stack" id="q1-cards">
+                <div class="card" data-q="q1" data-val="rarely"><div class="indicator"></div><div class="card-text">I rarely or never use AI tools</div></div>
+                <div class="card" data-q="q1" data-val="tried"><div class="indicator"></div><div class="card-text">I've tried them but don't use them regularly</div></div>
+                <div class="card" data-q="q1" data-val="regular"><div class="indicator"></div><div class="card-text">I use AI regularly for common tasks (drafting, summarising, research)</div></div>
+                <div class="card" data-q="q1" data-val="ai-first"><div class="indicator"></div><div class="card-text">I go to AI first for most tasks - it does the first pass, I review and refine</div></div>
+                <div class="card" data-q="q1" data-val="customised"><div class="indicator"></div><div class="card-text">I use different tools for different jobs and have my own setup</div></div>
+                <div class="card" data-q="q1" data-val="builder"><div class="indicator"></div><div class="card-text">I build things with AI - automations, agents, or code</div></div>
+            </div>
+            <div class="error-msg" id="q1-error">Please select an option</div>
+        </div>
+
+        <div class="question" id="q2-wrap">
+            <div class="question-label">How often do you use AI tools for INSEAD-related work?</div>
+            <div class="card-stack" id="q2-cards">
+                <div class="card" data-q="q2" data-val="never"><div class="indicator"></div><div class="card-text">Never</div></div>
+                <div class="card" data-q="q2" data-val="lt-weekly"><div class="indicator"></div><div class="card-text">Less than once a week</div></div>
+                <div class="card" data-q="q2" data-val="1-2-week"><div class="indicator"></div><div class="card-text">1-2 times a week</div></div>
+                <div class="card" data-q="q2" data-val="3-6-week"><div class="indicator"></div><div class="card-text">3-6 times a week</div></div>
+                <div class="card" data-q="q2" data-val="daily"><div class="indicator"></div><div class="card-text">Daily</div></div>
+                <div class="card" data-q="q2" data-val="multi-daily"><div class="indicator"></div><div class="card-text">Multiple times a day</div></div>
+            </div>
+            <div class="error-msg" id="q2-error">Please select an option</div>
+        </div>
+
+        <div class="question" id="q3-wrap">
+            <div class="question-label">Are you a current INSEAD MBA student?</div>
+            <div class="pill-row" id="q3-pills">
+                <div class="pill" data-q="q3" data-val="yes">Yes</div>
+                <div class="pill" data-q="q3" data-val="no">No</div>
+            </div>
+            <div class="error-msg" id="q3-error">Please select an option</div>
+        </div>
+
+        <div class="question" id="q3b-wrap">
+            <div class="question-label">Intake</div>
+            <div class="pill-row" id="q3b-pills">
+                <div class="pill" data-q="q3b" data-val="26D">26D</div>
+                <div class="pill" data-q="q3b" data-val="26J">26J</div>
+            </div>
+            <div class="error-msg" id="q3b-error">Please select an option</div>
+        </div>
+
+        <div class="question" id="q3c-wrap" style="display:none">
+            <div class="question-label">Which section are you in?</div>
+            <div class="pill-row" id="q3c-pills">
+                <div class="pill" data-q="q3c" data-val="1" data-intake="26J">1</div>
+                <div class="pill" data-q="q3c" data-val="2" data-intake="26J">2</div>
+                <div class="pill" data-q="q3c" data-val="3" data-intake="26J">3</div>
+                <div class="pill" data-q="q3c" data-val="4" data-intake="26J">4</div>
+                <div class="pill" data-q="q3c" data-val="6" data-intake="26D">6</div>
+                <div class="pill" data-q="q3c" data-val="7" data-intake="26D">7</div>
+                <div class="pill" data-q="q3c" data-val="8" data-intake="26D">8</div>
+                <div class="pill" data-q="q3c" data-val="9" data-intake="26D">9</div>
+            </div>
+            <div class="error-msg" id="q3c-error">Please select an option</div>
+        </div>
+
+        <div class="question" id="q4-wrap">
+            <div class="question-label">Background before INSEAD</div>
+            <div class="card-stack compact" id="q4-cards">
+                <div class="card" data-q="q4" data-val="consulting"><div class="indicator"></div><div class="card-text">Consulting</div></div>
+                <div class="card" data-q="q4" data-val="finance"><div class="indicator"></div><div class="card-text">Finance / banking / investing</div></div>
+                <div class="card" data-q="q4" data-val="tech"><div class="indicator"></div><div class="card-text">Technology / product</div></div>
+                <div class="card" data-q="q4" data-val="engineering"><div class="indicator"></div><div class="card-text">Engineering / technical</div></div>
+                <div class="card" data-q="q4" data-val="energy"><div class="indicator"></div><div class="card-text">Energy / natural resources</div></div>
+                <div class="card" data-q="q4" data-val="fmcg"><div class="indicator"></div><div class="card-text">FMCG / consumer / retail</div></div>
+                <div class="card" data-q="q4" data-val="marketing"><div class="indicator"></div><div class="card-text">Marketing / sales / media</div></div>
+                <div class="card" data-q="q4" data-val="healthcare"><div class="indicator"></div><div class="card-text">Healthcare / pharma</div></div>
+                <div class="card" data-q="q4" data-val="real-estate"><div class="indicator"></div><div class="card-text">Real estate / construction</div></div>
+                <div class="card" data-q="q4" data-val="legal"><div class="indicator"></div><div class="card-text">Legal</div></div>
+                <div class="card" data-q="q4" data-val="military"><div class="indicator"></div><div class="card-text">Military / defence / gov</div></div>
+                <div class="card" data-q="q4" data-val="ngo"><div class="indicator"></div><div class="card-text">Non-profit / NGO / dev</div></div>
+                <div class="card" data-q="q4" data-val="entrepreneurship"><div class="indicator"></div><div class="card-text">Entrepreneurship / family biz</div></div>
+                <div class="card" data-q="q4" data-val="supply-chain"><div class="indicator"></div><div class="card-text">Supply chain / logistics</div></div>
+                <div class="card" data-q="q4" data-val="education"><div class="indicator"></div><div class="card-text">Education</div></div>
+                <div class="card" data-q="q4" data-val="other"><div class="indicator"></div><div class="card-text">Mixed / other</div></div>
+            </div>
+            <div class="error-msg" id="q4-error">Please select an option</div>
+        </div>
+    </div>
+
+    <!-- PAGE 2 -->
+    <div class="page" id="page2">
+        <div class="page-title">Tools</div>
+
+        <div class="question" id="q5-wrap">
+            <div class="question-label">For each tool, which best describes you?</div>
+            <div class="question-hint">Scroll right on mobile to see all columns</div>
+            <div class="matrix-wrapper">
+                <div class="matrix" id="q5-matrix">
+                    <div class="col-header"></div>
+                    <div class="col-header">Never heard of it</div>
+                    <div class="col-header">Heard of it</div>
+                    <div class="col-header">Tried it</div>
+                    <div class="col-header">Use occasionally</div>
+                    <div class="col-header">Use regularly</div>
+                </div>
+            </div>
+            <div class="conditional" id="q5-other-reveal">
+                <input type="text" id="q5-other-input" placeholder="What tool?" data-q="q5_other_name">
+            </div>
+            <div class="error-msg" id="q5-error">Please answer at least one row</div>
+        </div>
+
+        <div class="question" id="q5a-wrap">
+            <div class="question-label">Which AI tool is your primary go-to?</div>
+            <div class="card-stack" id="q5a-cards">
+                <div class="card" data-q="q5a" data-val="chatgpt"><div class="indicator"></div><div class="card-text">ChatGPT</div></div>
+                <div class="card" data-q="q5a" data-val="claude"><div class="indicator"></div><div class="card-text">Claude</div></div>
+                <div class="card" data-q="q5a" data-val="perplexity"><div class="indicator"></div><div class="card-text">Perplexity</div></div>
+                <div class="card" data-q="q5a" data-val="copilot-ms"><div class="indicator"></div><div class="card-text">Microsoft Copilot</div></div>
+                <div class="card" data-q="q5a" data-val="copilot-gh"><div class="indicator"></div><div class="card-text">GitHub Copilot</div></div>
+                <div class="card" data-q="q5a" data-val="gemini"><div class="indicator"></div><div class="card-text">Gemini</div></div>
+                <div class="card" data-q="q5a" data-val="notebooklm"><div class="indicator"></div><div class="card-text">NotebookLM</div></div>
+                <div class="card" data-q="q5a" data-val="other"><div class="indicator"></div><div class="card-text">Other</div></div>
+                <div class="card" data-q="q5a" data-val="none"><div class="indicator"></div><div class="card-text">I don't have a go-to</div></div>
+            </div>
+            <div class="conditional" id="q5a-other-reveal">
+                <input type="text" id="q5a-other-input" placeholder="Which tool?" data-q="q5a_other">
+            </div>
+            <div class="error-msg" id="q5a-error">Please select an option</div>
+        </div>
+
+        <div class="question" id="q6a-wrap">
+            <div class="question-label">Which of the following do you know you can access for free as an INSEAD student?</div>
+            <div class="card-stack">
+                <div class="category-group">
+                    <div class="category-label">Provided by INSEAD</div>
+                    <div class="card checkbox" data-q="q6a" data-val="copilot-ms"><div class="indicator"></div><div class="card-text">Microsoft Copilot</div></div>
+                    <div class="card checkbox" data-q="q6a" data-val="figma" style="margin-top:0.5rem"><div class="indicator"></div><div class="card-text">Figma (student licence)</div></div>
+                </div>
+                <div class="category-group">
+                    <div class="category-label">Free via student programmes (not INSEAD)</div>
+                    <div class="card checkbox" data-q="q6a" data-val="perplexity"><div class="indicator"></div><div class="card-text">Perplexity Pro (student offer)</div></div>
+                </div>
+                <div class="category-group">
+                    <div class="category-label">Other</div>
+                    <div class="card checkbox" data-q="q6a" data-val="other-free"><div class="indicator"></div><div class="card-text">Other</div></div>
+                    <div class="card checkbox" data-q="q6a" data-val="unaware" style="margin-top:0.5rem"><div class="indicator"></div><div class="card-text">I'm not aware of any AI tools available through INSEAD</div></div>
+                </div>
+            </div>
+            <div class="error-msg" id="q6a-error">Please select at least one option</div>
+        </div>
+
+        <div class="question" id="q6b-wrap">
+            <div class="question-label">Which of these have you actually activated and used?</div>
+            <div class="question-hint">Optional</div>
+            <div class="card-stack">
+                <div class="card checkbox" data-q="q6b" data-val="copilot-ms"><div class="indicator"></div><div class="card-text">Microsoft Copilot</div></div>
+                <div class="card checkbox" data-q="q6b" data-val="figma"><div class="indicator"></div><div class="card-text">Figma (student licence)</div></div>
+                <div class="card checkbox" data-q="q6b" data-val="perplexity"><div class="indicator"></div><div class="card-text">Perplexity Pro (student offer)</div></div>
+                <div class="card checkbox" data-q="q6b" data-val="other-free"><div class="indicator"></div><div class="card-text">Other</div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PAGE 3 -->
+    <div class="page" id="page3">
+        <div class="page-title">Usage &amp; Barriers</div>
+
+        <div class="question" id="q7b-wrap">
+            <div class="question-label">How often do you use AI tools in the context of your INSEAD learning?</div>
+            <div class="question-hint">Case prep, study groups, revision, assignments</div>
+            <div class="card-stack" id="q7b-cards">
+                <div class="card" data-q="q7b" data-val="never"><div class="indicator"></div><div class="card-text">Never</div></div>
+                <div class="card" data-q="q7b" data-val="rarely"><div class="indicator"></div><div class="card-text">Rarely - only for specific things</div></div>
+                <div class="card" data-q="q7b" data-val="sometimes"><div class="indicator"></div><div class="card-text">Sometimes - to help with understanding or preparation</div></div>
+                <div class="card" data-q="q7b" data-val="regularly"><div class="indicator"></div><div class="card-text">Regularly - AI is part of my study routine</div></div>
+                <div class="card" data-q="q7b" data-val="always"><div class="indicator"></div><div class="card-text">Always - AI is integrated into most of my learning</div></div>
+            </div>
+            <div class="error-msg" id="q7b-error">Please select an option</div>
+        </div>
+
+        <div class="question" id="q7c-wrap">
+            <div class="question-label">Do you use AI as an aid during lectures?</div>
+            <div class="card-stack" id="q7c-cards">
+                <div class="card" data-q="q7c" data-val="never"><div class="indicator"></div><div class="card-text">Never</div></div>
+                <div class="card" data-q="q7c" data-val="occasionally"><div class="indicator"></div><div class="card-text">Occasionally - to look something up or clarify a concept</div></div>
+                <div class="card" data-q="q7c" data-val="regularly"><div class="indicator"></div><div class="card-text">Regularly - I have AI open alongside my notes</div></div>
+                <div class="card" data-q="q7c" data-val="yes-realtime"><div class="indicator"></div><div class="card-text">Yes - I rely on real time assistance</div></div>
+            </div>
+            <div class="error-msg" id="q7c-error">Please select an option</div>
+        </div>
+
+        <div class="question" id="q8-wrap">
+            <div class="question-label">What, if anything, most limits your use of AI tools?</div>
+            <div class="question-hint">Tap your #1 choice first, then #2, then #3</div>
+            <div class="card-stack" id="q8-cards">
+                <div class="rank-card" data-q="q8" data-val="tool-choice"><div class="badge"></div><div class="card-text">I'm not sure which tool to use for what</div></div>
+                <div class="rank-card" data-q="q8" data-val="skill"><div class="badge"></div><div class="card-text">I don't know how to get good results from AI</div></div>
+                <div class="rank-card" data-q="q8" data-val="trust"><div class="badge"></div><div class="card-text">I don't trust the outputs enough</div></div>
+                <div class="rank-card" data-q="q8" data-val="integrity"><div class="badge"></div><div class="card-text">I'm concerned about academic integrity</div></div>
+                <div class="rank-card" data-q="q8" data-val="privacy"><div class="badge"></div><div class="card-text">I'm concerned about privacy and confidentiality</div></div>
+                <div class="rank-card" data-q="q8" data-val="cost"><div class="badge"></div><div class="card-text">The tools I want are too expensive</div></div>
+                <div class="rank-card" data-q="q8" data-val="workflow"><div class="badge"></div><div class="card-text">I don't know how to incorporate it into my workflow</div></div>
+                <div class="rank-card" data-q="q8" data-val="not-useful"><div class="badge"></div><div class="card-text">I've tried it but didn't find it useful</div></div>
+                <div class="rank-card" data-q="q8" data-val="prefer-not"><div class="badge"></div><div class="card-text">I prefer not to rely on it</div></div>
+                <div class="rank-card" data-q="q8" data-val="nothing"><div class="badge"></div><div class="card-text">Nothing - I'm already using it as much as I want</div></div>
+            </div>
+            <div class="rank-hint" id="q8-hint">Tap to select up to 3</div>
+            <div class="error-msg" id="q8-error">Please select at least one option</div>
+        </div>
+
+        <div class="question" id="q9-wrap">
+            <div class="question-label">If INSEAD were to offer an additional AI tool to future MBA cohorts, which would be most valuable?</div>
+            <div class="card-stack" id="q9-cards">
+                <div class="card" data-q="q9" data-val="chatgpt-plus"><div class="indicator"></div><div class="card-text">ChatGPT Plus</div></div>
+                <div class="card" data-q="q9" data-val="claude-pro"><div class="indicator"></div><div class="card-text">Claude Pro</div></div>
+                <div class="card" data-q="q9" data-val="perplexity-pro"><div class="indicator"></div><div class="card-text">Continuing Perplexity Pro</div></div>
+                <div class="card" data-q="q9" data-val="copilot-gh"><div class="indicator"></div><div class="card-text">GitHub Copilot</div></div>
+                <div class="card" data-q="q9" data-val="copilot-ms"><div class="indicator"></div><div class="card-text">Microsoft Copilot</div></div>
+                <div class="card" data-q="q9" data-val="gemini-adv"><div class="indicator"></div><div class="card-text">Gemini Advanced</div></div>
+                <div class="card" data-q="q9" data-val="cursor"><div class="indicator"></div><div class="card-text">Cursor / AI coding tool</div></div>
+                <div class="card" data-q="q9" data-val="other-tool"><div class="indicator"></div><div class="card-text">Other</div></div>
+            </div>
+            <div class="conditional" id="q9-other-reveal">
+                <input type="text" id="q9-other-input" placeholder="Which tool?" data-q="q9_other">
+            </div>
+            <div class="error-msg" id="q9-error">Please select an option</div>
+        </div>
+
+        <div class="question" id="q10-wrap">
+            <div class="question-label">Overall, how useful are AI tools for your INSEAD work today?</div>
+            <div class="likert" id="q10-likert">
+                <div class="likert-option" data-q="q10" data-val="not-useful">Not at all useful</div>
+                <div class="likert-option" data-q="q10" data-val="slightly">Slightly useful</div>
+                <div class="likert-option" data-q="q10" data-val="moderate">Moderately useful</div>
+                <div class="likert-option" data-q="q10" data-val="very">Very useful</div>
+                <div class="likert-option" data-q="q10" data-val="essential">Essential</div>
+            </div>
+            <div class="error-msg" id="q10-error">Please select an option</div>
+        </div>
+
+        <div class="question" id="q11-wrap">
+            <div class="question-label">When you use AI for academic work, how openly do you usually disclose it?</div>
+            <div class="card-stack" id="q11-cards">
+                <div class="card" data-q="q11" data-val="openly"><div class="indicator"></div><div class="card-text">I usually disclose it openly</div></div>
+                <div class="card" data-q="q11" data-val="sometimes"><div class="indicator"></div><div class="card-text">I sometimes disclose it, depending on the context</div></div>
+                <div class="card" data-q="q11" data-val="rarely"><div class="indicator"></div><div class="card-text">I rarely disclose it</div></div>
+                <div class="card" data-q="q11" data-val="prefer-not-say"><div class="indicator"></div><div class="card-text">I prefer not to say</div></div>
+                <div class="card" data-q="q11" data-val="no-ai"><div class="indicator"></div><div class="card-text">I do not use AI for academic work</div></div>
+            </div>
+            <div class="error-msg" id="q11-error">Please select an option</div>
+        </div>
+    </div>
+
+    <!-- PAGE 4 -->
+    <div class="page" id="page4">
+        <div class="page-title">Curriculum &amp; Support</div>
+
+        <div class="question" id="q12a-wrap">
+            <div class="question-label">Would you expect INSEAD to offer you education on practical uses of AI either as a professional or a learner?</div>
+            <div class="card-stack" id="q12a-cards">
+                <div class="card" data-q="q12a" data-val="yes-absolutely"><div class="indicator"></div><div class="card-text">Yes, absolutely</div></div>
+                <div class="card" data-q="q12a" data-val="nice-not-essential"><div class="indicator"></div><div class="card-text">It would be nice but not essential</div></div>
+                <div class="card" data-q="q12a" data-val="no-self-learn"><div class="indicator"></div><div class="card-text">No, I can learn this on my own</div></div>
+                <div class="card" data-q="q12a" data-val="not-sure"><div class="indicator"></div><div class="card-text">I'm not sure</div></div>
+            </div>
+            <div class="error-msg" id="q12a-error">Please select an option</div>
+        </div>
+
+        <div class="question" id="q12b-wrap">
+            <div class="question-label">What would you typically want to learn about with regards to using AI?</div>
+            <div class="question-hint">Tap your first choice, then second, then third</div>
+            <div class="card-stack" id="q12b-cards">
+                <div class="rank-card" data-q="q12b" data-val="tool-choice"><div class="badge"></div><div class="card-text">Choosing the right AI tool for different tasks</div></div>
+                <div class="rank-card" data-q="q12b" data-val="prompting"><div class="badge"></div><div class="card-text">Writing better prompts and getting better outputs</div></div>
+                <div class="rank-card" data-q="q12b" data-val="research"><div class="badge"></div><div class="card-text">Using AI for research, reading, and synthesis</div></div>
+                <div class="rank-card" data-q="q12b" data-val="writing"><div class="badge"></div><div class="card-text">Using AI for writing, presentations, and communication</div></div>
+                <div class="rank-card" data-q="q12b" data-val="data"><div class="badge"></div><div class="card-text">Using AI for data analysis and modelling</div></div>
+                <div class="rank-card" data-q="q12b" data-val="workflows"><div class="badge"></div><div class="card-text">Building personal workflows and automations</div></div>
+                <div class="rank-card" data-q="q12b" data-val="coding"><div class="badge"></div><div class="card-text">Coding with AI</div></div>
+                <div class="rank-card" data-q="q12b" data-val="ethics"><div class="badge"></div><div class="card-text">AI ethics, academic integrity, and responsible use</div></div>
+                <div class="rank-card" data-q="q12b" data-val="strategy"><div class="badge"></div><div class="card-text">AI strategy and implementation in organisations</div></div>
+                <div class="rank-card" data-q="q12b" data-val="tech-architecture"><div class="badge"></div><div class="card-text">Understanding AI technology and architecture</div></div>
+            </div>
+            <div class="rank-hint" id="q12b-hint">Tap to select up to 3</div>
+            <div class="error-msg" id="q12b-error">Please select at least one option</div>
+        </div>
+
+        <div class="question" id="q13-wrap">
+            <div class="question-label">Which learning formats would work best for you?</div>
+            <div class="question-hint">Tap your first choice, then your second</div>
+            <div class="card-stack" id="q13-cards">
+                <div class="rank-card" data-q="q13" data-val="workshops"><div class="badge"></div><div class="card-text">Guided hands-on workshops</div></div>
+                <div class="rank-card" data-q="q13" data-val="self-paced"><div class="badge"></div><div class="card-text">Self-paced online modules</div></div>
+                <div class="rank-card" data-q="q13" data-val="peer-demos"><div class="badge"></div><div class="card-text">Peer demos from students</div></div>
+                <div class="rank-card" data-q="q13" data-val="office-hours"><div class="badge"></div><div class="card-text">Drop-in office hours</div></div>
+                <div class="rank-card" data-q="q13" data-val="starter-pack"><div class="badge"></div><div class="card-text">A pre-built starter pack of recommended tools and workflows</div></div>
+                <div class="rank-card" data-q="q13" data-val="build-workshop"><div class="badge"></div><div class="card-text">A "build your own workflow" workshop</div></div>
+                <div class="rank-card" data-q="q13" data-val="talks"><div class="badge"></div><div class="card-text">Expert talks or panels</div></div>
+            </div>
+            <div class="rank-hint" id="q13-hint">Tap to select up to 2</div>
+            <div class="error-msg" id="q13-error">Please select at least one option</div>
+        </div>
+
+        <div class="question" id="q14-wrap">
+            <div class="question-label">If INSEAD supports AI tools for students, which model would you prefer?</div>
+            <div class="card-stack" id="q14-cards">
+                <div class="card" data-q="q14" data-val="one-tool"><div class="indicator"></div><div class="card-text">One standard tool for everyone</div></div>
+                <div class="card" data-q="q14" data-val="small-set"><div class="indicator"></div><div class="card-text">A small set of recommended tools</div></div>
+                <div class="card" data-q="q14" data-val="flexible"><div class="indicator"></div><div class="card-text">A flexible credit or subsidy I can use on the tool that suits me</div></div>
+                <div class="card" data-q="q14" data-val="none"><div class="indicator"></div><div class="card-text">No institutional provisioning needed</div></div>
+            </div>
+            <div class="error-msg" id="q14-error">Please select an option</div>
+        </div>
+    </div>
+
+    <!-- PAGE 5 -->
+    <div class="page" id="page5">
+        <div class="page-title">Almost done - these are optional but incredibly valuable</div>
+
+        <div class="question" id="q15-wrap">
+            <div class="question-label">Describe your AI setup in one sentence.</div>
+            <textarea id="q15-input" placeholder="e.g. I use ChatGPT for case prep and Perplexity for research..."></textarea>
+        </div>
+
+        <div class="question" id="q16-wrap">
+            <div class="question-label">What is one useful way you've used AI at INSEAD?</div>
+            <textarea id="q16-input" placeholder="e.g. I used Claude to break down a complex OB case into stakeholder perspectives..."></textarea>
+        </div>
+
+        <div class="question" id="q17-wrap">
+            <div class="question-label">Would you be willing to participate in a short follow-up interview?</div>
+            <div class="card-stack" id="q17-cards">
+                <div class="card" data-q="q17" data-val="yes"><div class="indicator"></div><div class="card-text">Yes</div></div>
+                <div class="card" data-q="q17" data-val="no"><div class="indicator"></div><div class="card-text">No</div></div>
+            </div>
+            <div class="conditional" id="q17-email-reveal">
+                <input type="email" id="q17-email-input" placeholder="firstname.lastname@insead.edu">
+            </div>
+        </div>
+    </div>
+
+    </form>
+
+    <div class="nav" id="navSection">
+        <button type="button" class="btn-back" id="btnBack" style="display:none">Back</button>
+        <button type="button" class="btn-next" id="btnNext">Next</button>
+    </div>
+
+    <div class="thank-you" id="thankYou">
+        <div class="checkmark">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </div>
+        <h2>Thanks.</h2>
+        <p>Your responses will directly shape INSEAD's AI tool provisioning and upskilling programme.</p>
+    </div>
+
+    <div class="footer" id="footerSection">INSEAD AI Club x Learning Experience</div>
+</div>
+
+<script>
+const SCRIPT_URL = 'YOUR_APPS_SCRIPT_URL';
+
+const state = {
+    q1: null, q2: null, q3: null, q3b: null, q3c: null, q4: null,
+    q5: {}, q5_other_name: '',
+    q5a: null, q5a_other: '',
+    q6a: [], q6b: [],
+    q7b: null, q7c: null,
+    q8: [], q9: null, q9_other: '',
+    q10: null, q11: null,
+    q12a: null, q12b: [], q13: [], q14: null,
+    q15: '', q16: '', q17: null, q17_email: ''
+};
+
+let currentPage = 1;
+const totalPages = 5;
+
+// Build Q5 matrix
+(function buildMatrix() {
+    const matrix = document.getElementById('q5-matrix');
+    const tools = [
+        ['chatgpt', 'ChatGPT'], ['claude', 'Claude'], ['perplexity', 'Perplexity'],
+        ['copilot_ms', 'Microsoft Copilot'], ['copilot_gh', 'GitHub Copilot'],
+        ['gemini', 'Gemini'], ['notebooklm', 'NotebookLM'], ['other', 'Other']
+    ];
+    const cols = ['never_heard', 'heard', 'tried', 'occasional', 'regular'];
+    tools.forEach(([key, label]) => {
+        const rowLabel = document.createElement('div');
+        rowLabel.className = 'row-label';
+        rowLabel.dataset.tool = key;
+        rowLabel.textContent = label;
+        matrix.appendChild(rowLabel);
+        cols.forEach(col => {
+            const cell = document.createElement('div');
+            cell.className = 'cell';
+            cell.dataset.tool = key;
+            const dot = document.createElement('div');
+            dot.className = 'dot';
+            dot.dataset.tool = key;
+            dot.dataset.col = col;
+            dot.addEventListener('click', () => selectMatrixDot(key, col, dot));
+            cell.appendChild(dot);
+            matrix.appendChild(cell);
+        });
+    });
+})();
+
+function selectMatrixDot(tool, col, dotEl) {
+    const matrix = document.getElementById('q5-matrix');
+    // Clear row
+    matrix.querySelectorAll(`.dot[data-tool="${tool}"]`).forEach(d => d.classList.remove('selected'));
+    matrix.querySelectorAll(`[data-tool="${tool}"]`).forEach(el => el.classList.remove('row-selected'));
+    // Select
+    dotEl.classList.add('selected');
+    matrix.querySelectorAll(`[data-tool="${tool}"]`).forEach(el => el.classList.add('row-selected'));
+    state.q5[tool] = col;
+    // Show other text field if other row is selected
+    const otherReveal = document.getElementById('q5-other-reveal');
+    if (tool === 'other' && col !== 'never_heard') {
+        otherReveal.classList.add('visible');
+    }
+    clearError('q5');
+}
+
+// Radio card clicks
+document.querySelectorAll('.card[data-q]:not(.checkbox)').forEach(card => {
+    card.addEventListener('click', () => {
+        const q = card.dataset.q;
+        const val = card.dataset.val;
+        // Clear siblings
+        card.closest('.card-stack').querySelectorAll(`.card[data-q="${q}"]`).forEach(c => c.classList.remove('selected'));
+        card.classList.add('selected');
+        state[q] = val;
+        clearError(q);
+        // Conditional reveals
+        if (q === 'q5a') {
+            document.getElementById('q5a-other-reveal').classList.toggle('visible', val === 'other');
+        }
+        if (q === 'q9') {
+            document.getElementById('q9-other-reveal').classList.toggle('visible', val === 'other-tool');
+        }
+        if (q === 'q17') {
+            document.getElementById('q17-email-reveal').classList.toggle('visible', val === 'yes');
+        }
+    });
+});
+
+// Pill clicks
+document.querySelectorAll('.pill[data-q]').forEach(pill => {
+    pill.addEventListener('click', () => {
+        const q = pill.dataset.q;
+        const val = pill.dataset.val;
+        pill.closest('.pill-row').querySelectorAll(`.pill[data-q="${q}"]`).forEach(p => p.classList.remove('selected'));
+        pill.classList.add('selected');
+        state[q] = val;
+        clearError(q);
+        // Intake → section filtering
+        if (q === 'q3b') {
+            state.q3c = null;
+            const wrap = document.getElementById('q3c-wrap');
+            wrap.style.display = '';
+            document.querySelectorAll('#q3c-pills .pill').forEach(p => {
+                p.classList.remove('selected');
+                p.style.display = p.dataset.intake === val ? '' : 'none';
+            });
+        }
+    });
+});
+
+// Checkbox card clicks
+document.querySelectorAll('.card.checkbox[data-q]').forEach(card => {
+    card.addEventListener('click', () => {
+        const q = card.dataset.q;
+        const val = card.dataset.val;
+        card.classList.toggle('selected');
+        const arr = state[q];
+        const idx = arr.indexOf(val);
+        if (idx > -1) arr.splice(idx, 1);
+        else arr.push(val);
+        clearError(q);
+    });
+});
+
+// Likert clicks
+document.querySelectorAll('.likert-option[data-q]').forEach(opt => {
+    opt.addEventListener('click', () => {
+        const q = opt.dataset.q;
+        opt.closest('.likert').querySelectorAll('.likert-option').forEach(o => o.classList.remove('selected'));
+        opt.classList.add('selected');
+        state[q] = opt.dataset.val;
+        clearError(q);
+    });
+});
+
+// Rank card logic
+function setupRank(qKey, max) {
+    const container = document.getElementById(qKey + '-cards');
+    const hint = document.getElementById(qKey + '-hint');
+    container.querySelectorAll('.rank-card').forEach(card => {
+        card.addEventListener('click', () => {
+            const val = card.dataset.val;
+            const arr = state[qKey];
+            const idx = arr.indexOf(val);
+            if (idx > -1) {
+                // Remove
+                arr.splice(idx, 1);
+                updateRankDisplay(qKey, max);
+                clearError(qKey);
+                return;
+            }
+            if (arr.length >= max) return;
+            arr.push(val);
+            updateRankDisplay(qKey, max);
+            clearError(qKey);
+        });
+    });
+}
+
+function updateRankDisplay(qKey, max) {
+    const container = document.getElementById(qKey + '-cards');
+    const arr = state[qKey];
+    const hint = document.getElementById(qKey + '-hint');
+    container.querySelectorAll('.rank-card').forEach(card => {
+        const val = card.dataset.val;
+        const rank = arr.indexOf(val);
+        const badge = card.querySelector('.badge');
+        if (rank > -1) {
+            card.classList.add('selected');
+            card.classList.remove('dimmed');
+            badge.textContent = rank + 1;
+        } else {
+            card.classList.remove('selected');
+            badge.textContent = '';
+            card.classList.toggle('dimmed', arr.length >= max);
+        }
+    });
+    const remaining = max - arr.length;
+    if (arr.length === 0) hint.textContent = `Tap to select up to ${max}`;
+    else if (remaining > 0) hint.textContent = `${remaining} more choice${remaining > 1 ? 's' : ''} remaining`;
+    else hint.textContent = 'Tap a selected item to change';
+}
+
+setupRank('q8', 3);
+setupRank('q12b', 3);
+setupRank('q13', 2);
+
+// Text inputs
+document.getElementById('q5-other-input').addEventListener('input', e => { state.q5_other_name = e.target.value; });
+document.getElementById('q5a-other-input').addEventListener('input', e => { state.q5a_other = e.target.value; });
+document.getElementById('q9-other-input').addEventListener('input', e => { state.q9_other = e.target.value; });
+document.getElementById('q15-input').addEventListener('input', e => { state.q15 = e.target.value; });
+document.getElementById('q16-input').addEventListener('input', e => { state.q16 = e.target.value; });
+document.getElementById('q17-email-input').addEventListener('input', e => { state.q17_email = e.target.value; });
+
+// Error helpers
+function showError(qKey, msg) {
+    const el = document.getElementById(qKey + '-error');
+    if (!el) return false;
+    el.textContent = msg || 'Please select an option';
+    el.classList.add('visible');
+    const wrap = document.getElementById(qKey + '-wrap');
+    if (wrap) { wrap.classList.add('shake'); setTimeout(() => wrap.classList.remove('shake'), 400); }
+    return true;
+}
+
+function clearError(qKey) {
+    const el = document.getElementById(qKey + '-error');
+    if (el) el.classList.remove('visible');
+}
+
+function clearAllErrors() {
+    document.querySelectorAll('.error-msg').forEach(e => e.classList.remove('visible'));
+}
+
+// Validation
+function validatePage(page) {
+    clearAllErrors();
+    let errors = [];
+    if (page === 1) {
+        if (!state.q1) errors.push('q1');
+        if (!state.q2) errors.push('q2');
+        if (!state.q3) errors.push('q3');
+        if (!state.q3b) errors.push('q3b');
+        if (!state.q3c) errors.push('q3c');
+        if (!state.q4) errors.push('q4');
+    } else if (page === 2) {
+        if (Object.keys(state.q5).length === 0) errors.push('q5');
+        if (!state.q5a) errors.push('q5a');
+        if (state.q6a.length === 0) errors.push('q6a');
+    } else if (page === 3) {
+        if (!state.q7b) errors.push('q7b');
+        if (!state.q7c) errors.push('q7c');
+        if (state.q8.length === 0) errors.push('q8');
+        if (!state.q9) errors.push('q9');
+        if (!state.q10) errors.push('q10');
+        if (!state.q11) errors.push('q11');
+    } else if (page === 4) {
+        if (!state.q12a) errors.push('q12a');
+        if (state.q12b.length === 0) errors.push('q12b');
+        if (state.q13.length === 0) errors.push('q13');
+        if (!state.q14) errors.push('q14');
+    }
+    // Page 5: no required fields
+
+    if (errors.length > 0) {
+        errors.forEach(q => showError(q));
+        const firstErr = document.getElementById(errors[0] + '-wrap');
+        if (firstErr) firstErr.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return false;
+    }
+    return true;
+}
+
+// Navigation
+function showPage(n) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page' + n).classList.add('active');
+    document.getElementById('progressFill').style.width = (n / totalPages * 100) + '%';
+    document.getElementById('pageIndicator').textContent = n + ' of ' + totalPages;
+    document.getElementById('btnBack').style.display = n === 1 ? 'none' : '';
+    document.getElementById('btnNext').textContent = n === totalPages ? 'Submit' : 'Next';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    currentPage = n;
+}
+
+document.getElementById('btnNext').addEventListener('click', async () => {
+    if (currentPage < totalPages) {
+        if (!validatePage(currentPage)) return;
+        showPage(currentPage + 1);
+    } else {
+        // Submit
+        if (!validatePage(currentPage)) return;
+        await submitSurvey();
+    }
+});
+
+document.getElementById('btnBack').addEventListener('click', () => {
+    if (currentPage > 1) showPage(currentPage - 1);
+});
+
+async function submitSurvey() {
+    const btn = document.getElementById('btnNext');
+    btn.disabled = true;
+    btn.textContent = 'Submitting...';
+
+    const payload = {
+        timestamp: new Date().toISOString(),
+        q1_proficiency: state.q1,
+        q2_frequency: state.q2,
+        q3_mba_student: state.q3,
+        q3b_intake: state.q3b,
+        q3c_section: state.q3c,
+        q4_background: state.q4,
+        q5_chatgpt: state.q5.chatgpt || '',
+        q5_claude: state.q5.claude || '',
+        q5_perplexity: state.q5.perplexity || '',
+        q5_copilot_ms: state.q5.copilot_ms || '',
+        q5_copilot_gh: state.q5.copilot_gh || '',
+        q5_gemini: state.q5.gemini || '',
+        q5_notebooklm: state.q5.notebooklm || '',
+        q5_other: state.q5.other || '',
+        q5_other_name: state.q5_other_name || '',
+        q5a_goto: state.q5a === 'other' ? 'other: ' + state.q5a_other : state.q5a,
+        q6a_awareness: state.q6a.join(', '),
+        q6b_activated: state.q6b.join(', '),
+        q7b_insead_learning: state.q7b,
+        q7c_lectures: state.q7c,
+        q8_barriers: state.q8.map((v, i) => `${i+1}: ${v}`).join(', '),
+        q9_fund_tool: state.q9 === 'other-tool' ? 'other: ' + state.q9_other : state.q9,
+        q10_usefulness: state.q10,
+        q11_disclosure: state.q11,
+        q12a_demand: state.q12a,
+        q12b_curriculum: state.q12b.map((v, i) => `${i+1}: ${v}`).join(', '),
+        q13_format: state.q13.map((v, i) => `${i+1}: ${v}`).join(', '),
+        q14_support_model: state.q14,
+        q15_setup: state.q15,
+        q16_useful_example: state.q16,
+        q17_interview: state.q17,
+        q17_email: state.q17_email
+    };
+
+    try {
+        await fetch(SCRIPT_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+        // no-cors gives opaque response, treat as success
+        document.getElementById('surveyForm').style.display = 'none';
+        document.getElementById('progress-section').style.display = 'none';
+        document.getElementById('pageIndicator').style.display = 'none';
+        document.getElementById('navSection').style.display = 'none';
+        document.getElementById('thankYou').style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch (err) {
+        btn.disabled = false;
+        btn.textContent = 'Submit';
+        alert('Something went wrong. Please try again.');
+    }
+}
+</script>
+</body>
+</html>
