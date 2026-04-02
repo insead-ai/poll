@@ -496,6 +496,7 @@ textarea { resize: vertical; min-height: 60px; }
                 <div class="card checkbox" data-q="q6b" data-val="figma"><div class="indicator"></div><div class="card-text">Figma (student licence)</div></div>
                 <div class="card checkbox" data-q="q6b" data-val="perplexity"><div class="indicator"></div><div class="card-text">Perplexity Pro (student offer)</div></div>
                 <div class="card checkbox" data-q="q6b" data-val="other-free"><div class="indicator"></div><div class="card-text">Other</div></div>
+                <div class="card checkbox" data-q="q6b" data-val="none" style="margin-top:0.5rem"><div class="indicator"></div><div class="card-text">None of these</div></div>
             </div>
         </div>
     </div>
@@ -747,17 +748,24 @@ const totalPages = 5;
 
 function selectMatrixDot(tool, col, dotEl) {
     const matrix = document.getElementById('q5-matrix');
+    const wasSelected = dotEl.classList.contains('selected');
     // Clear row
     matrix.querySelectorAll(`.dot[data-tool="${tool}"]`).forEach(d => d.classList.remove('selected'));
     matrix.querySelectorAll(`[data-tool="${tool}"]`).forEach(el => el.classList.remove('row-selected'));
-    // Select
-    dotEl.classList.add('selected');
-    matrix.querySelectorAll(`[data-tool="${tool}"]`).forEach(el => el.classList.add('row-selected'));
-    state.q5[tool] = col;
-    // Show other text field if other row is selected
-    const otherReveal = document.getElementById('q5-other-reveal');
-    if (tool === 'other' && col !== 'never_heard') {
-        otherReveal.classList.add('visible');
+    if (wasSelected) {
+        // Toggle off - deselect the row entirely
+        delete state.q5[tool];
+        if (tool === 'other') {
+            document.getElementById('q5-other-reveal').classList.remove('visible');
+        }
+    } else {
+        // Select
+        dotEl.classList.add('selected');
+        matrix.querySelectorAll(`[data-tool="${tool}"]`).forEach(el => el.classList.add('row-selected'));
+        state.q5[tool] = col;
+        if (tool === 'other' && col !== 'never_heard') {
+            document.getElementById('q5-other-reveal').classList.add('visible');
+        }
     }
     clearError('q5');
 }
@@ -813,6 +821,22 @@ document.querySelectorAll('.card.checkbox[data-q]').forEach(card => {
     card.addEventListener('click', () => {
         const q = card.dataset.q;
         const val = card.dataset.val;
+        // Q6b mutual exclusion: "none" clears tools, tools clear "none"
+        if (q === 'q6b') {
+            if (val === 'none') {
+                // Deselect all other q6b cards
+                document.querySelectorAll('.card.checkbox[data-q="q6b"]').forEach(c => {
+                    if (c.dataset.val !== 'none') c.classList.remove('selected');
+                });
+                state.q6b = [];
+            } else {
+                // Deselect "none" if selecting a tool
+                const noneCard = document.querySelector('.card.checkbox[data-q="q6b"][data-val="none"]');
+                if (noneCard) noneCard.classList.remove('selected');
+                const noneIdx = state.q6b.indexOf('none');
+                if (noneIdx > -1) state.q6b.splice(noneIdx, 1);
+            }
+        }
         card.classList.toggle('selected');
         const arr = state[q];
         const idx = arr.indexOf(val);
