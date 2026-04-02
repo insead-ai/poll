@@ -374,20 +374,13 @@ textarea { resize: vertical; min-height: 60px; }
             <div class="error-msg" id="q2-error">Please select an option</div>
         </div>
 
-        <div class="question" id="q3-wrap">
-            <div class="question-label">Are you a current INSEAD MBA student?</div>
-            <div class="pill-row" id="q3-pills">
-                <div class="pill" data-q="q3" data-val="yes">Yes</div>
-                <div class="pill" data-q="q3" data-val="no">No</div>
-            </div>
-            <div class="error-msg" id="q3-error">Please select an option</div>
-        </div>
-
         <div class="question" id="q3b-wrap">
-            <div class="question-label">Intake</div>
+            <div class="question-label">Programme / Intake</div>
             <div class="pill-row" id="q3b-pills">
-                <div class="pill" data-q="q3b" data-val="26D">26D</div>
-                <div class="pill" data-q="q3b" data-val="26J">26J</div>
+                <div class="pill" data-q="q3b" data-val="26D">MBA 26D</div>
+                <div class="pill" data-q="q3b" data-val="26J">MBA 26J</div>
+                <div class="pill" data-q="q3b" data-val="MIM">MIM</div>
+                <div class="pill" data-q="q3b" data-val="GEMBA">GEMBA</div>
             </div>
             <div class="error-msg" id="q3b-error">Please select an option</div>
         </div>
@@ -463,6 +456,7 @@ textarea { resize: vertical; min-height: 60px; }
                 <div class="card" data-q="q5a" data-val="copilot-ms"><div class="indicator"></div><div class="card-text">Microsoft Copilot</div></div>
                 <div class="card" data-q="q5a" data-val="copilot-gh"><div class="indicator"></div><div class="card-text">GitHub Copilot</div></div>
                 <div class="card" data-q="q5a" data-val="gemini"><div class="indicator"></div><div class="card-text">Gemini</div></div>
+                <div class="card" data-q="q5a" data-val="mistral"><div class="indicator"></div><div class="card-text">Mistral / Le Chat</div></div>
                 <div class="card" data-q="q5a" data-val="notebooklm"><div class="indicator"></div><div class="card-text">NotebookLM</div></div>
                 <div class="card" data-q="q5a" data-val="other"><div class="indicator"></div><div class="card-text">Other</div></div>
                 <div class="card" data-q="q5a" data-val="none"><div class="indicator"></div><div class="card-text">I don't have a go-to</div></div>
@@ -562,6 +556,7 @@ textarea { resize: vertical; min-height: 60px; }
                 <div class="card" data-q="q9" data-val="copilot-gh"><div class="indicator"></div><div class="card-text">GitHub Copilot</div></div>
                 <div class="card" data-q="q9" data-val="copilot-ms"><div class="indicator"></div><div class="card-text">Microsoft Copilot</div></div>
                 <div class="card" data-q="q9" data-val="gemini-adv"><div class="indicator"></div><div class="card-text">Gemini Advanced</div></div>
+                <div class="card" data-q="q9" data-val="mistral-pro"><div class="indicator"></div><div class="card-text">Mistral / Le Chat Pro</div></div>
                 <div class="card" data-q="q9" data-val="cursor"><div class="indicator"></div><div class="card-text">Cursor / AI coding tool</div></div>
                 <div class="card" data-q="q9" data-val="other-tool"><div class="indicator"></div><div class="card-text">Other</div></div>
             </div>
@@ -703,10 +698,10 @@ textarea { resize: vertical; min-height: 60px; }
 </div>
 
 <script>
-const SCRIPT_URL = 'YOUR_APPS_SCRIPT_URL';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzsbMFAkeclpJ_m1xrhVx95fWERLyx6aE4ayuXLM_shy5ltm_PggRF0IAKF56ziYM8/exec';
 
 const state = {
-    q1: null, q2: null, q3: null, q3b: null, q3c: null, q4: null,
+    q1: null, q2: null, q3b: null, q3c: null, q4: null,
     q5: {}, q5_other_name: '',
     q5a: null, q5a_other: '',
     q6a: [], q6b: [],
@@ -726,7 +721,7 @@ const totalPages = 5;
     const tools = [
         ['chatgpt', 'ChatGPT'], ['claude', 'Claude'], ['perplexity', 'Perplexity'],
         ['copilot_ms', 'Microsoft Copilot'], ['copilot_gh', 'GitHub Copilot'],
-        ['gemini', 'Gemini'], ['notebooklm', 'NotebookLM'], ['other', 'Other']
+        ['gemini', 'Gemini'], ['mistral', 'Mistral / Le Chat'], ['notebooklm', 'NotebookLM'], ['other', 'Other']
     ];
     const cols = ['never_heard', 'heard', 'tried', 'occasional', 'regular'];
     tools.forEach(([key, label]) => {
@@ -803,7 +798,8 @@ document.querySelectorAll('.pill[data-q]').forEach(pill => {
         if (q === 'q3b') {
             state.q3c = null;
             const wrap = document.getElementById('q3c-wrap');
-            wrap.style.display = '';
+            const isMBA = val === '26D' || val === '26J';
+            wrap.style.display = isMBA ? '' : 'none';
             document.querySelectorAll('#q3c-pills .pill').forEach(p => {
                 p.classList.remove('selected');
                 p.style.display = p.dataset.intake === val ? '' : 'none';
@@ -924,9 +920,9 @@ function validatePage(page) {
     if (page === 1) {
         if (!state.q1) errors.push('q1');
         if (!state.q2) errors.push('q2');
-        if (!state.q3) errors.push('q3');
         if (!state.q3b) errors.push('q3b');
-        if (!state.q3c) errors.push('q3c');
+        const isMBA = state.q3b === '26D' || state.q3b === '26J';
+        if (isMBA && !state.q3c) errors.push('q3c');
         if (!state.q4) errors.push('q4');
     } else if (page === 2) {
         if (Object.keys(state.q5).length === 0) errors.push('q5');
@@ -992,9 +988,8 @@ async function submitSurvey() {
         timestamp: new Date().toISOString(),
         q1_proficiency: state.q1,
         q2_frequency: state.q2,
-        q3_mba_student: state.q3,
-        q3b_intake: state.q3b,
-        q3c_section: state.q3c,
+        q3b_programme: state.q3b,
+        q3c_section: state.q3c || '',
         q4_background: state.q4,
         q5_chatgpt: state.q5.chatgpt || '',
         q5_claude: state.q5.claude || '',
@@ -1002,6 +997,7 @@ async function submitSurvey() {
         q5_copilot_ms: state.q5.copilot_ms || '',
         q5_copilot_gh: state.q5.copilot_gh || '',
         q5_gemini: state.q5.gemini || '',
+        q5_mistral: state.q5.mistral || '',
         q5_notebooklm: state.q5.notebooklm || '',
         q5_other: state.q5.other || '',
         q5_other_name: state.q5_other_name || '',
